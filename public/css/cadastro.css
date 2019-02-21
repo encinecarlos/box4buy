@@ -1,0 +1,12 @@
+body {
+    color: #2095f4;
+}
+
+.bg-cadastro {
+    margin: 0;
+    padding: 0;
+    background: url("https://box4buy.com/img/home-banner-bg.jpg") center center no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: auto;
+}
