@@ -214,14 +214,6 @@
             </div>
         </div>
     </div>
-
-    {{--<div class="modal custom-modal" id="viewimage">
-        <div class="row">
-            <div class="col-sm-12">
-                <img data-dz-thumbnail/>
-            </div>
-        </div>
-    </div>--}}
 @stop
 
 @section('css')

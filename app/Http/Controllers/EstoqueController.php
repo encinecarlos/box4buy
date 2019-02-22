@@ -262,6 +262,9 @@ class EstoqueController extends Controller
             'dias_estoque' => $prod_orcamento[0]->data_chegada == '' ? 'NR' : $prod_orcamento[0]->data_chegada
         ];
 
+        $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde - {$request->qtenvio} WHERE seq_produto = {$seq_produto}";
+        DB::statement($sql_produto_update);
+
         $request->session()->push('produtos', $data_produtos);
 
         $produtos = $request->session()->get('produtos');
@@ -273,6 +276,10 @@ class EstoqueController extends Controller
     public function removeProduto(Request $request, $seq_id)
     {
         if (session('produtos')) {
+            $produto_id = session('produtos.'.$seq_id.'.id');
+            $quantidade = session('produtos.'.$seq_id.'.qtde');
+            $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde + {$quantidade} WHERE seq_produto = {$produto_id}";
+            DB::statement($sql_produto_update);
             session()->pull('produtos.'.$seq_id);
             if (count(session('produtos')) == 0) {
                 session()->forget('produtos');

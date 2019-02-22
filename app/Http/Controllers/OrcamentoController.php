@@ -45,19 +45,19 @@ class OrcamentoController extends Controller
                                 vlr_declarado,
                                 `status`)
                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", [
-                               $cod_suite,
-                               $request->codigo_pacote,
-                               $request->seguro,
-                               $request->codigo_endereco,
-                               $request->peso != null ? $request->peso : 0,
-                               $request->envianf,
-                               $request->etiquetaoriginal,
-                               $request->enviapropaganda,
-                               $request->caixaoriginal,
-                               $request->sacolaoriginal,
-                               $request->total_declarado,
-                               4
-                           ]);
+                    $cod_suite,
+                    $request->codigo_pacote,
+                    $request->seguro,
+                    $request->codigo_endereco,
+                    $request->peso != null ? $request->peso : 0,
+                    $request->envianf,
+                    $request->etiquetaoriginal,
+                    $request->enviapropaganda,
+                    $request->caixaoriginal,
+                    $request->sacolaoriginal,
+                    $request->total_declarado,
+                    4
+                ]);
 
                 $cod_orcamento = DB::getPdo()->lastInsertId();
 
@@ -65,7 +65,7 @@ class OrcamentoController extends Controller
                 $messages = [
                     'valordeclarado.required' => 'Informe o valor declarado do(s) produto(s).'
                 ];
-                
+
                 for ($i = 0; $i < count($produtos); $i++) {
                     $this->validate($request, [
                         'valor_declarado' => 'required'
@@ -78,19 +78,18 @@ class OrcamentoController extends Controller
                                                             quantidade,
                                                             `status`)
                                                             VALUES (?,?,?,?,?,?,?)", [
-                                                                $produtos[$i]['id'],
-                                                                $produtos[$i]['descricao'],
-                                                                $cod_orcamento,
-                                                                number_format((float)$request->valor_declarado[$i], 2),
-                                                                $produtos[$i]['dias_estoque'],
-                                                                $produtos[$i]['qtde'] == '' ? '0' : $produtos[$i]['qtde'],
-                                                                9
-                                                            ]);
-                    $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde - {$produtos[$i]['qtde']} WHERE seq_produto = {$produtos[$i]['id']}";
-                    DB::statement($sql_produto_update);
+                        $produtos[$i]['id'],
+                        $produtos[$i]['descricao'],
+                        $cod_orcamento,
+                        number_format((float)$request->valor_declarado[$i], 2),
+                        $produtos[$i]['dias_estoque'],
+                        $produtos[$i]['qtde'] == '' ? '0' : $produtos[$i]['qtde'],
+                        9
+                    ]);
+
                 }
-            
-                Mail::send(new OrderNotification($cod_suite, $email ,$cod_orcamento));
+
+                Mail::send(new OrderNotification($cod_suite, $email, $cod_orcamento));
                 session()->forget('produtos');
 
                 return response()->json(['msg' => 'Orçamento gerado com sucesso!', 'status' => '1']);
@@ -102,7 +101,7 @@ class OrcamentoController extends Controller
         }
     }
 
-    
+
     public function index()
     {
         $orcamentos = Orcamento::all();
@@ -110,7 +109,7 @@ class OrcamentoController extends Controller
         $aguardando = $orcamentos->filter(function ($orcamento) {
             return $orcamento->status == '4';
         });
-        
+
         $aprovado = $orcamentos->filter(function ($orcamento) {
             return $orcamento->status == '5';
         });
@@ -118,7 +117,7 @@ class OrcamentoController extends Controller
         $pago = $orcamentos->filter(function ($orcamento) {
             return $orcamento->status == '6';
         });
-             
+
         return view('orcamento.main', ['aguardando' => $aguardando, 'aprovado' => $aprovado, 'pago' => $pago, 'produtos' => $produtos]);
     }
 
@@ -159,12 +158,12 @@ class OrcamentoController extends Controller
         $produtos = OrcamentoProduto::where('codigo_orcamento', $id)->get();
 
         return view('orcamento.edit', [
-                                        'orcamento' => $orcamento,
-                                        'produtos' => $produtos,
-                                        'orcamentoStatus' => $orcamentoStatus,
-                                        'dadosUsuario' => $dadosUsuario,
-                                        'dadosUsuarioEndereco' => $dadosUsuarioEndereco,
-                                        'dadosUsuarioContato' => $dadosUsuarioContato]);
+            'orcamento' => $orcamento,
+            'produtos' => $produtos,
+            'orcamentoStatus' => $orcamentoStatus,
+            'dadosUsuario' => $dadosUsuario,
+            'dadosUsuarioEndereco' => $dadosUsuarioEndereco,
+            'dadosUsuarioContato' => $dadosUsuarioContato]);
     }
 
     public function editUsuario($id)
@@ -216,7 +215,7 @@ class OrcamentoController extends Controller
 
     public function mudaQuantidade(Request $request, $idproduto)
     {
-        session(['produtos.'.$idproduto.'.qtde' => $request->quantidade]);
+        session(['produtos.' . $idproduto . '.qtde' => $request->quantidade]);
         $produtos = session('produtos');
         return $produtos;
     }
@@ -241,22 +240,22 @@ class OrcamentoController extends Controller
     public function destroy($id)
     {
         $produto = OrcamentoProduto::where('codigo_orcamento', $id)->get();
-                
+
         try {
-            for ($i= 0; $i < count($produto); $i++) {
-                if($produto[$i]->status != '8') {
+            for ($i = 0; $i < count($produto); $i++) {
+                if ($produto[$i]->status != '8') {
                     $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde + {$produto[$i]->quantidade}, `status` = '2' WHERE seq_produto = {$produto[$i]->codigo_produto}";
                     DB::update($sql_produto_update);
-                }                
+                }
             }
-                           
-            $orcamento = Orcamento::find($id);            
+
+            $orcamento = Orcamento::find($id);
             $orcamento->delete();
             return response()->json(['msg' => 'Registro excluido com sucesso!']);
         } catch (Exception $e) {
             Debugbar::info($e->getMessage());
         }
-        
-        
+
+
     }
 }
