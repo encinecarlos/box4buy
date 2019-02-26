@@ -51,7 +51,7 @@
 									<td>{{ $produto->peso }}</td>
 									<td>{{ $produto->data_chegada != '' ? $produto->data_chegada->diffInDays() : 'Produto não chegou' }}</td>
 									<td class="col-sm-2">{{ $produto->data_chegada != '' ? $produto->qtde : 'Produto não chegou' }}</td>
-									<td class="col-sm-2"><input type="number" name="qtenvio" class="form-control" id="qtde-{{ $produto->seq_produto }}" value="1"></td>
+									<td class="col-sm-2"><input type="number" name="qtenvio" class="form-control" id="qtde-{{ $produto->seq_produto }}" value="1" max="{{ $produto->qtde }}"></td>
 									<td>
 										@if($produto->data_chegada == '' || $produto->qtde == 0)
 										<button type="button" class="btn btn-danger qt" title="Adicionar ao carrinho" disabled>

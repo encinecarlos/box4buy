@@ -215,6 +215,19 @@ class OrcamentoController extends Controller
 
     public function mudaQuantidade(Request $request, $idproduto)
     {
+        $quantidade_atual = session('produtos.' . $idproduto . '.qtde');
+        $produto_id = session('produtos.' . $idproduto . '.id');
+        if($request->quantidade > $quantidade_atual)
+        {
+            $diff_quantidade = $quantidade_atual - $request->quantidade;
+            $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde - {$diff_quantidade} WHERE seq_produto = {$produto_id}";
+            DB::statement($sql_produto_update);
+        } elseif ($request->quantidade < $quantidade_atual) {
+            $diff_quantidade = $quantidade_atual - $request->quantidade;
+            $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde + {$diff_quantidade} WHERE seq_produto = {$produto_id}";
+            DB::statement($sql_produto_update);
+        }
+
         session(['produtos.' . $idproduto . '.qtde' => $request->quantidade]);
         $produtos = session('produtos');
         return $produtos;

@@ -247,7 +247,6 @@ class EstoqueController extends Controller
     {
         $produto = DB::table('bxby_produtos_estoque')->where('seq_produto', $seq_produto)->get();
         if ($produto[0]->qtde > 0) {
-            $nova_quantidade = $produto[0]->qtde - $request->qtenvio;            
             if ($produto[0]->qtde == 0) {
                 DB::table('bxby_produtos_estoque')->where('seq_produto', $seq_produto)->update(['status' => '3']);
             }
@@ -265,9 +264,25 @@ class EstoqueController extends Controller
         $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde - {$request->qtenvio} WHERE seq_produto = {$seq_produto}";
         DB::statement($sql_produto_update);
 
-        $request->session()->push('produtos', $data_produtos);
-
         $produtos = $request->session()->get('produtos');
+        if($produtos)
+        {
+            $idproduto = array_search($seq_produto, array_column($produtos, 'id'));
+            if($idproduto)
+            {
+                $qtde_atual = session('produtos.'.$idproduto.'.qtde');
+                $new_qtde = $qtde_atual + $request->qtenvio;
+                session()->put(['produtos.'.$idproduto.'.qtde' => "$new_qtde"]);
+            } else {
+                $request->session()->push('produtos', $data_produtos);
+            }
+
+            debugbar()->debug("ID: $idproduto");
+//            debugbar()->debug("Qtde: $qtde_atual");
+//            debugbar()->debug("new qtde: $new_qtde");
+        } else {
+            $request->session()->push('produtos', $data_produtos);
+        }
         //return redirect(route('estoque'))->with('produtos', $produtos);
         return $produtos;
         //return response()->json(['msg' => "produto adicionado com sucesso!"]);
