@@ -183,8 +183,9 @@ $(document).ready(function () {
     $('.changeqtd').click(function () {
         var produto_id = this.id;
         var quantidade = $('#edita-' + produto_id).val();
+        var produto_id = $(this).data('produto');
 
-        axios.get('/carrinho/atualiza/' + produto_id + '/quantidade?quantidade=' + quantidade).then(response => {
+        axios.get('/carrinho/atualiza/' + produto_id + '/quantidade?quantidade=' + quantidade+'&produto_id='+produto_id).then(response => {
             var data = response.data;
             console.log(data);
             for (var i = 0; i < Object.keys(data).length; i++) {

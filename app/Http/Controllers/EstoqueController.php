@@ -278,8 +278,6 @@ class EstoqueController extends Controller
             }
 
             debugbar()->debug("ID: $idproduto");
-//            debugbar()->debug("Qtde: $qtde_atual");
-//            debugbar()->debug("new qtde: $new_qtde");
         } else {
             $request->session()->push('produtos', $data_produtos);
         }

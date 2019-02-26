@@ -217,9 +217,10 @@ class OrcamentoController extends Controller
     {
         $quantidade_atual = session('produtos.' . $idproduto . '.qtde');
         $produto_id = session('produtos.' . $idproduto . '.id');
+        $produto = array_search($request->produto_id, array_column(session('produtos'), 'id'));
         if($request->quantidade > $quantidade_atual)
         {
-            $diff_quantidade = $quantidade_atual - $request->quantidade;
+            $diff_quantidade = $request->quantidade - $quantidade_atual;
             $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde - {$diff_quantidade} WHERE seq_produto = {$produto_id}";
             DB::statement($sql_produto_update);
         } elseif ($request->quantidade < $quantidade_atual) {
