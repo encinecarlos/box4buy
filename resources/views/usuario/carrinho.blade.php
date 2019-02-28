@@ -5,9 +5,12 @@
     <div class="box box-info">
         <div class="box-header">
             <h4>Carrinho</h4>
+            <div class="box-tools">
+                <a href="{{ url()->route('estoque') }}"><i class="fa fa-chevron-left"></i> Voltar</a>
+            </div>
         </div>
         <div class="box-body">
-            <div class="alert alert-danger alert-errors">
+            <div class="alert alert-danger alert-errors hide">
                 <ul id="list-error" style="list-style-type: none">
                 </ul>
             </div>
@@ -59,6 +62,14 @@
                                                         class="fa fa-close"></i></a></td>
                                     </tr>
                                 @endforeach
+                                <div class="pull-right">
+                                    <tr>
+                                        <td colspan="2"><b>Total:</b></td>
+                                        <td><input class="form-control" name="qtd" id="itens-total" value="{{ $total['total_produtos'] }}" readonly></td>
+                                        <td><input class="form-control" name="peso" id="peso-total" value="{{ $total['total_peso'] }}" readonly></td>
+                                    </tr>
+                                </div>
+
                             @else
                                 <p class="alert alert-warning text-center">NENHUM PRODUTO ADICIONADO AO CARRINHO</p>
                             @endif
@@ -179,25 +190,6 @@
                     <div class="col-sm-6">
                         <table id="example2" class="table table-bordered pull-right">
                             <tbody>
-                            <tr>
-                                <td><label>Total de Itens</label></td>
-                                <td class="col-sm-2">
-                                    <input class="form-control" name="qtd" id="itens-total" readonly>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td><label>Peso Total</label></td>
-                                <td class="col-sm-2">
-                                    <input class="form-control" name="peso" id="peso-total" readonly>
-                                </td>
-                            </tr>
-                            {{-- <tr>
-                                <td><label>Valor Total Declarado</label></td>
-                                <td class="col-sm-2">
-                                    <input class="form-control money" name="total_declarado" id="total-declarado" readonly>
-                                </td>
-                            </tr> --}}
                             <tr>
                                 <td colspan="2">
                                     {{-- <button type="button" id="geraorcamento" class="btn btn-info btn-lg boxColorTema pull-right">

@@ -147,9 +147,11 @@
 										<span class="label label-warning">Pendente</span>
 									</td>
 									<td>
-										<a href="{{ route('orcamento-edit-usuario', $a->sequencia) }}">
-												<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+										<a href="{{ route('orcamento-edit-usuario', $a->sequencia) }}"
+										   class="btn btn-warning">
+												<i class="fa fa-pencil" aria-hidden="true"></i>
 											</a>
+										<button class="btn btn-danger orcamento-cancelar" data-orcamento="{{ $a->sequencia }}"><i class="fa fa-remove"></i> Cancelar Orçamento</button>
 									</td>
 								</tr>
 								@endforeach

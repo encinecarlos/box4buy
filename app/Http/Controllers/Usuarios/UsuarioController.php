@@ -168,7 +168,7 @@ class UsuarioController extends Controller
                     return redirect()->intended('/admin/dashboard');
                 } else {
                     session(['suite_prefix' => 'CB#']);
-                    return redirect()->intended('/usuario/home');
+                    return redirect()->intended(route('home'));
                 }
             } else {
                 return redirect(route('login'))->with('login-err', 'Usuario ou senha inválidos. Tente novamente.');

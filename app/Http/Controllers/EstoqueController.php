@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Estoque;
+use App\Http\Middleware\SumProducts;
+use App\lib\ProductServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
@@ -17,7 +19,6 @@ use App\OrcamentoProduto;
 use App\Mail\ProductNotification;
 use Illuminate\Support\Facades\Storage;
 use Mail;
-use Route;
 use App\User;
 
 class EstoqueController extends Controller
@@ -50,6 +51,7 @@ class EstoqueController extends Controller
         $pago = $orcamentos->filter(function ($orcamento) {
             return $orcamento->status == '6';
         });
+
 
         //return dump($fotos);
         return view('usuario.estoque', ['produtos' => $produtos,
@@ -264,11 +266,11 @@ class EstoqueController extends Controller
         $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde - {$request->qtenvio} WHERE seq_produto = {$seq_produto}";
         DB::statement($sql_produto_update);
 
-        $produtos = $request->session()->get('produtos');
+        $produtos = session('produtos');
         if($produtos)
         {
             $idproduto = array_search($seq_produto, array_column($produtos, 'id'));
-            if($idproduto)
+            if($produtos[$idproduto]['id'] == $seq_produto)
             {
                 $qtde_atual = session('produtos.'.$idproduto.'.qtde');
                 $new_qtde = $qtde_atual + $request->qtenvio;
@@ -278,6 +280,7 @@ class EstoqueController extends Controller
             }
 
             debugbar()->debug("ID: $idproduto");
+            debugbar()->debug("Sequencia_produto: $seq_produto");
         } else {
             $request->session()->push('produtos', $data_produtos);
         }
@@ -285,6 +288,8 @@ class EstoqueController extends Controller
         return $produtos;
         //return response()->json(['msg' => "produto adicionado com sucesso!"]);
     }
+
+
 
     public function removeProduto(Request $request, $seq_id)
     {

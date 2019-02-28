@@ -210,8 +210,6 @@ $(document).ready(function () {
     });
 
     function reloadpage() {
-        // var hash = window.location.hash;
-        // $('#myTab a[href="' + hash + '"]').tab('show');
         location.href = location.href;
     }
 
@@ -286,12 +284,8 @@ $(document).ready(function () {
                 text: response.data.msg,
                 type: 'success',
                 confirmButtonText: 'OK',
-                onClose: reloadTab
+                onClose: reloadpage
             });
         });
     });
-
-    function reloadTab() {
-        location.href = self.location;
-    }
 });

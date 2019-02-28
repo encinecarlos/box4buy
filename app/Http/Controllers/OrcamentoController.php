@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\lib\ProductServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 //use illuminate\Support\Facades\Auth;
@@ -22,7 +23,8 @@ class OrcamentoController extends Controller
     public function cartIndex()
     {
         $user_endereco = Enderecos::where('codigo_suite', Auth::user()->codigo_suite)->get();
-        return view('usuario.carrinho', ['endereco' => $user_endereco]);
+        $total_produtos = ProductServices::totalizaProdutos();
+        return view('usuario.carrinho', ['endereco' => $user_endereco, 'total' => $total_produtos]);
     }
 
     public function geraOrcamento(Request $request)
@@ -269,7 +271,17 @@ class OrcamentoController extends Controller
         } catch (Exception $e) {
             Debugbar::info($e->getMessage());
         }
+    }
 
+    public function cancelaOrcamento($id)
+    {
+        $status_orcamento = Orcamento::select('status')->where('sequencia', $id)->get();
 
+        if($status_orcamento[0]->status == 4)
+        {
+            $this->destroy($id);
+        } else {
+            debugbar()->error("Orçamento não foi cancelado");
+        }
     }
 }

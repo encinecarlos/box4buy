@@ -20,33 +20,15 @@ $(document).ready(function () {
         var qtde = $('#qtde-' + seq_id).val();
 
         axios.post('/estoque/produto/' + seq_id, { qtenvio: qtde }).then(response => {
-
-            var data = response.data;
-
-            for (var i = 0; i < Object.keys(data).length; i++) {
-                var peso = Number(data[i].peso) * Number(data[i].qtde);
-                quantidadetotal += Number(data[i].qtde);
-                pesototal += peso;
-            }
-
-            localStorage.setItem('quantidade', quantidadetotal);
-            localStorage.setItem('peso', pesototal);
-
-            toastr.success("Produto adicionado ao carrinho!");
-            location.href = location.href;
+            Swal({
+                title: 'Sucesso!',
+                text: response.data.msg,
+                type: 'success',
+                confirmButtonText: 'OK',
+                onClose: reloadpage
+            });
         });
     });
-
-    var pesoLocal = localStorage.getItem('peso')
-    var qtdLocal = localStorage.getItem('quantidade');
-
-    $('#user-cart').click(function () {
-        $('input[name=qtd]').val(qtdLocal);
-        $('input[name=peso]').val(pesoLocal);
-    });
-
-    $('input[name=qtd]').val(qtdLocal);
-    $('input[name=peso]').val(pesoLocal);
 
     $('#linha_seguro').hide();
     $('select[name="codigo_pacote"]').change(function () {
@@ -186,30 +168,13 @@ $(document).ready(function () {
         var produto_id = $(this).data('produto');
 
         axios.get('/carrinho/atualiza/' + produto_id + '/quantidade?quantidade=' + quantidade+'&produto_id='+produto_id).then(response => {
-            var data = response.data;
-            console.log(data);
-            for (var i = 0; i < Object.keys(data).length; i++) {
-                var peso = Number(data[i].peso) * Number(data[i].qtde);
-                quantidadetotal += Number(data[i].qtde);
-                pesototal += peso;
-            }
-            localStorage.removeItem('quantidade');
-            localStorage.removeItem('peso');
-
-            localStorage.setItem('quantidade', quantidadetotal);
-            localStorage.setItem('peso', pesototal);
-
-            var pesoLocal = localStorage.getItem('peso')
-            var qtdLocal = localStorage.getItem('quantidade');
-
-            $('input[name=qtd]').val(qtdLocal);
-            $('input[name=peso]').val(pesoLocal);
-
-            // history.pushState("", document.title, window.location.pathname
-            //     + window.location.search);
-            pesototal = 0;
-            quantidadetotal = 0;
-            location.href = location.href;
+            Swal({
+                title: 'Sucesso!',
+                text: 'Quantidade atualizada com sucesso.',
+                type: 'success',
+                confirmButtonText: 'OK',
+                onClose: reloadpage
+            });
         });
     });
 
@@ -223,8 +188,13 @@ $(document).ready(function () {
         console.log(url);
 
         axios.get(url).then(response => {
-            toastr.success('Produto Removido');
-            location.href = location.href;
+            Swal({
+                title: 'Sucesso!',
+                text: 'Produto removido.',
+                type: 'success',
+                confirmButtonText: 'OK',
+                onClose: reloadpage
+            });
         });
     });
 
@@ -234,20 +204,29 @@ $(document).ready(function () {
         var data = orcamento.serialize();
 
         axios.post('/orcamento', data).then(response => {
-            localStorage.removeItem('quantidade');
-            localStorage.removeItem('peso');
-
             $('#itens-total').val('');
             $('#peso-total').val('');
 
             if (response.data.status == '1') {
-                toastr.success(response.data.msg);
+                Swal({
+                    title: 'Sucesso!',
+                    text: response.data.msg,
+                    type: 'success',
+                    confirmButtonText: 'OK',
+                    onClose: reloadpage
+                });
                 $.modal.close();
                 setTimeout(() => {
                     location.href = location.origin + '/usuario/estoque';
                 }, 2500);
             } else {
-                toastr.error(response.data.msg);
+                Swal({
+                    title: 'Tivemos um problema!',
+                    text: response.data.msg,
+                    type: 'error',
+                    confirmButtonText: 'OK',
+                    onClose: reloadpage
+                });
             }
         }).catch(error => {
             var erros = error.response.data.errors;
@@ -258,10 +237,10 @@ $(document).ready(function () {
 
             $.modal.close();
             $('html, body').animate({ scrollTop: 0 }, 1000);
-            $('.alert-errors').show();
+            $('.alert-errors').removeClass('hide');
 
             setTimeout(() => {
-                $('.alert-errors').hide();
+                $('.alert-errors').addClass('hide');
                 $('#list-error').empty();
             }, 10000);
         });
@@ -291,9 +270,15 @@ $(document).ready(function () {
 
         axios.put('/orcamento/' + seq_id, data).then(response => {
             if (response.data.status == '1') {
-                toastr.success(response.data.msg);
+                Swal({
+                    title: 'Sucesso!',
+                    text: 'Quantidade atualizada com sucesso.',
+                    type: 'success',
+                    confirmButtonText: 'OK',
+                    onClose: reloadpage
+                });
             } else {
-                toastr.error(response.data.msg);
+
             }
         }).catch(error => {
             var erros = error.response.data.errors;
@@ -311,7 +296,12 @@ $(document).ready(function () {
         });
     });
 
-    // Deleta um orçamento da base
+    function reloadpage()
+    {
+        location.href = location.href;
+    }
+
+    // Deleta ou cancela um orçamento
     $('.or-delete').click(function () {
         var orcamentoid = $(this).data('orcamento');
         axios.delete('/admin/orcamento/delete/' + orcamentoid).then(response => {
@@ -323,6 +313,20 @@ $(document).ready(function () {
                 onClose: reloadpage
             });
         });
+    });
+
+    $('.orcamento-cancelar').click(function() {
+        var orcamentoid = $(this).data('orcamento');
+
+        axios.delete('/cancelar/orcamento/'+orcamentoid).then(response => {
+            Swal({
+                title: 'Sucesso!',
+                text: 'Orcamento cancelado com sucesso!',
+                type: 'success',
+                confirmButtonText: 'OK',
+                onClose: reloadpage
+            });
+        })
     });
 
 });
