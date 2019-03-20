@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Estoque;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -11,14 +12,25 @@ class StatusNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $product_status;
+    public $product;
+    public $email;
+    public $customer_name;
+
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param Estoque $product
+     * @param $email
+     * @param $customer_name
+     * @param $status
      */
-    public function __construct()
+    public function __construct($product, $email, $customer_name, $status)
     {
-        //
+        $this->product = $product;
+        $this->product_status = $status;
+        $this->email = $email;
+        $this->customer_name = $customer_name;
     }
 
     /**
@@ -28,6 +40,10 @@ class StatusNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->from('atendimento@box4buy.com')
+            ->subject('Box4buy - STATUS DO PRODUTO')
+            ->to($this->email)
+            ->cc('cxarlos_alexandre88@hotmail.com')
+            ->markdown('emails.status');
     }
 }

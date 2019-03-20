@@ -65,10 +65,32 @@
 
         function deletePessoa(id) {
             console.log(id);
-            axios.delete('/admin/pessoas/delete/' + id).then(response => {
-                toastr.success(response.data.msg);
-                location.reload();
+            Swal.fire({
+                title: 'Você tem certeza disso?',
+                text: 'Deseja deletar este registro?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim',
+                confirmButtonColor: '#d33',
+                cancelButtonText: 'Não',
+            }).then(result => {
+                if (result.value) {
+                    axios.delete('/admin/pessoas/delete/' + id).then(response => {
+                        Swal.fire({
+                            title: 'Sucesso!',
+                            text: response.data.msg,
+                            type: 'success',
+                            confirmButtonText: 'OK',
+                            onClose: reloadPage
+                        });
+                    });
+                }
             });
+
+        }
+
+        function reloadPage() {
+            location.href = location.href;
         }
     </script>    
 @endsection

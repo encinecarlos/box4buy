@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Estoque;
+use App\EstoqueImagem;
 use App\Http\Middleware\SumProducts;
 use App\lib\ProductServices;
+use App\Mail\StatusNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
@@ -17,8 +19,8 @@ use App\Orcamento;
 use Carbon\Carbon;
 use App\OrcamentoProduto;
 use App\Mail\ProductNotification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Mail;
 use App\User;
 
 class EstoqueController extends Controller
@@ -26,15 +28,15 @@ class EstoqueController extends Controller
     public function exibeEstoqueUsuario()
     {
         $produtos = Estoque::where(['codigo_suite' => Auth::user()->codigo_suite])->get();
-        
+
         $fotos = Fotos::join('bxby_produtos_estoque', 'bxby_produtos_imagem.codigo_produto', '=', 'bxby_produtos_estoque.seq_produto')
-                      ->where('bxby_produtos_estoque.codigo_suite', Auth::user()->codigo_suite)->get();
-                       
+            ->where('bxby_produtos_estoque.codigo_suite', Auth::user()->codigo_suite)->get();
+
         $user_endereco = Enderecos::where('codigo_suite', Auth::user()->codigo_suite)->get();
         $orcamentos = Orcamento::where('codigo_suite', Auth::user()->codigo_suite)->get();
         $enable_payment = DB::table('bxby_pconfirma_dados')->select(['libera_pagamento'])
-                                                           ->where('codigo_suite', Auth::user()->codigo_suite)
-                                                           ->get();
+            ->where('codigo_suite', Auth::user()->codigo_suite)
+            ->get();
 
         $estoque = $produtos->filter(function ($produto) {
             return $produto->status == '2';
@@ -55,13 +57,13 @@ class EstoqueController extends Controller
 
         //return dump($fotos);
         return view('usuario.estoque', ['produtos' => $produtos,
-                                        'fotos' => $fotos,
-                                        'estoque' => $estoque,
-                                        'endereco' => $user_endereco,
-                                        'aguardando' => $aguardando,
-                                        'aprovado' => $aprovado,
-                                        'pago' => $pago,
-                                        'libera_pagamento' => $enable_payment]);
+            'fotos' => $fotos,
+            'estoque' => $estoque,
+            'endereco' => $user_endereco,
+            'aguardando' => $aguardando,
+            'aprovado' => $aprovado,
+            'pago' => $pago,
+            'libera_pagamento' => $enable_payment]);
     }
 
     public function cadastrar(Request $request)
@@ -69,25 +71,25 @@ class EstoqueController extends Controller
         try {
             DB::insert("INSERT INTO bxby_produtos_estoque ( codigo_suite, descricao_produto, data_compra, qtde, codigo_rastreio, site_loja, nome_loja, `status` )
                                 VALUES ( ?,?,?,?,?,?,?,? )", [
-                    $request->suite,
-                    $request->descricao,
-                    $request->datacompra,
-                    $request->quantidade,
-                    $request->codigorastreio,
-                    $request->siteloja,
-                    $request->nomeloja,
-                    1
-                ]);
+                $request->suite,
+                $request->descricao,
+                $request->datacompra,
+                $request->quantidade,
+                $request->codigorastreio,
+                $request->siteloja,
+                $request->nomeloja,
+                1
+            ]);
 
             $email = DB::table('bxby_pessoas')
                 ->select('email')
                 ->where('codigo_suite', $request->suite)
                 ->get();
 
-                Mail::send(new ProductNotification($request->suite, $email[0]->email, $request->descricao, $request->quantidade));
-                return response()->json(['msg' => 'Cadastrado com sucesso', 'status' => '1']);
-            
-            
+            Mail::send(new ProductNotification($request->suite, $email[0]->email, $request->descricao, $request->quantidade));
+            return response()->json(['msg' => 'Cadastrado com sucesso', 'status' => '1']);
+
+
             //return $request->descricao;
         } catch (QueryException $ex) {
             //CustomException::trataErro($ex);
@@ -99,30 +101,30 @@ class EstoqueController extends Controller
     {
         $produtos = Estoque::all();
         $produtosOrcamento = OrcamentoProduto::join('bxby_produtos_estoque', 'bxby_produtos_estoque.seq_produto', '=', 'bxby_orcamento_produto.codigo_produto')
-                                             ->where('bxby_orcamento_produto.status', '9');
-        
+            ->where('bxby_orcamento_produto.status', '9');
+
         $achegar = $produtos->filter(function ($produto) {
             return $produto->status == '1';
         });
-        
+
         $estoque = $produtos->filter(function ($produto) {
             return $produto->status == '2';
         });
 
         $orcamentos = OrcamentoProduto::join('bxby_produtos_estoque', 'bxby_produtos_estoque.seq_produto', '=', 'bxby_orcamento_produto.codigo_produto')
-                                             ->where('bxby_orcamento_produto.status', '9')->get();
+            ->where('bxby_orcamento_produto.status', '9')->get();
 
         $enviado = OrcamentoProduto::join('bxby_produtos_estoque', 'bxby_produtos_estoque.seq_produto', '=', 'bxby_orcamento_produto.codigo_produto')
-                                             ->where('bxby_orcamento_produto.status', '8')->get();
+            ->where('bxby_orcamento_produto.status', '8')->get();
 
-                                             $usuario = User::select('codigo_suite', 'nome_completo')->get();
+        $usuario = User::select('codigo_suite', 'nome_completo')->get();
 
         return view('estoque.main', [
             'produtos' => $produtos,
             'achegar' => $achegar,
             'estoque' => $estoque,
             'orcamentos' => $orcamentos,
-            'enviado' =>$enviado,
+            'enviado' => $enviado,
             'produtosOrcamento' => $produtosOrcamento,
             'usuario' => $usuario]);
     }
@@ -130,7 +132,7 @@ class EstoqueController extends Controller
     public function getOrcamento()
     {
         $enviado = OrcamentoProduto::join('bxby_produtos_estoque', 'bxby_produtos_estoque.seq_produto', '=', 'bxby_orcamento_produto.codigo_produto')
-                                             ->where('bxby_orcamento_produto.status', '8')->get();
+            ->where('bxby_orcamento_produto.status', '8')->get();
 
         return response()->json($enviado);
     }
@@ -159,12 +161,16 @@ class EstoqueController extends Controller
 
     public function updateStatus(Request $request, $seq_produto)
     {
+        $produto = Estoque::where(['codigo_suite' => $request->suite, 'seq_produto' => $request->seq_produto]);
+        $email = Pessoa::select('email', 'nome_completo')->where('codigo_suite', $request->suite)->get();
         if ($request->status == '2') {
-            DB::table('bxby_produtos_estoque')->where(['codigo_suite' => $request->suite, 'seq_produto' => $request->seq_produto])
-                                          ->update(['status' => $request->status, 'data_chegada' => date('Y-m-d')]);
+            $produto->update(['status' => $request->status, 'data_chegada' => date('Y-m-d')]);
+            debugbar()->info($email[0]->email);
+            Mail::send(new StatusNotification($produto->get(), $email[0]->email, $email[0]->nome_completo, $request->status));
         } else {
-            DB::table('bxby_produtos_estoque')->where(['codigo_suite' => $request->suite, 'seq_produto' => $request->seq_produto])
-                                          ->update(['status' => $request->status]);
+            $produto->update(['status' => $request->status]);
+            debugbar()->info($email[0]->email);
+            Mail::send(new StatusNotification($produto->get(), $email[0]->email, $email[0]->nome_completo, $request->status));
         }
     }
 
@@ -205,7 +211,7 @@ class EstoqueController extends Controller
 
             DB::table('bxby_produtos_estoque')->where(['codigo_suite' => $suite, 'seq_produto' => $id])->update($data);
         }
-        
+
         return response()->json(['msg' => 'Produto atualizado com sucesso!', 'status' => '1']);
     }
 
@@ -218,8 +224,7 @@ class EstoqueController extends Controller
 
                 $user_folder = 'foto_estoque_' . $request->suite;
 
-                if(!is_dir($user_folder))
-                {
+                if (!is_dir($user_folder)) {
                     Storage::disk('s3')->makeDirectory($user_folder);
                 }
 
@@ -233,16 +238,25 @@ class EstoqueController extends Controller
                                 data_cadastro)
                                 values
                                 (?,?,?,?)", [
-                                    $request->suite,
-                                    $request->produto,
-                                    Storage::url($path),
-                                    $dataAtual
-                                ]);
+                    $request->suite,
+                    $request->produto,
+                    Storage::url($path),
+                    $dataAtual
+                ]);
             }
             return response()->json(['msg' => 'Foto inserida com sucesso!', 'status' => '1']);
         } catch (QueryException $ex) {
             return CustomException::trataErro($ex);
         }
+    }
+
+    public function deleteImagem($id)
+    {
+        $foto = EstoqueImagem::select('caminho_imagem')->where('seq_imagem', $id)->get();
+        Storage::disk('s3')->delete($foto[0]->caminho_imagem);
+        EstoqueImagem::destroy($id);
+
+        return response()->json(['msg' => 'Imagem excluida com sucesso!']);
     }
 
     public function alteraQuantidade(Request $request, $seq_produto)
@@ -254,7 +268,7 @@ class EstoqueController extends Controller
             }
         }
         $prod_orcamento = DB::table('bxby_produtos_estoque')->where('seq_produto', $seq_produto)->get();
-        
+
         $data_produtos = [
             "id" => $seq_produto,
             "descricao" => $prod_orcamento[0]->descricao_produto,
@@ -267,14 +281,12 @@ class EstoqueController extends Controller
         DB::statement($sql_produto_update);
 
         $produtos = session('produtos');
-        if($produtos)
-        {
+        if ($produtos) {
             $idproduto = array_search($seq_produto, array_column($produtos, 'id'));
-            if($produtos[$idproduto]['id'] == $seq_produto)
-            {
-                $qtde_atual = session('produtos.'.$idproduto.'.qtde');
+            if ($produtos[$idproduto]['id'] == $seq_produto) {
+                $qtde_atual = session('produtos.' . $idproduto . '.qtde');
                 $new_qtde = $qtde_atual + $request->qtenvio;
-                session()->put(['produtos.'.$idproduto.'.qtde' => "$new_qtde"]);
+                session()->put(['produtos.' . $idproduto . '.qtde' => "$new_qtde"]);
             } else {
                 $request->session()->push('produtos', $data_produtos);
             }
@@ -290,15 +302,14 @@ class EstoqueController extends Controller
     }
 
 
-
     public function removeProduto(Request $request, $seq_id)
     {
         if (session('produtos')) {
-            $produto_id = session('produtos.'.$seq_id.'.id');
-            $quantidade = session('produtos.'.$seq_id.'.qtde');
+            $produto_id = session('produtos.' . $seq_id . '.id');
+            $quantidade = session('produtos.' . $seq_id . '.qtde');
             $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde + {$quantidade} WHERE seq_produto = {$produto_id}";
             DB::statement($sql_produto_update);
-            session()->pull('produtos.'.$seq_id);
+            session()->pull('produtos.' . $seq_id);
             if (count(session('produtos')) == 0) {
                 session()->forget('produtos');
             }

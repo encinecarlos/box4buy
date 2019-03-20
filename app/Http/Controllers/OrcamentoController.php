@@ -135,11 +135,6 @@ class OrcamentoController extends Controller
         return view('usuario.orcamento-detalhe', ['produtos' => $produtos]);
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
     public function add()
     {
         return view('orcamento.add');

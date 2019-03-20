@@ -266,17 +266,30 @@
             responsive: true
         });
 
-        function deleteProduto(id) {            
-            axios.delete('/admin/estoque/delete/' + id).then(response => {
-                // toastr.success(response.data.msg);
-                Swal({
-                    title: 'Sucesso!',
-                    text: 'Produto removido com sucesso.',
-                    type: 'success',
-                    confirmButtonText: 'OK',
-                    onClose: reloadPage
-                });                
+        function deleteProduto(id) {
+
+            Swal.fire({
+                title: 'Você tem certeza disso?',
+                text: 'Deseja deletar este registro?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim',
+                confirmButtonColor: '#d33',
+                cancelButtonText: 'Não',
+            }).then(result => {
+                if (result.value) {
+                    axios.delete('/admin/estoque/delete/' + id).then(response => {
+                        Swal({
+                            title: 'Sucesso!',
+                            text: 'Produto removido com sucesso.',
+                            type: 'success',
+                            confirmButtonText: 'OK',
+                            onClose: reloadPage
+                        });
+                    });
+                }
             });
+
 
             function reloadPage() {
                 location.href = self.location;

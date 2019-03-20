@@ -70,8 +70,6 @@ class UsuarioController extends Controller
             $ano = $splitdata[2];
 
             $data_nascimento = Carbon::create($ano, $mes, $dia);
-            Debugbar::info($data_nascimento->toDateString());
-            Debugbar::info($request->data_nascimento);
 
             DB::insert(
                 "INSERT INTO bxby_pessoas (nome_completo,
@@ -81,8 +79,9 @@ class UsuarioController extends Controller
                                                   email,
                                                   password,
                                                   tipo_pessoa,
-                                                  onde_conheceu)
-                                            VALUES (?,?,?,?,?,?,?,?)",
+                                                  onde_conheceu,
+                          data_cadastro)
+                                            VALUES (?,?,?,?,?,?,?,?,?)",
                 [
                     $request->_nome,
                     1,
@@ -91,7 +90,8 @@ class UsuarioController extends Controller
                     $request->email,
                     $pass,
                     1,
-                    $request->ondeconheceu
+                    $request->ondeconheceu,
+                    new Carbon()
                 ]
             );
 
@@ -501,5 +501,10 @@ class UsuarioController extends Controller
             return CustomException::trataErroGeral($e);
         }
 
+    }
+
+    public function rastreiaPacote($tracknumber)
+    {
+        return UspsTest::rastrearPacote($tracknumber);
     }
 }

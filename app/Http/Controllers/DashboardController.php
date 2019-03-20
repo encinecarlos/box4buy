@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $users = User::where('type_user', '2')->get();
+        $users = User::where('type_user', '2', '')->get();
         $usercount = $users->count();
 
         $orcamentos = Orcamento::where('status', '4')->get();

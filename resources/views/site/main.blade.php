@@ -30,6 +30,34 @@
 </head>
 
 <body id="page-top">
+    {{--@include('chat.plugin')--}}
+    <meta name="referrer" content="unsafe-url">
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                xfbml            : true,
+                version          : 'v3.2'
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/pt_BR/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat"
+         attribution=setup_tool
+         page_id="1933271053371600"
+         theme_color="#2095f4"
+         logged_in_greeting="Olá, como podemos ajuda-lo?"
+         logged_out_greeting="Olá, como podemos ajuda-lo?">
+    </div>
     <!--====================================================
                              HEADER
     ======================================================-->
@@ -486,6 +514,19 @@
     <script src="{{ asset('bower_components/toastr/toastr.js') }}"></script>
     <script src="{{ asset('bower_components/jquery-modal/jquery.modal.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    {{--<script>
+        var botmanWidget = {
+            frameEndpoint: '/bxby/chat',
+            chatServer: 'https://messenger.carlosencine.com/botman',
+            title: 'Atendimento Online',
+            introMessage: 'Seja bem vindo a Box4buy. Em que podemos ajuda-lo?',
+            mainColor: '#2095f4',
+            placeholderText: 'Enviar Mensagem...',
+            bubbleBackground: '#2095f4',
+            bubbleAvatarUrl: 'img/chat/messenger1.png'
+        };
+    </script>
+    <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>--}}
 </body>
 
 </html>

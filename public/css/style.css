@@ -333,7 +333,7 @@ sup {
 .estoque-card {
     padding: 4px;
     box-shadow: 0px 0px 5px #CCC;
-    height: 265px;
+    height: 300px;
     margin: 4px;
 }
 
@@ -1108,7 +1108,6 @@ sup {
 
 .box.box-info {
     border-top-color: #2196f3;
-    padding: 15px;
 }
 
 .box.box-solid.box-info {
@@ -1122,6 +1121,8 @@ sup {
 .row {
     margin-bottom: 15px;
     vertical-align: middle;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 /* .nav-tabs-custom>.nav-tabs>li {
@@ -1184,6 +1185,19 @@ sup {
 
 .swal2-popup {
   font-size: 1.6rem !important;
+}
+
+.box-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgb(255,255,255);
+    position: fixed;
+    z-index: 5000;
+    left: 0;
+    top: 0;
+    text-align: center;
+    float: left;
+    padding-top: 16%;
 }
 
 /* FIM CUSTOMIZAÇÕES - CARLOS ENCINE */

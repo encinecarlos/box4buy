@@ -13,7 +13,7 @@
 				<div class="form-group">
 					<label for="inputValida" class="col-sm-2 control-label">Peso:</label>								
 					<div class="col-sm-2">
-						<input type="text" class="form-control" name="peso" id="pesoinput" placeholder="LBS">						
+						<input type="text" class="form-control" name="peso" id="pesoinput" placeholder="Kg">
 					</div>
 					<div class="col-sm-4">
 						<button type="button" class="btn btn-info boxColorTema" id="btn-peso">Calcular</button>
@@ -40,8 +40,8 @@
 											<li class="header">First Class</li>	
 										@default										
 									@endswitch								
-									<li><b>Peso (Libras):</b> {{ $value['peso'] }}</li>
-									<li><b>Peso (KG):</b> {{ $value['peso'] * 0.450 }}</li>
+									<li><b>Peso (Libras):</b> {{ $value['peso_libra'] }}</li>
+									<li><b>Peso (KG):</b> {{ $value['peso'] }}</li>
 									<li><b>Taxa de Frete:</b> {{ $value['valor_frete'] }} USD</li>
 									<li><b>Taxa de Cartão:</b> {{ $value['taxa_cartao'] }}</li>
 									<li><b>Taxa Box4Buy :</b> {{ $value['taxa_box'] }} USD</li>

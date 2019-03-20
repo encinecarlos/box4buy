@@ -179,14 +179,15 @@
                                             </div>
                                         </div>
                                         <div class="box-footer text-center">
-                                            <a href="{{ route('rotateleft', $fotos[$i]->seq_imagem) }}" class="btn btn-default boxColorTema btn-lg"><i class="fa fa-rotate-left"></i></a>
-                                            <a href="#" class="btn btn-default boxColorTema btn-lg"><i class="fa fa-rotate-right"></i></a>
+                                            {{--<a href="{{ route('rotateleft', $fotos[$i]->seq_imagem) }}" class="btn btn-default boxColorTema btn-lg"><i class="fa fa-rotate-left"></i></a>
+                                            <a href="#" class="btn btn-default boxColorTema btn-lg"><i class="fa fa-rotate-right"></i></a>--}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     {{-- <h5 class="card-title">COD: {{ $fotos[$i]->codigo_produto }}</h5> --}}
                                     <p class="card-text">Postado em: {{ $fotos[$i]->data_cadastro->format('d/m/Y') }}</p>
+                                    <p><button onclick="deleteImage({{ $fotos[$i]->seq_imagem }})" class="btn btn-danger remove-foto"><i class="fa fa-trash"></i> Excluir</button></p>
                                 </div>
                             </div>
                         </li>
@@ -204,20 +205,20 @@
                         <img id="img-editable" data-dz-thumbnail/>
                     </div>
                 </div>
-                <div class="row">
+                {{--<div class="row">
                     <div class="col-sm-12 text-center">
-                        <a href="#" class="btn btn-default boxColorTema btn-lg" id="left"><i class="fa fa-rotate-left"></i></a>
-                        <a href="#" class="btn btn-default boxColorTema btn-lg" id="save"><i class="fa fa-cloud-upload"></i> Salvar</a>
-                        <a href="#" class="btn btn-default boxColorTema btn-lg" id="right"><i class="fa fa-rotate-right"></i></a>
+                        <button class="btn btn-default boxColorTema btn-lg" id="left"><i class="fa fa-rotate-left"></i></button>
+                        <button class="btn btn-default boxColorTema btn-lg" id="save"><i class="fa fa-cloud-upload"></i> Salvar</button>
+                        <button class="btn btn-default boxColorTema btn-lg" id="right"><i class="fa fa-rotate-right"></i></button>
                     </div>
-                </div>
+                </div>--}}
             </div>
         </div>
     </div>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.3/cropper.css" />
+    <link rel="stylesheet" href="{{ asset('css/cropper.css') }}" />
 @stop
 
 @section('js')
@@ -225,9 +226,40 @@
     <script src="{{ asset('js/dropzone.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
     {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.3/cropper.js"></script>--}}
-    <script src="{{ asset('../node_modules/cropperjs/dist/cropper.js') }}"></script>
+    <script src="{{ asset('js/cropper.js') }}"></script>
+    <script src="{{ asset('js/jquery-cropper.js') }}"></script>
     <script src="{{ asset('js/uploadfotoproduto.js') }}"></script>
     <script>
         $('.money').maskMoney();
+        function deleteImage(id)
+        {
+            Swal.fire({
+                title: 'Você tem certeza disso?',
+                text: 'Deseja apagar esta imagem?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim',
+                confirmButtonColor: '#d33',
+                cancelButtonText: 'Não',
+            }).then(result => {
+                if(result.value)
+                {
+                    axios.get('/admin/produto/foto/delete/' + id).then(response => {
+                        Swal.fire({
+                            title: 'Sucesso!',
+                            text: response.data.msg,
+                            type: 'success',
+                            onClose: reloadPage
+                        });
+                    });
+                }
+            });
+
+        }
+
+        function reloadPage()
+        {
+            location.href = location.href;
+        }
     </script>
 @stop

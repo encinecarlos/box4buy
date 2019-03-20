@@ -1,18 +1,12 @@
-$.modal.defaults = {
-    fadeDuration: 200,
-    clickClose: true,
-    escapeClose: true
-}
+// $.modal.defaults = {
+//     fadeDuration: 200,
+//     clickClose: true,
+//     escapeClose: true
+// }
 
 $('.alert-errors').hide();
 
 $('.date').inputmask("99/99/9999");
-// var date = document.getElementById('date');
-// Inputmask('99/99/9999').mask(date);
-
-// $('#form-dados input').prop('readonly', true);
-// $('#form-dados select').css('display', 'none');
-
 
 $(document).ready(function () {
     toastr.options.timeOut = 3000;
@@ -21,7 +15,7 @@ $(document).ready(function () {
         escapeClose: true,
         clickClose: true,
         showClose: false
-    }
+    };
 
     // Desabilita enter nos forms    
     $("form").keypress(function (event) {
@@ -86,11 +80,21 @@ $(document).ready(function () {
         axios.post('/api/usuario/admin/new', data).then(response => {
 
             if (response.data.status == '1') {
-                toastr.success(response.data.msg);
-                $('.form-ajax').trigger('reset');
-            } else {
-                toastr.error(response.data.msg);
+                Swal({
+                    title: 'Sucesso!',
+                    text: response.data.msg,
+                    type: 'success',
+                    confirmButtonText: 'OK',
+                    onClose: $('.form-ajax').trigger('reset')
+                });
 
+            } else {
+                tSwal({
+                    title: 'Sucesso!',
+                    text: response.data.msg,
+                    type: 'success',
+                    confirmButtonText: 'OK',
+                });
             }
         }).catch(error => {
             var erros = error.response.data.errors;
@@ -153,15 +157,26 @@ $(document).ready(function () {
 
         axios.post('/api/endereco', data).then(response => {
             if (response.msg.status == '1') {
-                toastr.success(response.data.msg);
+                Swal({
+                    title: 'Sucesso!',
+                    text: response.data.msg,
+                    type: 'success',
+                    confirmButtonText: 'OK',
+                    onClose: closeModal
+                });
             } else {
-                toastr.error(response.data.msg);
+                Swal({
+                    title: 'Sucesso!',
+                    text: response.data.msg,
+                    type: 'success',
+                    confirmButtonText: 'OK',
+                    onClose: closeModal
+                });
             }
-            setTimeout(function () {
+            if(Swal.isVisible())
+            {
                 $('#form-enderecoadd :input[type="text"]').val('');
-                $.modal.close();
-            }, 3000);
-
+            }
         });
     });
 
@@ -171,12 +186,23 @@ $(document).ready(function () {
         var dataEndereco = enderecoForm.serialize();
 
         axios.put('/api/endereco/update/' + optionId, dataEndereco).then(response => {
-            toastr.success(response.data.msg);
-            setTimeout(function () {
-                $.modal.close();
-            }, 3500);
+            Swal({
+                title: 'Sucesso!',
+                text: response.data.msg,
+                type: 'success',
+                confirmButtonText: 'OK',
+                onClose: closeModal
+            });
+
         });
     });
+
+    function closeModal()
+    {
+        setTimeout(function () {
+            $.modal.close();
+        }, 3500);
+    }
 
     $('#send-produto-user').click(function () {
         var data = $('#form-estoque').serialize();
@@ -217,10 +243,21 @@ $(document).ready(function () {
         var suite = e.target.id;
         axios.get('/payment/' + suite + '/enable').then(response => {
             if (response.data.status == '1') {
-                toastr.success(response.data.msg);
-                location.href = self.location;
+                Swal({
+                    title: 'Sucesso!',
+                    text: response.data.msg,
+                    type: 'success',
+                    confirmButtonText: 'OK',
+                    onClose: reloadpage
+                });
             } else {
-                toastr.danger(response.data.msg);
+                Swal({
+                    title: 'Temos um problema!',
+                    text: response.data.msg,
+                    type: 'error',
+                    confirmButtonText: 'OK',
+                    onClose: reloadpage
+                });
             }
 
         });
@@ -230,10 +267,21 @@ $(document).ready(function () {
         var suite = e.target.id;
         axios.get('/payment/' + suite + '/disable').then(response => {
             if (response.data.status == '1') {
-                toastr.success(response.data.msg);
-                location.href = self.location;
+                Swal({
+                    title: 'Sucesso!',
+                    text: response.data.msg,
+                    type: 'success',
+                    confirmButtonText: 'OK',
+                    onClose: reloadpage
+                });
             } else {
-                toastr.danger(response.data.msg);
+                Swal({
+                    title: 'Temos um problema!',
+                    text: response.data.msg,
+                    type: 'error',
+                    confirmButtonText: 'OK',
+                    onClose: reloadpage
+                });
             }
 
         });
@@ -270,15 +318,6 @@ $(document).ready(function () {
         var data = form.serialize();
 
         axios.post('/admin/estoque/update/' + produto, data).then(response => {
-            toastr.success(response.data.msg);
-        });
-    });
-
-    // Deleta um orçamento da base
-    $('.or-delete').click(function () {
-        var orcamentoid = $(this).data('orcamento');
-        var tabid = $(this).data('tab');
-        axios.delete('/admin/orcamento/delete/' + orcamentoid).then(response => {
             Swal({
                 title: 'Sucesso!',
                 text: response.data.msg,
@@ -288,4 +327,33 @@ $(document).ready(function () {
             });
         });
     });
+
+    // Deleta um orçamento da base
+    $('.or-delete').click(function () {
+        var orcamentoid = $(this).data('orcamento');
+        var tabid = $(this).data('tab');
+        Swal.fire({
+            title: 'Você tem certeza disso?',
+            text: 'Deseja deletar este registro?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim',
+            confirmButtonColor: '#d33',
+            cancelButtonText: 'Não',
+        }).then(result => {
+            if (result.value) {
+                axios.delete('/admin/orcamento/delete/' + orcamentoid).then(response => {
+                    Swal.fire({
+                        title: 'Sucesso!',
+                        text: response.data.msg,
+                        type: 'success',
+                        confirmButtonText: 'OK',
+                        onClose: reloadpage
+                    });
+                });
+            }
+
+        });
+    });
+
 });

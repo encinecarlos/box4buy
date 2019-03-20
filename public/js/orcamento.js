@@ -165,9 +165,9 @@ $(document).ready(function () {
     $('.changeqtd').click(function () {
         var produto_id = this.id;
         var quantidade = $('#edita-' + produto_id).val();
-        var produto_id = $(this).data('produto');
+        var produto_data = $(this).data('produto');
 
-        axios.get('/carrinho/atualiza/' + produto_id + '/quantidade?quantidade=' + quantidade+'&produto_id='+produto_id).then(response => {
+        axios.get('/carrinho/atualiza/' + produto_id + '/quantidade?quantidade=' + quantidade+'&produto_id='+produto_data).then(response => {
             Swal({
                 title: 'Sucesso!',
                 text: 'Quantidade atualizada com sucesso.',
@@ -318,15 +318,28 @@ $(document).ready(function () {
     $('.orcamento-cancelar').click(function() {
         var orcamentoid = $(this).data('orcamento');
 
-        axios.delete('/cancelar/orcamento/'+orcamentoid).then(response => {
-            Swal({
-                title: 'Sucesso!',
-                text: 'Orcamento cancelado com sucesso!',
-                type: 'success',
-                confirmButtonText: 'OK',
-                onClose: reloadpage
-            });
-        })
+        Swal.fire({
+            title: 'Você tem certeza disso?',
+            text: 'Deseja cancelar este orçamento?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim',
+            confirmButtonColor: '#d33',
+            cancelButtonText: 'Não',
+        }).then(result => {
+           if(result.value) {
+               axios.delete('/cancelar/orcamento/'+orcamentoid).then(response => {
+                   Swal({
+                       title: 'Sucesso!',
+                       text: 'Orcamento cancelado com sucesso!',
+                       type: 'success',
+                       confirmButtonText: 'OK',
+                       onClose: reloadpage
+                   });
+               });
+           }
+        });
+
     });
 
 });

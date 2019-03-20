@@ -67,6 +67,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('/pessoas/show/{id}', 'PessoaController@show')->name('pessoas-show');
     Route::get('/pessoas/edit/{id}', 'PessoaController@edit')->name('pessoas.edit');
     Route::delete('/pessoas/delete/{id}', 'PessoaController@destroy')->name('pessoa-delete');
+
     //estoque
     Route::get('/estoqueGeral', 'EstoqueController@estoqueAdmin')->name('estoqueAdmin');
     Route::get('admin/estoque/add', 'EstoqueController@addAdmin')->name('estoqueAddAdmin');
@@ -74,7 +75,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('/estoque/editAdmin', 'EstoqueController@editAdmin')->name('estoqueEditAdmin');
     Route::post('/estoque/update/{suite}', 'EstoqueController@updateProduto')->name('update-estoque');
     Route::post('/produtos/upload', 'EstoqueController@uploadEstoque')->name('upload-estoque');
+    Route::post('/produtos/local/upload', 'EstoqueImagemController@getImage')->name('upload-estoque');
     Route::delete('/estoque/delete/{id}', 'EstoqueController@destroy')->name('deleta-produto');
+    Route::get('/produto/foto/delete/{fotoid}', 'EstoqueController@deleteImagem');
 
     // Envio de emails
     Route::get('/messages/direct/all', 'DirectMessageController@index')->name('send-direct-message');
@@ -287,4 +290,10 @@ Route::get('/calculadora', function () {
 
 Route::get('/calculadora/clear', 'Usuarios\UsuarioController@clearFrete');
 
+Route::get('/bxby/chat', function() {
+    return view('chat.main');
+});
+
+
 // Rotas d eteste
+Route::get('/pacote/{tracknumber}', 'Usuarios\UsuarioController@rastreiaPacote');

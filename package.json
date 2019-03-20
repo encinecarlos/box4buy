@@ -12,15 +12,16 @@
     "devDependencies": {
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
-        "popper.js": "^1.12",
         "cross-env": "^5.1",
-        "jquery": "^3.2",
+        "jquery": "^3.3.1",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
+        "popper.js": "^1.12",
         "vue": "^2.5.7"
     },
     "dependencies": {
         "admin-lte": "^3.0.0-alpha",
-        "cropperjs": "^1.4.3"
+        "cropperjs": "^1.4.3",
+        "jquery-cropper": "^1.0.0"
     }
 }
