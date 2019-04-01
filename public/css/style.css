@@ -1200,6 +1200,23 @@ sup {
     padding-top: 16%;
 }
 
+.btn-rounded {
+    border-radius: 2rem;
+}
+
+.btn-rounded-100 {
+    border-radius: 100px;
+}
+
+.label {
+    border-radius: 2rem !important;
+}
+
+span.label {
+    font-size: 14px !important;
+
+}
+
 /* FIM CUSTOMIZAÇÕES - CARLOS ENCINE */
 
 

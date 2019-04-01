@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Estoque;
 use App\EstoqueImagem;
 use App\Http\Middleware\SumProducts;
+use App\Http\Requests\EstoqueRequest;
 use App\lib\ProductServices;
 use App\Mail\StatusNotification;
 use Illuminate\Http\Request;
@@ -66,7 +67,7 @@ class EstoqueController extends Controller
             'libera_pagamento' => $enable_payment]);
     }
 
-    public function cadastrar(Request $request)
+    public function cadastrar(EstoqueRequest $request)
     {
         try {
             DB::insert("INSERT INTO bxby_produtos_estoque ( codigo_suite, descricao_produto, data_compra, qtde, codigo_rastreio, site_loja, nome_loja, `status` )
@@ -88,9 +89,6 @@ class EstoqueController extends Controller
 
             Mail::send(new ProductNotification($request->suite, $email[0]->email, $request->descricao, $request->quantidade));
             return response()->json(['msg' => 'Cadastrado com sucesso', 'status' => '1']);
-
-
-            //return $request->descricao;
         } catch (QueryException $ex) {
             //CustomException::trataErro($ex);
             return CustomException::trataErro($ex);

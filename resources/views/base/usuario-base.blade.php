@@ -63,9 +63,9 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 1.0.0
+      @version('full')
     </div>
-    <strong>Copyright &copy; 2018 <a href="https://devhousesolutions.com.br" target="_blank">DevHouse Solutions</a>.</strong> All rights
+    <strong>Copyright &copy; {{ date('Y') }} <a href="https://devhousesolutions.com.br" target="_blank">DevHouse Solutions</a>.</strong> All rights
     reserved.
   </footer> 
 </div>

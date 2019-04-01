@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Sauladam\ShipmentTracker\ShipmentTracker;
 use USPS\RatePackage;
 use USPS\TrackConfirm;
+
 class UspsTest
 {
     public static function calculate(Request $request)
@@ -20,9 +21,9 @@ class UspsTest
         $package->setField('Machinable', 'True');
         $package->setField('MailType', 'Package');
         $package->setField('ValueOfContents', array(
-                           'POBoxFlag' => 'N',
-                           'GiftFlag' => 'N'
-                        ));
+            '$PO$peso_libra',
+            'GiftFlag' => 'N'
+        ));
 
         $package->setField('ValueOfContents', 0);
         $package->setField('Country', 'Brazil');
@@ -44,27 +45,25 @@ class UspsTest
         $data = [];
         $servicos = $response["IntlRateV2Response"]["Package"]["Service"];
         $taxabox = 0;
-        
+
         for ($i = 0; $i < count($servicos); $i++) {
-            if ($request->peso >= 10.01) {
+            if ($peso_libra >= 10.01) {
                 $taxabox = number_format(12, 2);
-            }
-            elseif($request->peso >= 4.01 && $request->peso <= 10) {
+            } elseif ($peso_libra >= 4.01 && $request->peso <= 10) {
                 $taxabox = number_format(7.5, 2);
-            }
-            elseif($request->peso <= 4) {
-                $taxabox = number_format(3, 2);                    
+            } elseif ($peso_libra <= 4) {
+                $taxabox = number_format(3, 2);
             }
 
             $valortotal = $servicos[$i]["Postage"] + $taxabox;
-            
+
             $taxa = ($valortotal / 100) * 5;
             $valorfinal = $valortotal + $taxa;
-            
+
             array_push($data, [
                 'id' => $servicos[$i]['@attributes']['ID'],
                 'peso' => $request->peso,
-                'peso_libra' => $peso_libra,
+                'peso_libra' => number_format($peso_libra,2),
                 'servico' => $servicos[$i]["SvcDescription"],
                 'valor_frete' => $servicos[$i]["Postage"],
                 'taxa_box' => $taxabox,
@@ -74,15 +73,15 @@ class UspsTest
         }
 
         unset($data[0]);
-        
+
         if (session()->has('frete')) {
             session()->forget('frete');
             session()->push('frete', array_reverse($data));
         } else {
             session()->push('frete', array_reverse($data));
         }
-        
-        return $request;        
+
+        return $request;
     }
 
     public static function rastrearPacote($tracknumber)

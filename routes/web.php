@@ -107,86 +107,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('/rotate/left/{imgid}', 'EstoqueImagemController@rotateLeft')->name('rotateleft');
 });
 
-
-/*Route::domain('painel.carlosencine.com')->group(function() {
-    Route::get('/usuario/home', 'Usuarios\UsuarioController@renderHome')->name('home');
-
-    Route::get('/usuario/perfil/{id}', 'Usuarios\UsuarioController@perfil')->name('perfil');
-    Route::get('/usuario/perfil/edit/{id}', 'Usuarios\UsuarioController@perfilEdit')->name('perfil-edit');
-
-    Route::get('/usuario/estoque', 'EstoqueController@exibeEstoqueUsuario')->name('estoque');
-    Route::post('/usuario/estoque', 'EstoqueController@cadastrar');
-
-    Route::get('/usuario/fotos', function () {
-        return view('usuario.fotos');
-    })->name('fotos');
-
-    Route::get('/usuario/carrinho', function () {
-        return view('usuario.carrinho');
-    })->name('carrinho');
-
-    Route::get('/usuario/orcamentos', function () {
-        return view('usuario.orcamentos');
-    })->name('orcamentos');
-
-    Route::get('/usuario/enviados', 'Usuarios\EnviadosController@index')->name('enviados');
-
-    Route::get('/usuario/suporte', 'SuporteController@index')->name('tickets');
-    Route::get('/usuario/suporte/add', 'SuporteController@create')->name('ticketadd');
-    Route::post('usuario/suporte/add', 'SuporteController@store');
-    Route::get('/usuario/suporte/{ticket_id}', 'SuporteController@show')->name('ticketshow');
-    Route::get('/admin/suporte/{ticket_id}', 'SuporteController@adminShow')->name('ticketadminshow');
-    Route::post('/usuario/suporte/resposta', 'CommentsController@postComment')->name('ticketresponse');
-    Route::get('/suporte/{ticket_id}/close', 'SuporteController@closeTicket')->name('closeticket');
-    Route::get('/suporte/{ticket_id}/open', 'SuporteController@openTicket')->name('openticket');
-    Route::get('/admin/suporte', 'SuporteController@adminIndex')->name('ticketadmin');
-
-    // Estoque
-    Route::get('/estoque/{id}', 'EstoqueController@exibeEstoqueUsuario');
-    Route::post('/estoque', 'EstoqueController@cadastrar');
-    Route::post('/estoque/update/{seq_produto}', 'EstoqueController@updateStatus');
-    Route::get('/estoque/edit/{seq_produto}', 'EstoqueController@edit')->name('editarproduto');
-    Route::get('/estoque/{suite}/{produto}', 'EstoqueController@produtoEdit')->name('edit-produto');
-    Route::post('/estoque/produto/{seq_produto}', 'EstoqueController@alteraQuantidade');
-    Route::post('/produtos/upload', 'EstoqueController@uploadEstoque')->name('upload-estoque');
-    Route::get('/estoque/adiciona/quantidade/{seq_produto}/produto', 'EstoqueController@removeProduto')->name('remove-item');
-    Route::delete('/estoque/delete/{id}', 'EstoqueController@destroy')->name('deleta-produto-usuario');
-    Route::put('/estoque/update/produto/{idproduto}', 'EstoqueController@updateProduto')->name('update-estoque-usuario');
-
-    // Carinho
-    Route::get('usuario/carrinho', 'OrcamentoController@cartIndex')->name('user-carrinho');
-    Route::get('/carrinho/atualiza/{produto}/quantidade', 'OrcamentoController@mudaQuantidade');
-
-    // Endereços
-    Route::get('/enderecos', 'EnderecosController@index')->middleware('auth');
-    Route::get('/enderecos/add', 'EnderecosController@add');
-    Route::get('/enderecos/show', 'EnderecosController@show');
-    Route::get('/enderecos/edit', 'EnderecosController@edit');
-
-    // Orcamentos
-    Route::post('/orcamento', 'OrcamentoController@geraOrcamento');
-    Route::get('/orcamento/usuario/{id}/edit', 'OrcamentoController@editUsuario')->name('orcamento-edit-usuario');
-    Route::get('/orcamento/usuario/detalhe/{produto_id}', 'OrcamentoController@orcamentoDetalheUsuario')->name('orcamento-detalhe-usuario');
-    Route::put('/orcamento/{id}', 'OrcamentoController@update')->name('update-orcamento');
-    Route::delete('/cancelar/orcamento/{id}', 'OrcamentoController@cancelaOrcamento')->name('orcamento.cancelar');
-    // Route::post('/orcamento/remove/produto/{id}', 'OrcamentoController@removeProduto')->name('removeproduto');
-
-    // Rotas de pagamento e recibo
-    Route::get('/invoice/{orcamento}', 'PaymentController@invoice')->name('pagamento-invoice');
-    Route::post('/invoice/payment/{orcamento}', 'PaymentController@pay')->name('payment');
-    Route::get('/invoice/payment/status', 'PaymentController@getStatus')->name('status');
-    Route::get('/invoice/payment/recibo/{id}', 'PaymentController@geraRecibo')->name('recibo');
-    Route::get('/invoice/pdf/{id}', 'PaymentController@toPDF')->name('gerapdf');
-    Route::get('/payment/{suite}/enable', 'Usuarios\UsuarioController@enablePayment')->name('enable-payment');
-    Route::get('/payment/{suite}/disable', 'Usuarios\UsuarioController@disablePayment')->name('disable-payment');
-
-    Route::get('/usuario/calculadora', 'Usuarios\UsuarioController@price')->name('calculadora');
-
-    Route::get('/usuario/tutorial', function () {
-        return view('usuario.tutorial');
-    })->name('tutorial');
-});*/
-
 /* Views do painel do usuário */
 Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::get('/usuario/home', 'Usuarios\UsuarioController@renderHome')->name('home');
@@ -233,7 +153,7 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::delete('/estoque/delete/{id}', 'EstoqueController@destroy')->name('deleta-produto-usuario');
     Route::put('/estoque/update/produto/{idproduto}', 'EstoqueController@updateProduto')->name('update-estoque-usuario');
     
-    // Carinho
+    // Carrinho
     Route::get('usuario/carrinho', 'OrcamentoController@cartIndex')->name('user-carrinho');
     Route::get('/carrinho/atualiza/{produto}/quantidade', 'OrcamentoController@mudaQuantidade');
 
@@ -243,12 +163,21 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::get('/enderecos/show', 'EnderecosController@show');
     Route::get('/enderecos/edit', 'EnderecosController@edit');
 
+    //compra assistida
+    Route::get('/compra-assistida', 'CompraAssistidaController@index')->name('compra.main');
+    Route::get('/compra-assistida/add', 'CompraAssistidaController@add')->name('compra.add');
+    Route::post('/compra-assistida/save/{itemid}', 'CompraAssistidaController@store')->name('compra.save');
+    Route::post('/compra-assistida/additems', 'CompraAssistidaController@addItems')->name('compra.additem');
+    Route::post('/compra-assistida/updateitem', 'CompraAssistidaController@updateItems')->name('compra.updateitem');
+    Route::post('/compra-assistida/removeitems', 'CompraAssistidaController@removeItems')->name('compra.removeitem');
+
     // Orcamentos
     Route::post('/orcamento', 'OrcamentoController@geraOrcamento');
     Route::get('/orcamento/usuario/{id}/edit', 'OrcamentoController@editUsuario')->name('orcamento-edit-usuario');
     Route::get('/orcamento/usuario/detalhe/{produto_id}', 'OrcamentoController@orcamentoDetalheUsuario')->name('orcamento-detalhe-usuario');
     Route::put('/orcamento/{id}', 'OrcamentoController@update')->name('update-orcamento');
     Route::delete('/cancelar/orcamento/{id}', 'OrcamentoController@cancelaOrcamento')->name('orcamento.cancelar');
+    Route::get('/orcamento/show/{id}', 'OrcamentoController@show')->name('orcamento.show');
     // Route::post('/orcamento/remove/produto/{id}', 'OrcamentoController@removeProduto')->name('removeproduto');
 
     // Rotas de pagamento e recibo

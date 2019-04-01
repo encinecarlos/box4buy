@@ -140,8 +140,9 @@ class OrcamentoController extends Controller
         return view('orcamento.add');
     }
 
-    public function show($id = null)
+    public function show($id)
     {
+        //$orcamento = Orcamento::find($id);
         return view('orcamento.show');
     }
 

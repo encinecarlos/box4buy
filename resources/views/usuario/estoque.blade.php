@@ -9,7 +9,8 @@
                     <a href="{{ route('user-carrinho') }}" id="user-cart" class="btn btn-default boxColorTema"><i
                                 class="fa fa-shopping-cart"></i> Carrinho
                         <small class="label badge">{{ count(session('produtos')) == 0 ? '0' : count(session('produtos')) }}</small>
-                    </a>            @endif
+                    </a>
+                @endif
             </div>
         </div>
         <div class="box-body" id="estoque-content">
@@ -19,8 +20,12 @@
                                 class="fa fa-list"></i> SEUS PRODUTOS</a>
                 </li>
                 <li>
-                    <a href="#orcamento" data-toggle="tab" aria-expanded="false" id="item-orcamento"><i
-                                class="fa fa-file"></i> ORÇAMENTO</a>
+                    <a href="#orcamento"
+                       data-toggle="tab"
+                       aria-expanded="false"
+                       id="item-orcamento">
+                        <i class="fa fa-file"></i> ORÇAMENTO
+                    </a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -31,7 +36,7 @@
                             <div class="box-tools">
                                 {{-- <a href="#" id="sweetTeste" class="btn btn-default">TESTE</a> --}}
                                 <a href="#product-new"
-                                   class="btn btn-info boxColortema"
+                                   class="btn btn-info btn-rounded boxColorTema"
                                    rel="modal:open"
                                    title="Informar o envio de um produto para a Box4Buy">
                                     <i class="fa fa-plus"></i> NOVO PRODUTO
@@ -39,7 +44,7 @@
                             </div>
                         </div>
                         <div class="box-body table-responsive">
-                            <table class="table table-bordered table-hover table-responsive" id="estoque-produtos">
+                            <table class="table table-bordered table-hover" id="estoque-produtos">
                                 <thead>
                                 <tr>
                                     <th>Rastreio Loja</th>
@@ -55,11 +60,14 @@
                                 <tbody>
                                 @foreach($produtos as $produto)
                                     <tr>
-                                        <td><a href="#track-{{ $produto->seq_produto }}"
+                                        <td>
+                                            <a href="#track-{{ $produto->seq_produto }}"
                                                data-codigo="{{ $produto->codigo_rastreio }}"
                                                data-produto="{{ $produto->seq_produto }}"
                                                class="rastreamento"
-                                               rel="modal:open">{{ $produto->codigo_rastreio }}</a></td>
+                                               rel="modal:open">{{ $produto->codigo_rastreio }}
+                                            </a>
+                                        </td>
                                         <div class="modal custom-modal"
                                              id="track-{{ $produto->seq_produto }}">
                                             <div class="box-overlay">
@@ -114,9 +122,12 @@
                                             </div>
                                         </div>
                                         <td>{{ $produto->descricao_produto }}</td>
-                                        <td><a href="#fotoproduto-{{ $produto->seq_produto }}" rel="modal:open"
-                                               class="btn btn-primary boxColorTema" title="Visualizar Fotos"><i
-                                                        class="fa fa-image"></i></a></td>
+                                        <td class="text-center">
+                                            <a href="#fotoproduto-{{ $produto->seq_produto }}" rel="modal:open"
+                                               class="btn btn-primary btn-rounded boxColorTema"
+                                               title="Visualizar Fotos"><i
+                                                        class="fa fa-image"></i></a>
+                                        </td>
                                         <td>{{ $produto->peso }}</td>
                                         <td>{{ $produto->data_chegada != '' ? $produto->data_chegada->diffInDays() : 'Produto não chegou' }}</td>
                                         <td class="col-sm-2">{{ $produto->data_chegada != '' ? $produto->qtde : 'Produto não chegou' }}</td>
@@ -125,20 +136,20 @@
                                                                     max="{{ $produto->qtde }}"></td>
                                         <td>
                                             @if($produto->data_chegada == '' || $produto->qtde == 0)
-                                                <button type="button" class="btn btn-danger qt"
+                                                <button type="button" class="btn btn-danger btn-rounded qt"
                                                         title="Adicionar ao carrinho" disabled>
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </button>
                                             @else
-                                                <button type="button" class="btn btn-success qt"
+                                                <button type="button" class="btn btn-success btn-rounded qt"
                                                         title="Adicionar ao carrinho" id="{{ $produto->seq_produto }}">
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </button>
                                             @endif
                                             <a href="#edit-produto-{{ $produto->seq_produto }}"
-                                               class="btn btn-default boxColorTema" rel="modal:open"><i
+                                               class="btn btn-default btn-rounded boxColorTema" rel="modal:open"><i
                                                         class="fa fa-edit"></i></a>
-                                            <button class="btn btn-danger delete-produto-{{ $produto->seq_produto }}"
+                                            <button class="btn btn-danger btn-rounded delete-produto-{{ $produto->seq_produto }}"
                                                     type="button" onclick="deleteProduto({{ $produto->seq_produto }})">
                                                 <i class="fa fa-trash"></i></button>
                                         </td>
@@ -229,7 +240,7 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('orcamento-detalhe-usuario', $a->sequencia) }}"
-                                               id="{{ $a->sequencia }}" class="btn btn-info boxColorTema">
+                                               id="{{ $a->sequencia }}" class="btn btn-info btn-rounded boxColorTema">
                                                 <i class="fa fa-eye"></i> Produtos</a>
                                         </td>
                                         <td>{{ $a->peso_total }}</td>
@@ -239,10 +250,10 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('orcamento-edit-usuario', $a->sequencia) }}"
-                                               class="btn btn-warning">
+                                               class="btn btn-warning btn-rounded">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                             </a>
-                                            <button class="btn btn-danger orcamento-cancelar"
+                                            <button class="btn btn-danger btn-rounded orcamento-cancelar"
                                                     data-orcamento="{{ $a->sequencia }}"><i class="fa fa-remove"></i>
                                                 Cancelar Orçamento
                                             </button>
@@ -268,7 +279,7 @@
                                     <th>Produtos</th>
                                     <th>Peso(lbs)</th>
                                     <th>Valor</th>
-                                    <th>Pago</th>
+                                    <th>status pagamento</th>
                                     <th>Status</th>
                                     <th>Ações</th>
                                 </tr>
@@ -279,34 +290,45 @@
                                         <td>{{ $ap->sequencia }}</td>
                                         <td>{{ session('suite_prefix') }}{{ $ap->codigo_suite }}</td>
                                         <td>
-                                            @switch($ap->codigo_pacote) @case(1) First class @break @case(2) Priority
-                                            Mail @break @case(3) Priority Express @break @endswitch
+                                            @switch($ap->codigo_pacote)
+                                                @case(1)
+                                                    First class
+                                                    @break
+                                                @case(2)
+                                                    Priority Mail
+                                                    @break
+                                                @case(3)
+                                                    Priority Express
+                                                    @break
+                                            @endswitch
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <a href="{{ route('orcamento-detalhe-usuario', $ap->sequencia) }}"
-                                               id="{{ $ap->sequencia }}" class="btn btn-info boxColorTema">
+                                               id="{{ $ap->sequencia }}" class="btn btn-info btn-rounded boxColorTema">
                                                 <i class="fa fa-eye"></i> Produtos</a>
                                         </td>
                                         <td>{{ $ap->peso_total }}</td>
                                         <td>{{ number_format($ap->vlr_final,2,',', '.') }}</td>
                                         <td>
-                                            <span class="label label-danger">Não</span>
+                                            <span class="label label-warning">Aguardando pagamento</span>
                                         </td>
                                         <td>
                                             <span class="label label-success">Aprovado</span>
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-info boxColorTema"><i class="fa fa-eye"></i> Ver Detalhes</a>
+                                            <a href="{{ route('orcamento.show', $ap->sequencia) }}"
+                                               class="btn btn-info btn-rounded boxColorTema"><i class="fa fa-eye"></i> Ver Detalhes</a>
                                             @switch($libera_pagamento[0]->libera_pagamento)
                                                 @case('1')
-                                            <p>Va até a <a href="{{ route('home') }}" class="btn btn-link">pagina
-                                                    inicial</a> e clique em validar conta para enviar
-                                                seus documentos e habilitar o pagamento de suas mercadorias</p>
+                                                <p>Va até a <a href="{{ route('home') }}" class="btn btn-link">pagina
+                                                        inicial</a> e clique em validar conta para enviar
+                                                    seus documentos e habilitar o pagamento de suas mercadorias</p>
                                                 @break
                                                 @case('2')
-                                            <a href="{{ route('pagamento-invoice', $ap->sequencia) }}"
-                                               class="btn btn-info boxColorTema"><i class="fa fa-paypal"></i>
-                                                Pagar</a>
+                                                <a href="{{ route('pagamento-invoice', $ap->sequencia) }}"
+                                                   class="btn btn-info btn-rounded boxColorTema"><i
+                                                            class="fa fa-paypal"></i>
+                                                    Pagar</a>
                                                 @break
                                             @endswitch
                                         </td>
@@ -347,7 +369,7 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('orcamento-detalhe-usuario', $pg->sequencia) }}"
-                                               id="{{ $pg->sequencia }}" class="btn btn-info boxColorTema">
+                                               id="{{ $pg->sequencia }}" class="btn btn-info btn-rounded boxColorTema">
                                                 <i class="fa fa-eye"></i> Produtos</a>
                                         </td>
                                         <td>{{ $pg->peso_total }}</td>
@@ -359,7 +381,8 @@
                                             <span class="label label-success">Aprovado</span>
                                         </td>
                                         <td><a href="{{ route('gerapdf', $pg->sequencia) }}" target="_blank"
-                                               class="btn btn-default"><i class="fa fa-file-text"></i> Gerar Recibo</a>
+                                               class="btn btn-default btn-rounded"><i class="fa fa-file-text"></i> Gerar
+                                                Recibo</a>
                                         </td>
                                         {{--
                                         <td>
@@ -378,6 +401,13 @@
         </div>
 
         <div class="modal custom-modal" id="product-new">
+            <div class="row">
+                <div class="alert alert-danger alert-errors">
+                    <ul id="list-error" style="list-style-type: none">
+                    </ul>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="box box-info">
                     <div class="box-header">
@@ -400,7 +430,7 @@
 
                                 <label class="control-label col-sm-2">Quantidade:</label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="quantidade" class="form-control">
+                                    <input type="number" min="1" name="quantidade" class="form-control">
                                 </div>
                             </div>
 
@@ -430,7 +460,8 @@
                             </div>
                         </div>
                         <div class="box-footer">
-                            <button type="button" class="btn btn-info boxColorTema" id="send-produto-user"><i
+                            <button type="button" class="btn btn-info btn-rounded boxColorTema" id="send-produto-user">
+                                <i
                                         class="fa fa-check"></i> Enviar
                             </button>
                         </div>

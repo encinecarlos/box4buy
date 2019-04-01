@@ -206,7 +206,7 @@ $(document).ready(function () {
 
     $('#send-produto-user').click(function () {
         var data = $('#form-estoque').serialize();
-        console.log(data);
+
         axios.post('/api/produtos/new', data).then(response => {
             $.modal.close();
             Swal({
@@ -216,6 +216,19 @@ $(document).ready(function () {
                 confirmButtonText: 'OK',
                 onClose: reloadpage
             });
+        }).catch(error => {
+            var erros = error.response.data.errors;
+
+            for (erro in erros) {
+                $('#list-error').append('<li>' + erros[erro][0] + '</li>')
+            }
+
+            $('.alert-errors').show();
+
+            setTimeout(() => {
+                $('.alert-errors').hide();
+                $('#list-error').empty();
+            }, 5000);
         });
     });
 

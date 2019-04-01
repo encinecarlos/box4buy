@@ -26,7 +26,7 @@
                 <table class="table">
                     <tr>
                         <td><b>Name:</b></td>
-                        <td>{{ $configs->cfg_name }}</td>
+                        <td>{{ Auth::user()->nome_completo }}</td>
                     </tr>
                     <tr>
                         <td><b>Street Address:</b></td>
