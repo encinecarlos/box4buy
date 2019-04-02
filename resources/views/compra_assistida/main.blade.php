@@ -42,7 +42,7 @@
                             <td class="col-sm-2 text-center">{{ $compra->created_at->format('d/m/Y H:i:s') }}</td>
                             <td class="col-sm-2 text- center">{{ $compra->updated_at->format('d/m/Y H:i:s') }}</td>
                             <td>
-                                <a href="" class="btn btn-info btn-rounded boxColorTema">
+                                <a href="{{ route('compra.edit', $compra->sequencia) }}" class="btn btn-info btn-rounded boxColorTema">
                                     <i class="fa fa-eye"></i> Visualizar
                                 </a>
                                 <a href="" class="btn btn-danger btn-rounded">

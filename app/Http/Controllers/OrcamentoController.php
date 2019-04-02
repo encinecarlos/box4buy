@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\lib\ProductServices;
+use App\Lib\ProductServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 //use illuminate\Support\Facades\Auth;
@@ -11,7 +11,7 @@ use Mail;
 use App\Orcamento;
 use App\OrcamentoProduto;
 use Illuminate\Database\QueryException;
-use App\lib\CustomException;
+use App\Lib\CustomException;
 use App\Mail\OrderNotification;
 use Carbon\Carbon;
 use App\Enderecos;

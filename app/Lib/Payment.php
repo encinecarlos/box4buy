@@ -1,5 +1,5 @@
 <?php
-namespace App\lib;
+namespace App\Lib;
 
 use Paypal\Api\Payer;
 

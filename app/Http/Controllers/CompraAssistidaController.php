@@ -172,4 +172,11 @@ class CompraAssistidaController extends Controller
 
         return response('Solicitação enviada com sucesso');
     }
+
+    public function edit($id)
+    {
+        $solicitacao = CompraAssistidaInfo::find($id);
+
+        return view('compra_assistida.edit', ['solicitacao' => $solicitacao]);
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\lib;
+namespace App\Lib;
 
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;

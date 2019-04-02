@@ -1,6 +1,6 @@
 <?php
 
-namespace App\lib;
+namespace App\Lib;
 
 use Illuminate\Http\Request;
 use Sauladam\ShipmentTracker\ShipmentTracker;

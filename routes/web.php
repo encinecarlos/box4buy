@@ -170,6 +170,7 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::post('/compra-assistida/additems', 'CompraAssistidaController@addItems')->name('compra.additem');
     Route::post('/compra-assistida/updateitem', 'CompraAssistidaController@updateItems')->name('compra.updateitem');
     Route::post('/compra-assistida/removeitems', 'CompraAssistidaController@removeItems')->name('compra.removeitem');
+    Route::get('/compra-assistida/edit/{id}', 'CompraAssistidaController@edit')->name('compra.edit');
 
     // Orcamentos
     Route::post('/orcamento', 'OrcamentoController@geraOrcamento');

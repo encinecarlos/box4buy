@@ -6,7 +6,7 @@
  * Time: 11:58
  */
 
-namespace App\lib;
+namespace App\Lib;
 
 
 class ProductServices

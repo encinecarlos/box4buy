@@ -1,6 +1,6 @@
 <?php
 
-namespace App\lib;
+namespace App\Lib;
 
 // use Ixudra\Curl;
 use Ixudra\Curl\Facades\Curl as Api;

@@ -13,4 +13,9 @@ class CompraAssistidaInfo extends Model
     protected $table = 'bxby_compra_assistida_info';
     protected $primaryKey = 'sequencia';
     protected $fillable = ['status_solicitacao'];
+
+    public function produtos()
+    {
+        return $this->hasMany('App\CompraAssistida', 'compra_id', 'sequencia');
+    }
 }

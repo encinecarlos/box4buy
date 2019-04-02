@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\lib\ProductServices;
+use App\Lib\ProductServices;
 use Closure;
 use Illuminate\Support\Facades\Route;
 

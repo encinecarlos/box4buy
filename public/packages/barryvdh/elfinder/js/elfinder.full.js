@@ -4005,8 +4005,8 @@ var elFinder = function(elm, opts, bootCallback) {
 		 * Gets the contents hashes.
 		 *
 		 * @param      String  target      target file.hash
-		 * @param      Object  needHashes  need hash lib names
-		 * @return     Object  hashes with lib name as key
+		 * @param      Object  needHashes  need hash Lib names
+		 * @return     Object  hashes with Lib name as key
 		 */
 		self.getContentsHashes = function(target, needHashes) {
 			var dfd = $.Deferred(),

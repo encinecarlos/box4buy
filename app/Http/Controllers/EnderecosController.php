@@ -6,7 +6,7 @@ use App\Enderecos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
-use App\lib\CustomException;
+use App\Lib\CustomException;
 
 class EnderecosController extends Controller
 {

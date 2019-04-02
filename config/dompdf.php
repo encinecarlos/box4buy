@@ -91,7 +91,7 @@ return array(
          * capabilities for dompdf, however additional features (e.g. object,
          * image and font support, etc.) differ between backends.  Please see
          * {@link PDFLib_Adapter} for more information on the PDFLib backend
-         * and {@link CPDF_Adapter} and lib/class.pdf.php for more information
+         * and {@link CPDF_Adapter} and Lib/class.pdf.php for more information
          * on CPDF. Also see the documentation for each backend at the links
          * below.
          *

@@ -25,10 +25,10 @@ class CotacaoServiceProvider extends ServiceProvider
     public function register()
     {
         // $this->app->bind('getDolar', function ($app) {
-        //     return new lib\CotacaoDolar();
+        //     return new Lib\CotacaoDolar();
         // });
         App::bind('CotacaoDolar', function () {
-            return new App\lib\CotacaoDolar;
+            return new App\Lib\CotacaoDolar;
         });
     }
 }
