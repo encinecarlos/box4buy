@@ -5,13 +5,12 @@ namespace App\Lib;
 use Illuminate\Http\Request;
 use Sauladam\ShipmentTracker\ShipmentTracker;
 use USPS\RatePackage;
-use USPS\TrackConfirm;
 
 class UspsTest
 {
     public static function calculate(Request $request)
     {
-        $peso_libra = $request->peso * 2.2046;
+        $peso_libra = $request->peso;
         $rate = new \USPS\Rate(getenv('USPS_USER'));
         $rate->setInternationalCall(true);
         $rate->addExtraOption('Revision', 2);
@@ -63,7 +62,6 @@ class UspsTest
             array_push($data, [
                 'id' => $servicos[$i]['@attributes']['ID'],
                 'peso' => $request->peso,
-                'peso_libra' => number_format($peso_libra,2),
                 'servico' => $servicos[$i]["SvcDescription"],
                 'valor_frete' => $servicos[$i]["Postage"],
                 'taxa_box' => $taxabox,

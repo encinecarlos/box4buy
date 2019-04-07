@@ -8,6 +8,7 @@ class CompraAssistida extends Model
 {
     protected $table = 'bxby_compra_assistida';
     protected $primaryKey = 'sequencia';
+    public $timestamps = false;
 
     protected $fillable = [
         'codigo_suite',
@@ -22,4 +23,9 @@ class CompraAssistida extends Model
         'fora_estoque',
         'observacoes_adicionais'
     ];
+
+    public function pedido()
+    {
+        return $this->belongsTo('App\CompraAssistida');
+    }
 }

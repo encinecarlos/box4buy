@@ -27,7 +27,8 @@ class ConfiguracaoController extends Controller
                 'cfg_phone' => $request->cfg_phone,
         ];
 
-        $config = DB::table('bxby_configuration')->where('sequencia', '1')->update($data_update);        
+        Configuration::where('sequencia', '1')->update($data_update);
+        return redirect(route('configuracoes'))->with(['msg' => 'Configurações alteradas com sucesso!']);
     }
 
     public function generatePassword()

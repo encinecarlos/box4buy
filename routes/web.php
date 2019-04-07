@@ -94,6 +94,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
 
     // Configurações do sistema
     Route::get('/configuracoes', 'Configuracoes\ConfiguracaoController@index')->name('configuracoes');
+    Route::post('/configuracoes', 'Configuracoes\ConfiguracaoController@index')->name('configuracoes');
     Route::get('/configuracoes/password/generate', 'Configuracoes\ConfiguracaoController@generatePassword')->name('generate-pass');
 
     // Gestão de documentos
@@ -166,11 +167,13 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     //compra assistida
     Route::get('/compra-assistida', 'CompraAssistidaController@index')->name('compra.main');
     Route::get('/compra-assistida/add', 'CompraAssistidaController@add')->name('compra.add');
-    Route::post('/compra-assistida/save/{itemid}', 'CompraAssistidaController@store')->name('compra.save');
+    Route::post('/compra-assistida/save/{itemid?}', 'CompraAssistidaController@store')->name('compra.save');
     Route::post('/compra-assistida/additems', 'CompraAssistidaController@addItems')->name('compra.additem');
     Route::post('/compra-assistida/updateitem', 'CompraAssistidaController@updateItems')->name('compra.updateitem');
     Route::post('/compra-assistida/removeitems', 'CompraAssistidaController@removeItems')->name('compra.removeitem');
     Route::get('/compra-assistida/edit/{id}', 'CompraAssistidaController@edit')->name('compra.edit');
+    Route::put('/compra-assistida/update', 'CompraAssistidaController@update')->name('compra.update');
+    Route::delete('/compra-assistida/delete/{id}', 'CompraAssistidaController@destroyProduct')->name('compra.destroyProduct');
 
     // Orcamentos
     Route::post('/orcamento', 'OrcamentoController@geraOrcamento');

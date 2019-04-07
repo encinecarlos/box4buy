@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CompraAssistida;
 use App\CompraAssistidaInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -132,43 +133,62 @@ class CompraAssistidaController extends Controller
      * @param $itemid
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function store($itemid)
+    public function store(Request $request, $itemid = null)
     {
-        $this->compra->status_solicitacao = 10;
-        $this->compra->codigo_suite = session('items.'.$itemid.'.suite');
-        $this->compra->save();
+        if(session()->has('items'))
+        {
+            $this->compra->status_solicitacao = 10;
+            $this->compra->codigo_suite = session('items.'.$itemid.'.suite');
+            $this->compra->observacoes = session('items.'.$itemid.'.obervacoes_add');
+            $this->compra->save();
 
-        $compraid = DB::getPdo()->lastInsertId();
+            $compraid = DB::getPdo()->lastInsertId();
 
-        foreach (session('items') as $item) {
-            DB::insert('INSERT INTO bxby_compra_assistida (compra_id, 
+            foreach (session('items') as $item) {
+                DB::insert('INSERT INTO bxby_compra_assistida (compra_id, 
                                    link_produto, 
                                    cor, 
                                    tamanho, 
                                    preco, 
                                    quantidade, 
-                                   obervacao, 
+                                   observacao, 
                                    substitui_tamanho, 
                                    substitui_cor, 
-                                   fora_estoque, 
-                                   observacoes_adicionais) 
-                        VALUES (?,?,?,?,?,?,?,?,?,?,?)',
-            [
-                $compraid,
-                $item['url'],
-                $item['cor'],
-                $item['tamanho'],
-                $item['valor'],
-                $item['quantidade'],
-                $item['observacoes'],
-                $item['substitui_tamanho'],
-                $item['substitui_cor'],
-                $item['fora_estoque'],
-                $item['observacoes_add'],
-            ]);
+                                   fora_estoque) 
+                        VALUES (?,?,?,?,?,?,?,?,?,?)',
+                    [
+                        $compraid,
+                        $item['url'],
+                        $item['cor'],
+                        $item['tamanho'],
+                        $item['valor'],
+                        $item['quantidade'],
+                        $item['observacoes'],
+                        $item['substitui_tamanho'],
+                        $item['substitui_cor'],
+                        $item['fora_estoque'],
+                    ]);
+            }
+
+            session()->forget('items');
+        } else {
+            $data = [
+                'compra_id' => $request->compra_id,
+                'link_produto' => $request->linkproduto,
+                'cor' => $request->corproduto,
+                'tamanho' => $request->tamanhoproduto,
+                'preco' => $request->valorproduto,
+                'quantidade' => $request->quantidade,
+                'observacao' => $request->observacoes,
+                'substitui_tamanho' => $request->substituitamanho,
+                'substitui_cor' => $request->substituicor,
+                'fora_estoque' => $request->fora_estoque,
+                'observacoes_adicionais' => $request->observacoesadicionais
+            ];
+
+            CompraAssistida::insert($data);
         }
 
-        session()->forget('items');
 
         return response('Solicitação enviada com sucesso');
     }
@@ -178,5 +198,42 @@ class CompraAssistidaController extends Controller
         $solicitacao = CompraAssistidaInfo::find($id);
 
         return view('compra_assistida.edit', ['solicitacao' => $solicitacao]);
+    }
+
+    /**
+     * Atualiza um produto que ja esteja salvo em uma compra
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $data = [
+            'link_produto' => $request->linkproduto,
+            'cor' => $request->corproduto,
+            'tamanho' => $request->tamanhoproduto,
+            'preco' => $request->valorproduto,
+            'quantidade' => $request->quantidade,
+            'observacao' => $request->observacoes,
+            'substitui_tamanho' => $request->substituitamanho,
+            'substitui_cor' => $request->substituicor,
+            'fora_estoque' => $request->fora_estoque,
+            'observacoes_adicionais' => $request->observacoesadicionais
+        ];
+
+        $compra = CompraAssistida::find($request->itemid);
+        $compra->update($data);
+
+        return response('Produto alteradoi com sucesso!');
+    }
+
+    public function destroyProduct($id)
+    {
+        CompraAssistida::destroy($id);
+    }
+
+    public function destroy($id)
+    {
+        CompraAssistidaInfo::destroy($id);
+        return response('Registro excluido com sucesso!');
     }
 }

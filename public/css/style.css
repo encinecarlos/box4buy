@@ -1201,7 +1201,7 @@ sup {
 }
 
 .btn-rounded {
-    border-radius: 2rem;
+    border-radius: 2rem !important;
 }
 
 .btn-rounded-100 {

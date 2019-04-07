@@ -19,14 +19,6 @@
                 <h4><b><i class="fa fa-address-card"></i> ENDEREÇO NOS ESTADOS UNIDOS</b></h4>
             </div>
             <div class="box-body">
-                {{--<div class="small-box boxColorTema text-center">
-                    <div class="inner">
-                        <h3>
-                            {{ session('suite_prefix') }}{{ Auth::user()->codigo_suite }}
-                        </h3>
-                        <p>SUITE</p>
-                    </div>
-                </div>--}}
                 <table class="table">
                     <tr>
                         <td><b>Name:</b></td>
@@ -38,7 +30,7 @@
                     </tr>
                     <tr>
                         <td><b>Suite:</b></td>
-                        <td><b class="text text-info boxColorTema">{{ session('suite_prefix') }}{{ Auth::user()->codigo_suite }}</b></td>
+                        <td><b class="badge boxColorTema">{{ session('suite_prefix') }}{{ Auth::user()->codigo_suite }}</b></td>
                     </tr>
                     <tr>
                         <td><b>City:</b></td>

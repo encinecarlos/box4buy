@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int status_solicitacao
  * @property \Illuminate\Session\SessionManager|\Illuminate\Session\Store|mixed codigo_suite
+ * @property \Illuminate\Session\SessionManager|\Illuminate\Session\Store|mixed observacoes
+ * @property mixed produtos
  */
 class CompraAssistidaInfo extends Model
 {
