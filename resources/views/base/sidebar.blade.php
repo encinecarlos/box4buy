@@ -17,7 +17,9 @@
           <span>Estoque</span>
         </a>
       </li>
-
+      @if(App::environment(['local', 'staging']))
+        <li><a href="{{ route('compra.main') }}"><i class="fa fa-shopping-cart"></i> Compra Assistida (Em Breve)</a></li>
+      @endif
       <li>
         <a href="{{ route('orcamento') }}">
           <i class="fa fa-bar-chart" aria-hidden="true"></i>

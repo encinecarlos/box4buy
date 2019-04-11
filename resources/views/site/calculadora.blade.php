@@ -18,7 +18,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12 mt-3 mb-5">
-            <h4 class="text-center">Informe o peso do produto <span class="text text-info">(Em Kg)</span></h4>
+            <h4 class="text-center">Informe o peso do produto <span class="text text-info">(Libras)</span></h4>
         </div>        
     </div>
     <div class="center-block mt-3 mb-3">        
@@ -61,8 +61,8 @@
 									    <li class="header">First Class</li>	
 								    @default										
 							    @endswitch								
-							    <li><b>Peso (Libras):</b> {{ $value['peso_libra'] }}</li>
-							    <li><b>Peso (KG):</b> {{ $value['peso']}}</li>
+							    <li><b>Peso (Libras):</b> {{ $value['peso'] }}</li>
+							    <li><b>Peso (KG):</b> {{ number_format($value['peso'] / 2.2, 2) }}</li>
 							    <li><b>Taxa de Frete:</b> {{ $value['valor_frete'] }} USD</li>
 							    <li><b>Taxa de Cartão:</b> {{ $value['taxa_cartao'] }}</li>
 							    <li><b>Taxa Box4Buy :</b> {{ $value['taxa_box'] }} USD</li>

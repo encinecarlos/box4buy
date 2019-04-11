@@ -7,6 +7,7 @@
 $('.alert-errors').hide();
 
 $('.date').inputmask("99/99/9999");
+$('.money').maskMoney();
 
 $(document).ready(function () {
     toastr.options.timeOut = 3000;

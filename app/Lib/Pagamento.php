@@ -38,6 +38,11 @@ class Pagamento implements PaymentInterface
         return $apiContext;
     }
 
+    /**
+     * Gera o invoice do pagamento
+     * @param $orcamento_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function invoice($orcamento_id)
     {
         $orcamento = DB::table('bxby_orcamento')->join('bxby_pendereco', 'bxby_orcamento.cod_endereco', '=', 'bxby_pendereco.seq_endereco')
@@ -47,6 +52,11 @@ class Pagamento implements PaymentInterface
         return view('usuario.invoices.invoice', ['orcamento' => $orcamento, 'produtos' => $produtos_orcamento]);
     }
 
+    /**
+     * Cria a transação de pagamento junto ao PayPal
+     * @param $orcamento
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function pay($orcamento)
     {
         $orcamento = DB::table('bxby_orcamento')->where('sequencia', $orcamento)->get();
@@ -95,6 +105,10 @@ class Pagamento implements PaymentInterface
         }
     }
 
+    /**
+     * Processa o retorno da transação
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function getStatus()
     {
         $paymentid = session('payment_id');
@@ -131,6 +145,11 @@ class Pagamento implements PaymentInterface
         return redirect(route('estoque'));
     }
 
+    /**
+     * Gera o recibo referente a transação
+     * @param $orcamento_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function geraRecibo($orcamento_id)
     {
         $orcamento = DB::table('bxby_orcamento')->join('bxby_pendereco', 'bxby_orcamento.cod_endereco', '=', 'bxby_pendereco.seq_endereco')
@@ -140,6 +159,11 @@ class Pagamento implements PaymentInterface
         return view('usuario.invoices.recibo', ['orcamento' => $orcamento, 'produtos' => $produtos, 'dolar' => $cotacaoDolar]);
     }
 
+    /**
+     * Gera o pdf do recibo
+     * @param $orcamento_id
+     * @return mixed
+     */
     public function toPDF($orcamento_id)
     {
         $orcamento = DB::table('bxby_orcamento')->join('bxby_pendereco', 'bxby_orcamento.cod_endereco', '=', 'bxby_pendereco.seq_endereco')

@@ -43,4 +43,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(PessoaContato::class, 'codigo_suite', 'codigo_suite');
     }
+
+    public function CompraAssistida()
+    {
+        return $this->hasMany(CompraAssistidaInfo::class);
+    }
 }

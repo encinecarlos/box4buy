@@ -194,7 +194,7 @@
 
         $('.enviaPedido').click(() => {
             var itemid = $('.enviaPedido').data('itemid');
-            console.log(itemid);
+
             axios.post('/compra-assistida/save/' + itemid).then(response => {
                 Swal({
                     title: 'Sucesso!',

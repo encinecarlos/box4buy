@@ -16,6 +16,12 @@ class Utils
     private static $subtotal;
     private $totalGeral;
 
+
+    public function __construct()
+    {
+        $this->totalGeral = 0;
+    }
+
     /**
      * Faz o calculo de subtotal de produtos
      * @param $quantidade
@@ -37,8 +43,8 @@ class Utils
     {
         foreach ($assistidaInfo->produtos as $produto)
         {
-           $total = $produto->preco * $produto->quantidade;
-           $this->totalGeral += $total;
+            $total = $produto->preco * $produto->quantidade;
+            $this->totalGeral += $total;
         }
 
         return number_format($this->totalGeral, 2);

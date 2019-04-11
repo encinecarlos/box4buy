@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
 
 class Utils extends Facade
 {
-    public static function getFacadeAccessor()
+    protected static function getFacadeAccessor()
     {
         return 'Utils';
     }

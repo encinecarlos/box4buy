@@ -65,7 +65,7 @@
     <div class="pull-right hidden-xs">
       @version('full')
     </div>
-    <strong>Copyright &copy; {{ date('Y') }} <a href="https://devhousesolutions.com.br" target="_blank">DevHouse Solutions</a>.</strong> All rights
+    <strong class="hidden-print">Copyright &copy; {{ date('Y') }} <a href="https://devhousesolutions.com.br" target="_blank">DevHouse Solutions</a>.</strong> All rights
     reserved.
   </footer> 
 </div>

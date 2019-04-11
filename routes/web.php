@@ -173,7 +173,12 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::post('/compra-assistida/removeitems', 'CompraAssistidaController@removeItems')->name('compra.removeitem');
     Route::get('/compra-assistida/edit/{id}', 'CompraAssistidaController@edit')->name('compra.edit');
     Route::put('/compra-assistida/update', 'CompraAssistidaController@update')->name('compra.update');
+    Route::put('/compra-assistida/foraestoque/{id}', 'CompraAssistidaController@foraEstoque')->name('compra.foraestoque');
+    Route::put('/compra-assistida/valores/{id}', 'CompraAssistidaController@updateSolicitacao')->name('compra.geravalores');
     Route::delete('/compra-assistida/delete/{id}', 'CompraAssistidaController@destroyProduct')->name('compra.destroyProduct');
+    Route::post('/compra-assistida/cancelar/{id}', 'CompraAssistidaController@cancelaPedido')->name('compra.cancelar');
+    Route::post('/compra-assistida/payment/{id}', 'PagamentoCompraController@pay')->name('compra.pagamento');
+    Route::get('/compra-assistida/payment', 'PagamentoCompraController@getStatus')->name('compra.status');
 
     // Orcamentos
     Route::post('/orcamento', 'OrcamentoController@geraOrcamento');

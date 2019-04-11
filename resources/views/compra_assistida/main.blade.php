@@ -15,6 +15,9 @@
                     <thead>
                         <tr>
                             <th>Código</th>
+                            @if(Auth::user()->type_user == '1')
+                            <th>Suite</th>
+                            @endif
                             <th>Status</th>
                             <th>Data de Solicitação</th>
                             <th>Ultima atualização</th>
@@ -25,16 +28,22 @@
                         @foreach($compras as $compra)
                         <tr>
                             <td class="col-sm-1">{{ $compra->sequencia }}</td>
+                            @if(Auth::user()->type_user == '1')
+                            <td>CB{{ $compra->codigo_suite }}</td>
+                            @endif
                             <td class="col-sm-1 text-center">
                                 @switch($compra->status_solicitacao)
                                     @case('10')
-                                    <span class="badge bg-gray">Processando</span>
+                                    <span class="badge bg-gray text-uppercase">Processando</span>
                                     @break
                                     @case('11')
-                                    <span class="badge bg-yellow">Respondido</span>
+                                    <span class="badge bg-yellow text-uppercase">Respondido</span>
                                     @break
                                     @case('12')
-                                    <span class="badge bg-green"><i class="fa fa-check"></i> Concluido</span>
+                                    <span class="badge bg-green text-uppercase"><i class="fa fa-check"></i> Concluido</span>
+                                    @break
+                                    @case('13')
+                                    <span class="badge bg-red text-uppercase"><i class="fa fa-close"></i> Cancelado</span>
                                     @break
                                 @endswitch
 
@@ -43,7 +52,7 @@
                             <td class="col-sm-2 text- center">{{ $compra->updated_at->format('d/m/Y H:i:s') }}</td>
                             <td>
                                 <a href="{{ route('compra.edit', $compra->sequencia) }}" class="btn btn-info btn-rounded boxColorTema">
-                                    <i class="fa fa-eye"></i> Visualizar
+                                    <i class="fa fa-eye"></i> Detalhes
                                 </a>
                                 <a href="" class="btn btn-danger btn-rounded">
                                     <i class="fa fa-trash"></i> Excluir

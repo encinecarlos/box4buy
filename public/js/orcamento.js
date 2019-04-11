@@ -4,7 +4,7 @@ $(document).ready(function () {
         fadeDuration: 200,
         clickClose: true,
         escapeClose: true
-    }
+    };
 
     // mascara para os inputs    
     $('.money').maskMoney();
@@ -32,7 +32,7 @@ $(document).ready(function () {
 
     $('#linha_seguro').hide();
     $('select[name="codigo_pacote"]').change(function () {
-        if ($('select[name="codigo_pacote"]').val() == 2 || $('select[name="codigo_pacote"]').val() == 3) {
+        if ($('select[name="codigo_pacote"]').val() === 2 || $('select[name="codigo_pacote"]').val() === 3) {
             $('#linha_seguro').show();
         } else {
             $('#linha_seguro').hide();
