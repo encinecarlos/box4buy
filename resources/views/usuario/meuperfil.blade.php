@@ -161,7 +161,7 @@
                 
                 <div class="form-group">
                     <div class="col-sm-1 pull-right">
-                        <a href="{{ route('perfil-edit', $perfil->codigo_suite) }}" class="btn btn-info pull-right boxColorTema">
+                        <a href="{{ route('perfil-edit', $perfil->codigo_suite) }}" class="btn btn-info pull-right btn-rounded boxColorTema">
                             <i class="fa fa-edit"></i> Editar
                         </a>
                     </div>                    

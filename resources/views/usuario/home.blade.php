@@ -22,7 +22,7 @@
                 <table class="table">
                     <tr>
                         <td><b>Name:</b></td>
-                        <td>{{ Auth::user()->nome_completo }}</td>
+                        <td>{{ Auth::user()->nome_completo }} {{ Auth::user()->sobrenome }}</td>
                     </tr>
                     <tr>
                         <td><b>Street Address:</b></td>

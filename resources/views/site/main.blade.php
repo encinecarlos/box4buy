@@ -91,7 +91,11 @@
                             <h4 class="corWhite">do mundo até vc</h4>
                             <br>
                         </hgroup>
-                        <a href="#" class="btn btn-general buttonPrimary wow fadeInUp btnMain" data-toggle="modal" data-target="#cadastro-modal">Cadastre-se já, é Gratis! ></a>
+                        <a href="#" class="btn btn-general buttonPrimary wow fadeInUp btnMain btn-rounded" data-toggle="modal" data-target="#cadastro-modal">Cadastre-se já, é Gratis! <i class="fa fa-arrow-right"></i></a>
+                        {{--OU
+                        <a href="{{ route('login') }}" class="btn btn-general buttonPrimary wow fadeInUp btnMain btn-rounded">
+                            <i class="fa fa-lock"></i> ACESSE SUA CONTA
+                        </a>--}}
                     </div>
                     
                 </div>
@@ -325,7 +329,7 @@
             </div>
             <a href="{{ route('calculadora-site') }}" target="_blank">
                 <h3 class="text-center">
-                    <button class="btn btn-general buttonPrimary wow fadeInUp" role="button">
+                    <button class="btn btn-general buttonPrimary wow fadeInUp btn-rounded" role="button">
                         SIMULAR MEU FRETE
                     </button>
                 </h3>
@@ -357,8 +361,16 @@
                         </div>
                         <!-- <input type="hidden" name="nome"> -->
                         <div class="form-group">
-                            <label>Nome:</label>
-                            <input type="text" name="_nome" class="form-control" autofocus>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Nome:</label>
+                                    <input type="text" name="_nome" class="form-control" placeholder="Primeiro nome" autofocus>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Sobrenome:</label>
+                                    <input type="text" name="_sobrenome" placeholder="Ultimo nome" class="form-control" autofocus>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -498,22 +510,10 @@
                           FOOTER
     ======================================================-->
     @include('site.footer')
-    
-    <!--Global JavaScript -->
-    <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/popper/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/wow/wow.min.js') }}"></script>
-    <script src="{{ asset('js/owl-carousel/owl.carousel.min.js') }}"></script>
-    <!-- Plugin JavaScript -->
-    <script src="{{ asset('bower_components/inputmask/dist/jquery.inputmask.bundle.js') }}"></script>
-    <script src="{{ asset('js/jquery-easing/jquery.easing.min.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
-    <script src="{{ asset('bower_components/axios/dist/axios.js') }}"></script>    
-    <script src="{{ asset('bower_components/jquery-validation/dist/jquery.validate.js') }}"></script>
-    <script src="{{ asset('bower_components/toastr/toastr.js') }}"></script>
-    <script src="{{ asset('bower_components/jquery-modal/jquery.modal.js') }}"></script>
+
+    @include('site.javascript')
     <script src="{{ asset('js/main.js') }}"></script>
+
     {{--<script>
         var botmanWidget = {
             frameEndpoint: '/bxby/chat',

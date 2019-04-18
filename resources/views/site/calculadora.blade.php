@@ -26,9 +26,17 @@
             <div class="col-md-12">
                 <form class="form-horizontal">
                     <div class="form-group center-block">
-                        <div class="col-md-2 offset-md-5">
-                            <input type="text" class="form-control form-lg input-peso" name="peso" id="pesoinput" placeholder="Peso">                            
-                        </div>                        
+                        <div class="col-md-2 offset-md-5 slidercontainer">
+                            <label for="slidepeso"><b>Peso: <span id="peso-display"></span> Libra(s)</b></label>
+                                <input type="range"
+                                       class="bxby-slider"
+                                       name="peso"
+                                       min="1"
+                                       max="66"
+                                       value="1"
+                                       id="slidepeso">
+                            {{--<input type="text" class="form-control form-lg input-peso" name="peso" id="pesoinput" placeholder="Peso">                            --}}
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="container">

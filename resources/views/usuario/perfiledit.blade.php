@@ -20,10 +20,10 @@
     <form class="form-horizontal form-ajax" id="form-dados" method="post">
         @method('PUT')
         <div class="box-body">
-            <div class="form-group notMarging">                
-                <div class="form-group notMarging" style="display: {{ $enable_pay[0]->libera_pagamento == '1' ? 'none' : 'block'}}">
+            <div class="form-group notMarging">
+                <div class="form-group notMarging" style="display: {{ $enable_pay[0]->libera_pagamento == '2' ? 'none' : 'block'}}">
                     <div class="col-sm-6 col-sm-offset-2">
-                        <a class="btn boxColorTema" href="#upload-modal" rel="modal:open" id="inputValida">
+                        <a class="btn btn-rounded boxColorTema" href="#upload-modal" rel="modal:open" id="inputValida">
                             <i class="fa fa-check">
                             </i>
                             VALIDAR CONTA
@@ -36,7 +36,8 @@
                         Foto de Perfil
                     </label>
                     <div class="col-sm-4">
-                        <a href="#modalFotoPerfil" class="btn boxColorTema" rel="modal:open" id="add-fotoperfil">
+                        <a href="#modalFotoPerfil" class="btn btn-rounded boxColorTema" rel="modal:open" id="add-fotoperfil">
+                            <i class="fa fa-photo"></i>
                             Adicionar foto de perfil
                         </a>
                     </div>                    
@@ -58,38 +59,16 @@
                     <label class="col-sm-2 control-label" for="inputNome">
                         Nome
                     </label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <input class="form-control" id="inputNome" name="_nome" placeholder="Nome" type="text" value="{{ $perfil->nome_completo }}">
                         
                     </div>
-                    <label class="col-sm-1 control-label" for="inputSexo">
-                        Sexo
-                    </label>
-                    <div class="col-sm-2">
-                        <select class="form-control" id="inputSexo" name="sexo">
-                            @if($perfil->sexo == 1)
-                            <option selected="" value="1">
-                                Masculino
-                            </option>
-                            <option value="2">
-                                Feminino
-                            </option>
-                            @elseif($perfil->sexo == 2)
-                            <option value="1">
-                                Masculino
-                            </option>
-                            <option selected="" value="2">
-                                Feminino
-                            </option>
-                            @else
-                            <option value="1">
-                                Masculino
-                            </option>
-                            <option value="2">
-                                Feminino
-                            </option>
-                            @endif
-                        </select>
+
+                    <label class="col-sm-1 control-label">Sobrenome</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" id="inputNome" name="_sobrenome"
+                               placeholder="Ultimo nome"
+                               type="text" value="{{ $perfil->sobrenome }}">
                     </div>
                 </div>
                 <div class="form-group notMarging">
@@ -97,18 +76,31 @@
                         Data Nascimento
                     </label>
                     <div class="col-sm-4">
-                        <!--<input class="form-control pull-right" id="datepicker" data-inputmask="mask: 99/99/9999" name="data_nascimento" placeholder="dd/mm/aaaa" type="text" value="{{ date('d/m/Y', strtotime($perfil->data_nascimento)) }}">-->
-                        {{-- <input type="text" data-inputmask="'mask':'99/99/9999'" name="data_nascimento" class="form-control pull-right" value="{{ date('Y-m-d', strtotime($perfil->data_nascimento)) }}"> --}}
                         <input class="form-control pull-right" type="date" name="data_nascimento" id="datepicker" value="{{ date('Y-m-d', strtotime($perfil->data_nascimento)) }}">
                     </div>
-                    <label class="col-sm-1 control-label" for="inputEmail">
-                        Email
+
+                    <label class="col-sm-1 control-label" for="inputSexo">
+                        Sexo
                     </label>
                     <div class="col-sm-4">
-                        <input class="form-control" id="inputEmail" name="email" placeholder="Email" type="email" value="{{ $perfil->email }}">
-                        
+                        <select class="form-control" id="inputSexo" name="sexo">
+                            <option value="1" {{ $perfil->sexo == 1 ? 'selected' : '' }}>Masculino</option>
+                            <option value="2" {{ $perfil->sexo == 2 ? 'selected' : '' }}>Feminino</option>
+                        </select>
                     </div>
                 </div>
+
+                <div class="form-group notMarging">
+                    <label class="col-sm-2 control-label" for="inputEmail">
+                        Email
+                    </label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="inputEmail" name="email" placeholder="Email"
+                               type="email" value="{{ $perfil->email }}">
+
+                    </div>
+                </div>
+
                 <div class="form-group notMarging">
                     <label class="col-sm-2 control-label" for="inputCPF">
                         CPF
@@ -175,7 +167,12 @@
                         Adicionar endereço
                     </label>
                     <div class="col-sm-4">
-                        <a href="#modalAddEndereco" class="btn btn-info boxColorTema" data-method="add" rel="modal:open" id="add-alternativo">
+                        <a href="#modalAddEndereco"
+                           class="btn btn-info btn-rounded boxColorTema"
+                           data-method="add"
+                           rel="modal:open"
+                           id="add-alternativo">
+                            <i class="fa fa-plus"></i>
                             Adicionar novo endereço
                         </a>
                     </div>
@@ -183,7 +180,12 @@
                         Editar endereço
                     </label>
                     <div class="col-sm-4">
-                        <a href="#modalEndereco" class="btn btn-info boxColorTema" data-method="edit" rel="modal:open" id="edit-alternativo">
+                        <a href="#modalEndereco"
+                           class="btn btn-info btn-rounded boxColorTema"
+                           data-method="edit"
+                           rel="modal:open"
+                           id="edit-alternativo">
+                            <i class="fa fa-pencil"></i>
                             Editar endereço
                         </a>
                     </div>
@@ -205,12 +207,15 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-1 pull-right">
-                        <button class="btn btn-info pull-right boxColorTema" id="send" type="submit">
+                        <button class="btn btn-info btn-rounded pull-right boxColorTema" id="send" type="submit">
+                            <i class="fa fa-edit"></i>
                             ALTERAR
                         </button>
                     </div>
                     <div class="col-sm-1 pull-right">
-                        <a href="{{ route('perfil', $perfil->codigo_suite) }}" class="btn btn-info pull-right boxColorTema">
+                        <a href="{{ route('perfil', $perfil->codigo_suite) }}"
+                           class="btn btn-danger btn-rounded pull-right">
+                            <i class="fa fa-close"></i>
                             CANCELAR
                         </a>
                     </div>

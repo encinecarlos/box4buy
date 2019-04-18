@@ -73,6 +73,7 @@ class UsuarioController extends Controller
 
             DB::insert(
                 "INSERT INTO bxby_pessoas (nome_completo,
+                                                  sobrenome,
                                                   tipo_cadastro,
                                                   type_user,
                                                   data_nascimento,
@@ -80,10 +81,11 @@ class UsuarioController extends Controller
                                                   password,
                                                   tipo_pessoa,
                                                   onde_conheceu,
-                          data_cadastro)
-                                            VALUES (?,?,?,?,?,?,?,?,?)",
+                                                  data_cadastro)
+                                            VALUES (?,?,?,?,?,?,?,?,?,?)",
                 [
                     $request->_nome,
+                    $request->_sobrenome,
                     1,
                     2,
                     $data_nascimento,
@@ -247,7 +249,8 @@ class UsuarioController extends Controller
 
             $dataformat = date('Y-m-d', strtotime($request->data_nascimento));
             DB::update("UPDATE bxby_pessoas 
-                        SET nome_completo = '$request->_nome',                            
+                        SET nome_completo = '$request->_nome',
+                            sobrenome = '$request->_sobrenome',
                             data_nascimento = '$dataformat',
                             sexo = '$request->sexo',
                             email = '$request->email',                            
@@ -358,7 +361,7 @@ class UsuarioController extends Controller
                     $files = Storage::files($user_folder);
                     if (count($files[0]) != 0) {
                         Storage::delete($files[0]);
-                        $path = $request->file('file')->move($destination, $filename);
+                        $path = $request->file('file')->storePubliclyAs($user_folder, $filename);
                         DB::table('bxby_pconfirma_dados')
                             ->where('codigo_suite', $request->id)
                             ->update(['caminho_comprovante' => Storage::url($path)]);

@@ -10,6 +10,7 @@
             <div class="icon">
                 <i class="fa fa-user"></i>
             </div>
+            <a href="{{ route('pessoas') }}" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <div class="col-sm-3">
@@ -21,6 +22,7 @@
             <div class="icon">
                 <i class="fa fa-bar-chart"></i>
             </div>
+            <a href="{{ route('orcamento') }}" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <div class="col-sm-3">
@@ -32,6 +34,7 @@
             <div class="icon">
                 <i class="fa fa-money"></i>
             </div>
+            <a href="{{ route('orcamento') }}" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <div class="col-sm-3">
@@ -43,6 +46,7 @@
             <div class="icon">
                 <i class="fa fa-ticket"></i>
             </div>
+            <a href="{{ route('ticketadmin') }}" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
 </div>
@@ -66,7 +70,8 @@
                                 <td>{{ $enviados->codigo_suite }}</td>
                                 <td>{{ $enviados->descricao_produto }}</td>
                                 <td>
-                                    <a href="{{ route('edit-produto', [$enviados->codigo_suite, $enviados->seq_produto]) }}" class="btn btn-info boxColorTema"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('edit-produto', [$enviados->codigo_suite, $enviados->seq_produto]) }}"
+                                       class="btn btn-info btn-rounded boxColorTema"><i class="fa fa-pencil"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -105,7 +110,8 @@
                                 </td>
                                 <td>{{ $pendentes->peso_total }}</td>
                                 <td>
-                                    <a href="{{ route('orcamento-edit', $pendentes->sequencia) }}" class="btn btn-info boxColorTema">
+                                    <a href="{{ route('orcamento-edit', $pendentes->sequencia) }}"
+                                       class="btn btn-info btn-rounded boxColorTema">
                                     	<i class="fa fa-pencil" aria-hidden="true"></i>
                                     </a>
                                 </td>
@@ -140,9 +146,9 @@
                                 </td>
                                 <td>
                                     @switch($aberto->priority) @case('baixa')
-                                    <span class="label label-success">Baixa</span> @break @case('media')
-                                    <span class="label label-warning">Média</span> @break @case('alta')
-                                    <span class="label label-danger">Alta</span> @endswitch
+                                    <span class="badge bg-green">Baixa</span> @break @case('media')
+                                    <span class="badge bg-yellow">Média</span> @break @case('alta')
+                                    <span class="badge bg-red">Alta</span> @endswitch
                                 </td>
                             </tr>
                             @endforeach

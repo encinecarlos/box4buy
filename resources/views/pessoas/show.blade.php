@@ -6,7 +6,7 @@
             <h3 class="box-title">
                 <i class="fa fa-user">
                 </i>
-                {{ session('suite_prefix') }}{{ $pessoa->codigo_suite }} - {{ $pessoa->nome_completo }}
+                CB{{ $pessoa->codigo_suite }} - {{ $pessoa->nome_completo }}
             </h3>
         </div>
         <div class="box-content">
@@ -36,39 +36,19 @@
                                         <label class="col-sm-2 control-label" for="inputNome">
                                             Nome
                                         </label>
-                                        <div class="col-sm-6">
-                                            <input class="form-control" id="inputNome" name="_nome" placeholder="Nome"
+                                        <div class="col-sm-4">
+                                            <input class="form-control" id="inputNome" name="_nome"
+                                                   placeholder="Primeiro nome"
                                                    type="text" value="{{ $pessoa->nome_completo }}">
                                         </div>
-                                        <label class="col-sm-1 control-label" for="inputSexo">
-                                            Sexo
-                                        </label>
-                                        <div class="col-sm-2">
-                                            <select class="form-control" id="inputSexo" name="sexo">
-                                                @if($pessoa->sexo == 1)
-                                                    <option selected="" value="1">
-                                                        Masculino
-                                                    </option>
-                                                    <option value="2">
-                                                        Feminino
-                                                    </option>
-                                                @elseif($pessoa->sexo == 2)
-                                                    <option value="1">
-                                                        Masculino
-                                                    </option>
-                                                    <option selected="" value="2">
-                                                        Feminino
-                                                    </option>
-                                                @else
-                                                    <option value="1">
-                                                        Masculino
-                                                    </option>
-                                                    <option value="2">
-                                                        Feminino
-                                                    </option>
-                                                @endif
-                                            </select>
+
+                                        <label class="col-sm-1 control-label">Sobrenome</label>
+                                        <div class="col-sm-4">
+                                            <input class="form-control" id="inputNome" name="_sobrenome"
+                                                   placeholder="Ultimo nome"
+                                                   type="text" value="{{ $pessoa->sobrenome }}">
                                         </div>
+
                                     </div>
                                     <div class="form-group notMarging">
                                         <label class="col-sm-2 control-label" for="inputDataNascimento">
@@ -79,15 +59,30 @@
                                                    name="data_nascimento" placeholder="dd/mm/aaaa" type="date"
                                                    value="{{ $pessoa->data_nascimento }}">
                                         </div>
-                                        <label class="col-sm-1 control-label" for="inputEmail">
-                                            Email
+
+                                        <label class="col-sm-1 control-label" for="inputSexo">
+                                            Sexo
                                         </label>
                                         <div class="col-sm-4">
+                                            <select class="form-control" id="inputSexo" name="sexo">
+                                                <option value="1" {{ $pessoa->sexo == 1 ? 'selected' : '' }}>Masculino</option>
+                                                <option value="2" {{ $pessoa->sexo == 2 ? 'selected' : '' }}>Feminino</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group notMarging">
+                                        <label class="col-sm-2 control-label" for="inputEmail">
+                                            Email
+                                        </label>
+                                        <div class="col-sm-9">
                                             <input class="form-control" id="inputEmail" name="email" placeholder="Email"
                                                    type="email" value="{{ $pessoa->email }}">
 
                                         </div>
                                     </div>
+
                                     <div class="form-group notMarging">
                                         <label class="col-sm-2 control-label" for="inputCPF">
                                             CPF
@@ -200,15 +195,16 @@
                                             Adicionar endereço
                                         </label>
                                         <div class="col-sm-4">
-                                            <a href="#modalAddEndereco" rel="modal:open" data-method="add"
-                                               class="btn btn-info boxColorTema">Adicionar Endereço</a>
+                                            <a href="#modalAddEndereco" rel="modal:open"
+                                               data-method="add"
+                                               class="btn btn-info btn-rounded boxColorTema"><i class="fa fa-plus"></i> Adicionar Endereço</a>
                                         </div>
                                         <label class="col-sm-2 control-label" for="inputAdicionaEdereco">
                                             Editar endereço
                                         </label>
                                         <div class="col-sm-4">
                                             <a href="#modalEndereco" rel="modal:open" data-method="edit"
-                                               class="btn btn-info boxColorTema">Editar Endereço</a>
+                                               class="btn btn-info btn-rounded boxColorTema"><i class="fa fa-edit"></i> Editar Endereço</a>
                                         </div>
                                     </div>
                                     <div class="form-group notMarging">
@@ -229,13 +225,16 @@
                                     </div>
                                     <div class="box-body">
                                         <div class="col-sm-1 pull-right">
-                                            <button class="btn btn-info pull-right boxColorTema" id="send"
+                                            <button class="btn btn-info pull-right btn-rounded boxColorTema"
+                                                    id="send"
                                                     type="submit">
+                                                <i class="fa fa-pencil"></i>
                                                 ALTERAR
                                             </button>
                                         </div>
                                         <div class="col-sm-1 pull-right">
-                                            <button class="btn btn-info pull-right boxColorTema">
+                                            <button class="btn btn-danger btn-rounded pull-right">
+                                                <i class="fa fa-close"></i>
                                                 CANCELAR
                                             </button>
                                         </div>
@@ -265,7 +264,7 @@
 
                                     <td>
                                         <a href="{{ route('edit-produto', [$e->codigo_suite, $e->seq_produto]) }}"
-                                           class="btn btn-info"><i class="fa fa-edit"></i></a>
+                                           class="btn btn-info boxColorTema btn-rounded"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -293,7 +292,7 @@
                                         <img class="img-responsive img-thumbnail"
                                              src="{{ $documento->caminho_comprovante }}"
                                              alt="Comprovante de residencia">
-                                        <button class="btn btn-danger removedoc" data-documento="comprovante"
+                                        <button class="btn btn-danger btn-rounded removedoc" data-documento="comprovante"
                                                 onclick="removedocumento({{ $pessoa->codigo_suite }})"><i
                                                     class="fa fa-trash"></i></button>
                                     </div>
@@ -302,10 +301,10 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <button type="button" class="btn btn-success enablepayment"
+                                <button type="button" class="btn btn-success btn-rounded enablepayment"
                                         id="{{ $pessoa->codigo_suite }}"><i class="fa fa-check"></i> Liberar
                                 </button>
-                                <button type="button" class="btn btn-danger disablepayment"
+                                <button type="button" class="btn btn-danger btn-rounded disablepayment"
                                         id="{{ $pessoa->codigo_suite }}" 8><i class="fa fa-check"></i> Bloquear
                                 </button>
                             </div>

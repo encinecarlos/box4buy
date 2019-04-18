@@ -11,10 +11,20 @@
 		<form class="form-horizontal" id="formpeso" method="POST">
 			<div class="box-body">
 				<div class="form-group">
-					<label for="inputValida" class="col-sm-2 control-label">Peso:</label>								
-					<div class="col-sm-2">
-						<input type="text" class="form-control" name="peso" id="pesoinput" placeholder="Kg">
+					<label for="inputValida" class="col-sm-2 control-label">Peso:</label>
+					<div class="col-sm-2 slidercontainer">
+                        <input type="range"
+                               class="bxby-slider"
+                               name="peso"
+                               min="1"
+                               max="66"
+                               value="1"
+                               id="slidepeso">
+						{{--<input type="number" class="form-control" name="peso" id="pesoinput" placeholder="Informe o peso em Libras">--}}
 					</div>
+                    <div class="col-sm-1">
+                        <p><b><span id="peso-display"></span></b> Libra(s)</p>
+                    </div>
 					<div class="col-sm-4">
 						<button type="button" class="btn btn-info boxColorTema" id="btn-peso">Calcular</button>
 					</div>
@@ -40,8 +50,8 @@
 											<li class="header">First Class</li>	
 										@default										
 									@endswitch								
-									<li><b>Peso (Libras):</b> {{ $value['peso_libra'] }}</li>
-									<li><b>Peso (KG):</b> {{ $value['peso'] }}</li>
+									<li><b>Peso (Libras):</b> {{ $value['peso'] }}</li>
+									<li><b>Peso (KG):</b> {{ number_format($value['peso'] / 2.2, 2) }}</li>
 									<li><b>Taxa de Frete:</b> {{ $value['valor_frete'] }} USD</li>
 									<li><b>Taxa de Cartão:</b> {{ $value['taxa_cartao'] }}</li>
 									<li><b>Taxa Box4Buy :</b> {{ $value['taxa_box'] }} USD</li>
@@ -85,5 +95,15 @@
 @section('js')
 	<script src="{{ asset('js/usuario-estoque.js') }}"></script>
 	<script src="{{ asset('bower_components/axios/dist/axios.js') }}"></script>
-	<script src="{{ asset('js/frete.js') }}"></script>	
+	<script src="{{ asset('js/frete.js') }}"></script>
+    <script>
+        /*var slider = document.getElementById('slidepeso');
+        var pesodisplay = document.getElementById('peso-display');
+
+        pesodisplay.innerHTML = slider.value;
+
+        slider.oninput = function() {
+            pesodisplay.innerHTML = this.value;
+        }*/
+    </script>
 @stop

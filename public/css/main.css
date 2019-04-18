@@ -156,6 +156,18 @@ header .topmenu .top-data li i.top-social.fa-google-plus:hover,
     color: #fff;
 }
 
+header .topmenu .top-data li i.top-social.fa-youtube,
+.social-icon-f li i.top-social.fa-youtube {
+    border: 2px solid #e24343;
+    color: #e24343;
+}
+
+header .topmenu .top-data li i.top-social.fa-youtube:hover,
+.social-icon-f li i.top-social.fa-youtube:hover {
+    background: #e24343;
+    color: #fff;
+}
+
 header .topmenu .top-data li a.log-top {
     text-decoration: none;
     font-size: 15px;
@@ -4173,6 +4185,49 @@ small {
     background-color: #2095f4;
     width: 100%;
     padding: 5px;
+}
+
+.btn-rounded {
+    border-radius: 2rem !important;
+}
+
+.slidercontainer {
+    margin-top: 10px;
+}
+
+.bxby-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    line-height: 10px;
+    border-radius: 5px;
+    background: #2095f4;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.bxby-slider:hover {
+    opacity: 1;
+}
+
+.bxby-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #fdd303; /* Green background */
+    border-radius: 50%;
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #fdd303; /* Green background */
+    cursor: pointer; /* Cursor on hover */
 }
 
 /* FIM CUSTOMIZAÇÕES - CARLOS ENCINE */

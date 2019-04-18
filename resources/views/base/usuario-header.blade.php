@@ -42,7 +42,7 @@
             @else
               <img id="foto_perfil" src="{{ asset('img/user/user_default.png') }}" class="user-image" alt="{{ Auth::user()->nome_completo }}">
             @endif
-            <span class="hidden-xs">{{Auth::user()->nome_completo}}</span>
+            <span class="hidden-xs">{{Auth::user()->nome_completo}} {{ Auth::user()->sobrenome }}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
@@ -53,7 +53,7 @@
                 <img src="{{ asset('img/user/user_default.png') }}" class="img-circle" alt="{{ Auth::user()->nome_completo }}">
               @endif  
               <p>
-                {{ Auth::user()->nome_completo }}
+                {{ Auth::user()->nome_completo }} {{ Auth::user()->sobrenome }}
                 <small><b>{{ session('suite_prefix') }}{{ Auth::user()->codigo_suite }}</b></small>
               </p>
             </li>

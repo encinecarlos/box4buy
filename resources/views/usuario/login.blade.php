@@ -121,8 +121,16 @@
         </div>
         <!-- <input type="hidden" name="nome"> -->
         <div class="form-group">
-            <label>Nome:</label>
-            <input type="text" name="_nome" class="form-control" autofocus>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>Nome:</label>
+                    <input type="text" name="_nome" class="form-control" placeholder="Primeiro nome" autofocus>
+                </div>
+                <div class="col-sm-6">
+                    <label>Sobrenome:</label>
+                    <input type="text" name="_sobrenome" placeholder="Ultimo nome" class="form-control" autofocus>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
@@ -271,6 +279,8 @@
 <script src="{{ asset('bower_components/jquery-modal/jquery.modal.js') }}"></script>
 {{-- InputMask --}}
 <script src="{{ asset('bower_components/inputmask/dist/jquery.inputmask.bundle.js') }}"></script>
+{{--MaskMoney--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
 <!-- Arquivo js customozado da aplicação -->
 <script src="{{ asset('js/main.js') }}"></script>
 </body>

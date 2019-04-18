@@ -1,20 +1,16 @@
-// $.modal.defaults = {
-//     fadeDuration: 200,
-//     clickClose: true,
-//     escapeClose: true
-// }
-
 $('.alert-errors').hide();
 
 $('.date').inputmask("99/99/9999");
-$('.money').maskMoney();
+if($('div').hasClass('money')) {
+    $('.money').maskMoney();
+}
 
 $(document).ready(function () {
-    toastr.options.timeOut = 3000;
+    // toastr.options.timeOut = 3000;
     $.modal.defaults = {
         fadeDuration: 200,
         escapeClose: true,
-        clickClose: true,
+        clickClose: false,
         showClose: false
     };
 
@@ -26,7 +22,7 @@ $(document).ready(function () {
                 console.log("ENTER PRESSIONADO");
             }
         }
-    })
+    });
 
     $('#send').on('click', function (event) {
         event.preventDefault();
@@ -36,11 +32,13 @@ $(document).ready(function () {
 
         var id = location.href.split('/').pop();
         axios.put('/api/usuario/update/' + id, data).then(response => {
-            toastr.success(response.data.msg);
-            setTimeout(function () {
-                // window.location = "/usuario/perfil/"+id;
-                form.load(window.location.href + " #form-dados");
-            }, 1500);
+            Swal({
+                title: 'Sucesso!',
+                text: response.data.msg,
+                type: 'success',
+                confirmButtonText: 'OK',
+                onClose: closeModal
+            });
         });
     });
 
@@ -90,7 +88,7 @@ $(document).ready(function () {
                 });
 
             } else {
-                tSwal({
+                Swal({
                     title: 'Sucesso!',
                     text: response.data.msg,
                     type: 'success',

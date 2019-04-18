@@ -99,14 +99,6 @@
     ======================================================-->
     @include('site.footer')
     <!--Global JavaScript -->
-    <script src="js/jquery/jquery.min.js"></script>
-    <script src="js/popper/popper.min.js"></script>
-    <script src="js/bootstrap/bootstrap.min.js"></script>
-    <script src="js/wow/wow.min.js"></script>
-    <script src="js/owl-carousel/owl.carousel.min.js"></script>
-    <!-- Plugin JavaScript -->
-    <script src="js/jquery-easing/jquery.easing.min.js"></script>
-
-    <script src="js/custom.js"></script>
+    @include('site.javascript')
 </body>
 </html>

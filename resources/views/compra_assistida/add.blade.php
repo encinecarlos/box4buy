@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="col-sm-3">
-                        <label>Subitutir tamanho:</label>
+                        <label>Substituir tamanho:</label>
                         <input type="text" name="substituitamanho" class="form-control">
                     </div>
 
@@ -74,8 +74,8 @@
                                 <label>
                                     Se um item não estiver disponível:
                                     <select name="fora_estoque" class="form-control">
-                                        <option value="1">Compra os demais itens</option>
-                                        <option value="2">Cancela o pedido</option>
+                                        <option value="1">Comprar os demais itens</option>
+                                        <option value="2">Cancelar o pedido</option>
                                     </select>
                                 </label>
                             </div>

@@ -9,7 +9,7 @@
                    title="Gerenciamento de estoque, orçamentos e produtos enviados"><i class="fa fa-archive"></i> <span>Meus Produtos</span></a>
             </li>
             @if(App::environment(['local', 'staging']))
-            <li><a href="{{ route('compra.main') }}"><i class="fa fa-shopping-cart"></i> Compra Assistida (Em Breve)</a></li>
+            <li><a href="{{ route('compra.main') }}"><i class="fa fa-shopping-cart"></i> Compra Assistida</a></li>
             @endif
             <li><a href="{{ route('tickets') }}"><i class="fa fa-bullhorn"></i> <span>Suporte</span></a></li>
             @if (Auth::user()->type_user == '1')

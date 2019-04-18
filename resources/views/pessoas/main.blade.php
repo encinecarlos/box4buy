@@ -5,7 +5,7 @@
         <div class="box-header with-border">            
             <h4><i class="fa fa-user"></i> <span>CLIENTES</span></h4>
             <div class="box-tools pull-right">
-                <a href="{{ route('pessoas.add') }}" class="btn pull-right boxColorTema"><i class="fa fa-plus"></i> Adicionar cliente</a>
+                <a href="{{ route('pessoas.add') }}" class="btn pull-right btn-rounded boxColorTema"><i class="fa fa-plus"></i> Adicionar cliente</a>
             </div>
         </div>
         {{-- <div class="box-header with-border">            
@@ -30,10 +30,12 @@
                         <td>{{ $pessoa->nome_completo }}</td>
                         <td>{{ $pessoa->email }}</td>                                    
                         <td>
-                            <a href="{{ route('pessoas-show', $pessoa->codigo_suite) }}" class="btn btn-default boxColorTema">
+                            <a href="{{ route('pessoas-show', $pessoa->codigo_suite) }}"
+                               class="btn btn-default btn-rounded boxColorTema">
+                                <i class="fa fa-eye"></i>
                                 Ver mais
                             </a> 
-                            <button class="btn btn-danger delete-pessoa-{{ $pessoa->codigo_suite }}" type="button" onclick="deletePessoa({{ $pessoa->codigo_suite }})"><i class="fa fa-trash"></i></button>
+                            <button class="btn btn-danger btn-rounded delete-pessoa-{{ $pessoa->codigo_suite }}" type="button" onclick="deletePessoa({{ $pessoa->codigo_suite }})"><i class="fa fa-trash"></i></button>
                         </td>                    
                     </tr>
                     @endforeach
