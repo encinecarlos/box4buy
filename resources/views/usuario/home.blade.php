@@ -1,8 +1,4 @@
-@if(Auth::user()->type_user == 2)
-    @extends('base.usuario-base')
-@else
-    @extends('base.usuario-base')
-@endif
+@extends('base.usuario-base')
 
 @section('content')
     <!-- Essa DIV deverá aparecer no HOME CLIENTE -->

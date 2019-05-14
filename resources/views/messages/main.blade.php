@@ -49,7 +49,11 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-11">
-                                        <button type="submit" class="btn btn-info boxColorTema">Enviar Mensagem</button>
+                                        <button type="submit"
+                                                class="btn btn-info btn-rounded pull-right btn-lg boxColorTema">
+                                            <i class="fa fa-send"></i>
+                                            Enviar Mensagem
+                                        </button>
                                     </div>                    
                                 </div>    
                             </form>        
@@ -92,7 +96,11 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-11">
-                                        <button type="submit" class="btn btn-info boxColorTema">Enviar Mensagem</button>
+                                        <button type="submit"
+                                                class="btn btn-info btn-rounded pull-right btn-lg boxColorTema">
+                                            <i class="fa fa-send"></i>
+                                            Enviar Mensagem
+                                        </button>
                                     </div>                    
                                 </div>    
                             </form>        

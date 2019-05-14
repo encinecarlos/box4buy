@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
+//    const CREATED_AT = 'created_at';
+//    const UPDATED_AT = 'updated_at';
 
     protected $fillable = [
         'user_id', 'category_id', 'ticket_id', 'title', 'priority', 'message', 'status'

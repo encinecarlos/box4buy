@@ -1,4 +1,4 @@
-@extends('base.usuario-base')
+@extends(((Auth::user()->type_user == '2') ? 'base.usuario-base' : 'base.base'))
 
 @section('content')
     <div class="box box-info">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-sm-2">
                         <label>Valor:</label>
-                        <input type="text" name="valorproduto" class="form-control">
+                        <input type="text" name="valorproduto" class="form-control money">
                     </div>
 
                     <div class="col-sm-8">
@@ -177,6 +177,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"></script>
     <script>
+        // mascara para os inputs
+        $('.money').maskMoney();
+
         $('.additem').click(() => {
             var formitem = $('#additem').serialize();
             axios.post('/compra-assistida/additems', formitem).then(response => {

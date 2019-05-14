@@ -79,6 +79,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::delete('/estoque/delete/{id}', 'EstoqueController@destroy')->name('deleta-produto');
     Route::get('/produto/foto/delete/{fotoid}', 'EstoqueController@deleteImagem');
 
+    /*testes para suporte*/
+    Route::get('/suporte/teste', 'SuporteController@teste');
+    Route::get('/suporte', 'SuporteController@adminIndex')->name('ticketadmin');
+    Route::get('/suporte/historico', 'SuporteController@historico')->name('tickets.historico');
+
     // Envio de emails
     Route::get('/messages/direct/all', 'DirectMessageController@index')->name('send-direct-message');
     Route::post('/messages/direct/send', 'DirectMessageController@sendToAll')->name('postSend-direct-message');
@@ -132,7 +137,7 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
 
     Route::get('/usuario/enviados', 'Usuarios\EnviadosController@index')->name('enviados');
 
-    Route::get('/usuario/suporte', 'SuporteController@index')->name('tickets');
+    Route::get('/usuario/suporte', 'SuporteController@index')->name('tickets.usuario');
     Route::get('/usuario/suporte/add', 'SuporteController@create')->name('ticketadd');
     Route::post('usuario/suporte/add', 'SuporteController@store');
     Route::get('/usuario/suporte/{ticket_id}', 'SuporteController@show')->name('ticketshow');
@@ -140,7 +145,8 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::post('/usuario/suporte/resposta', 'CommentsController@postComment')->name('ticketresponse');
     Route::get('/suporte/{ticket_id}/close', 'SuporteController@closeTicket')->name('closeticket');
     Route::get('/suporte/{ticket_id}/open', 'SuporteController@openTicket')->name('openticket');
-    Route::get('/admin/suporte', 'SuporteController@adminIndex')->name('ticketadmin');
+
+
 
     // Estoque
     Route::get('/estoque/{id}', 'EstoqueController@exibeEstoqueUsuario');
@@ -179,6 +185,7 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::post('/compra-assistida/cancelar/{id}', 'CompraAssistidaController@cancelaPedido')->name('compra.cancelar');
     Route::post('/compra-assistida/payment/{id}', 'PagamentoCompraController@pay')->name('compra.pagamento');
     Route::get('/compra-assistida/payment', 'PagamentoCompraController@getStatus')->name('compra.status');
+    Route::delete('/compra-assistida/solicitacao/delete/{id}', 'CompraAssistidaController@destroy')->name('compra.deleta');
 
     // Orcamentos
     Route::post('/orcamento', 'OrcamentoController@geraOrcamento');
@@ -203,6 +210,9 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::get('/usuario/tutorial', function () {
         return view('usuario.tutorial');
     })->name('tutorial');
+
+    /*Onde comprar*/
+//    Route::get('')
 });
 
 Route::get('/login', function () {

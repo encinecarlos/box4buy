@@ -5,7 +5,7 @@
     <div class="box-header">
         <h4>ESTOQUE</h4>
         <div class="box-tools">
-            <a href="#product-new" class="btn btn-info boxColortema" rel="modal:open" title="Informar o envio de um produto para a Box4Buy"><i class="fa fa-plus"></i> NOVO PRODUTO</a>
+            <a href="#product-new" class="btn btn-info btn-rounded boxColorTema" rel="modal:open" title="Informar o envio de um produto para a Box4Buy"><i class="fa fa-plus"></i> NOVO PRODUTO</a>
         </div>
     </div>
 
@@ -39,8 +39,9 @@
                                     <td>{{ $ac->descricao_produto }}</td>
                                     <td>{{ $ac->codigo_rastreio }}</td>
                                     <td>
-                                        <a href="{{ route('edit-produto', [$ac->codigo_suite, $ac->seq_produto]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                                        <button class="btn btn-danger delete-produto-{{ $ac->seq_produto }}" type="button" onclick="deleteProduto({{ $ac->seq_produto }})"><i class="fa fa-trash"></i></button>
+                                        <a href="{{ route('edit-produto', [$ac->codigo_suite, $ac->seq_produto]) }}"
+                                           class="btn btn-info btn-rounded boxColorTema"><i class="fa fa-edit"></i></a>
+                                        <button class="btn btn-danger btn-rounded delete-produto-{{ $ac->seq_produto }}" type="button" onclick="deleteProduto({{ $ac->seq_produto }})"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -73,7 +74,8 @@
                                     <td>{{ $e->data_chegada->diffInDays() }}</td>
                                     <td>{{ $e->qtde }}</td>
                                     <td>
-                                        <a href="{{ route('edit-produto', [$e->codigo_suite, $e->seq_produto]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ route('edit-produto', [$e->codigo_suite, $e->seq_produto]) }}"
+                                           class="btn btn-info btn-rounded boxColorTema"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -108,7 +110,8 @@
                                     <td>{{ $es->descricao_produto }}</td>
                                     <td class="col-sm-1">{{ Carbon\Carbon::parse($es->dias_estoque)->diffInDays() }}</td>
                                     <td>
-                                        <a href="{{ route('edit-produto', [$es->codigo_suite, $es->seq_produto]) }}" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ route('edit-produto', [$es->codigo_suite, $es->seq_produto]) }}"
+                                           class="btn btn-info btn-rounded boxColorTema"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

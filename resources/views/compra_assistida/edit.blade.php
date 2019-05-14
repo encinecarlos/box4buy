@@ -173,6 +173,7 @@
     || $solicitacao->status_solicitacao == '13'
     || Auth::user()->type_user == '1')
 
+      {{--Valores para impressão--}}
      <div class="box box-default hidden-sm hidden-md hidden-lg hidden-xs">
          <div class="box-header">
              <h4><i class="fa fa-money"></i> Valores do serviço</h4>
@@ -200,6 +201,7 @@
          </div>
      </div>
 
+      {{--Valores para exibir em tela--}}
      <div class="box box-info hidden-print">
         <div class="box-header">
             <h4><i class="fa fa-money"></i> Valores do serviço</h4>
@@ -248,25 +250,88 @@
                 </div>
             </div>
 
-            @if(Auth::user()->type_user == '2')
+            @if(Auth::user()->type_user == '2' && $solicitacao->status_solicitacao == '11')
             <div class="row hidden-print">
                 <div class="col-sm-6">
-                    <form action="{{ route('compra.pagamento', $solicitacao->sequencia) }}" method="post">
-                        @csrf
-                        <button type="submit" class="btn btn-success btn-rounded btn-lg text-uppercase">
-                            <i class="fa fa-paypal"></i> Efetuar pagamento
-                        </button>
-
-                        <button type="button" onclick="cancelaPedido({{ $solicitacao->sequencia }})" class="btn btn-danger btn-rounded btn-lg text-uppercase">
-                            <i class="fa fa-trash"></i> Cancelar Pedido
-                        </button>
-                    </form>
+                    <button type="button" onclick="cancelaPedido({{ $solicitacao->sequencia }})"
+                            class="btn btn-danger btn-rounded btn-lg text-uppercase">
+                        <i class="fa fa-trash"></i> Cancelar Pedido
+                    </button>
+                </div>
+                <div class="col-sm-6">
+                    <div class="paypal-container"></div>
                 </div>
             </div>
             @endif
         </div>
     </div>
-    @endif
+@section('paypal')
+    <script
+            src="https://www.paypal.com/sdk/js?client-id={{ env('PAYPAL_CLIENT_ID') }}">
+    </script>
+@endsection
+@section('order')
+    <script>
+        paypal.Buttons({
+            style: {
+                size:'responsive',
+                color: 'blue',
+                shape: 'pill',
+                tagline: false,
+                label: 'pay'
+            },
+            createOrder(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: "{{ $solicitacao->total_compra }}",
+                            breakdown: {
+                                // currency_code: 'USD',
+                                item_total: {
+                                    currency_code: 'USD',
+                                    value:"{{ $solicitacao->total_compra }}"
+                                }
+                            }
+                        },
+                        items: [{
+                            name: "Box4Buy - compra assistida",
+                            unit_amount: {
+                                currency_code: 'USD',
+                                value: "{{ $solicitacao->total_compra }}"
+                            },
+                            description: "Entrega para a suite CB{{ Auth::user()->codigo_suite }}",
+                            quantity: 1
+                        }]
+                    }]
+                });
+            },
+
+            onApprove(data, actions) {
+                // Capture the funds from the transaction
+                /*return actions.order.capture().then(function(details) {
+                    // Show a success message to your buyer
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                });*/
+                axios.post("/compra-assistida/payment/{{ $solicitacao->sequencia }}").then(response => {
+                    Swal({
+                        title: 'Sucesso!',
+                        text: response.data,
+                        type: 'success',
+                        confirmButtonText: 'OK',
+                        onClose: reloadPage
+                    });
+                });
+
+            }
+        }).render('.paypal-container');
+
+        function reloadPage() {
+            location.href = location.href;
+        }
+    </script>
+@endsection
+
+@endif
 
     @include('compra_assistida.partials.add-produto')
 @endsection
@@ -285,6 +350,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"></script>
     <script>
+        // mascara para os inputs
+        $('.money').maskMoney();
+
         function pagar(id)
         {
             axios.post('/compra-assistida/payment/' + id).then(response => {

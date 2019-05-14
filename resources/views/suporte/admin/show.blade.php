@@ -3,16 +3,16 @@
 @section('content')   
     <div class="box box-info">
         <div class="box-header">
-            <h4>{{ $ticket->ticket_id }} - {{ $ticket->title }}</h4>
+            <h4>Código: {{ $ticket->ticket_id }}</h4>
             <p><b>Chamado aberto por:</b> {{ $ticket->user->nome_completo }}</p>
             <div class="box-tools">
                 {{-- <a href="{{ route('closeticket', $ticket->ticket_id) }}" class="btn btn-danger"><i class="fa fa-close"></i> Fechar Chamado</a> --}}
                 @switch($ticket->status)
                 @case('aberto')
-                    <button type="button" id="{{ $ticket->ticket_id }}" class="btn btn-danger pull-right closeticket"><i class="fa fa-close"></i> Encerrar chamado</button>
+                    <button type="button" id="{{ $ticket->ticket_id }}" class="btn btn-danger btn-rounded pull-right closeticket"><i class="fa fa-close"></i> Encerrar chamado</button>
                     @break
                 @case('fechado')    
-                    <button type="button" id="{{ $ticket->ticket_id }}" class="btn btn-success pull-right openticket"><i class="fa fa-check"></i> Abrir chamado</button>
+                    <button type="button" id="{{ $ticket->ticket_id }}" class="btn btn-success pull-right btn-rounded openticket"><i class="fa fa-check"></i> Abrir chamado</button>
                     @break
                 @endswitch    
             </div>
@@ -20,7 +20,7 @@
 
         <div class="box-body">
             <p>{{ $ticket->message }}</p>
-            <p><b>Categoria: </b>{{ $categoria->name }}</p>
+            {{--<p><b>Categoria: </b>{{ $categoria->name }}</p>--}}
             <p>
                 <b>Status:</b>
                 @switch($ticket->status)
@@ -82,7 +82,9 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-11">
-                        <button type="submit" class="btn btn-info boxColorTema pull-right">Responder</button>                        
+                        <button type="submit" class="btn btn-info btn-rounded boxColorTema pull-right">
+                           <i class="fa fa-send-o"></i> Responder
+                        </button>
                     </div>                    
                 </div>
             </form>

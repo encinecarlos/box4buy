@@ -316,8 +316,6 @@
                                             <span class="label label-success">Aprovado</span>
                                         </td>
                                         <td>
-                                            <a href="{{ route('orcamento.show', $ap->sequencia) }}"
-                                               class="btn btn-info btn-rounded boxColorTema"><i class="fa fa-eye"></i> Ver Detalhes</a>
                                             @switch($libera_pagamento[0]->libera_pagamento)
                                                 @case('1')
                                                 <p>Va até a <a href="{{ route('home') }}" class="btn btn-link">pagina
@@ -475,6 +473,7 @@
 
 
 @stop
+
 @section('css')
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap.css"/>
@@ -486,7 +485,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"></script>
+
     <script>
+
+
         $('#estoque-produtos').dataTable({
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json'

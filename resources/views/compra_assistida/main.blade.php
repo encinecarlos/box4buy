@@ -54,7 +54,7 @@
                                 <a href="{{ route('compra.edit', $compra->sequencia) }}" class="btn btn-info btn-rounded boxColorTema">
                                     <i class="fa fa-eye"></i> Detalhes
                                 </a>
-                                <a href="" class="btn btn-danger btn-rounded">
+                                <a href="#" onclick="deletaSolicitacao({{ $compra->sequencia }})" class="btn btn-danger btn-rounded">
                                     <i class="fa fa-trash"></i> Excluir
                                 </a>
                             </td>
@@ -86,5 +86,38 @@
             },
             order: [[0, 'desc']],
         });
+
+        function deletaSolicitacao(id)
+        {
+            Swal.fire({
+                title: 'AVISO',
+                text: 'Deseja remover esta solicitação?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim',
+                confirmButtonColor: '#d33',
+                cancelButtonText: 'Não',
+            }).then(result => {
+                if(result.value) {
+                    axios.delete('/compra-assistida/solicitacao/delete/'+id).then(response => {
+                        Swal({
+                            title: 'Sucesso!',
+                            text: response.data,
+                            type: 'success',
+                            confirmButtonText: 'OK',
+                            // onClose: reloadPage
+                        }).then(confirm => {
+                            if(confirm) {
+                                location.reload();
+                            }
+                        });
+                    });
+                }
+            });
+        }
+
+        function reloadPage() {
+            location.href = location.href;
+        }
     </script>
 @endsection

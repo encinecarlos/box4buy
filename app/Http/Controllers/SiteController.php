@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\SiteContactMail;
+use Illuminate\Support\Facades\Mail;
 
 class SiteController extends Controller
 {

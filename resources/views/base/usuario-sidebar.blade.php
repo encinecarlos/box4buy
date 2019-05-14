@@ -8,10 +8,8 @@
             <li><a href="{{ route('estoque') }}" data-toggle="tooltip"
                    title="Gerenciamento de estoque, orçamentos e produtos enviados"><i class="fa fa-archive"></i> <span>Meus Produtos</span></a>
             </li>
-            @if(App::environment(['local', 'staging']))
             <li><a href="{{ route('compra.main') }}"><i class="fa fa-shopping-cart"></i> Compra Assistida</a></li>
-            @endif
-            <li><a href="{{ route('tickets') }}"><i class="fa fa-bullhorn"></i> <span>Suporte</span></a></li>
+            <li><a href="{{ route('tickets.usuario') }}"><i class="fa fa-bullhorn"></i> <span>Suporte</span></a></li>
             @if (Auth::user()->type_user == '1')
                 <li><a href="{{ route('pessoas') }}"><i class="fa fa-home"></i> <span>Admin</span></a></li>
             @endif

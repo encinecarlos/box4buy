@@ -8,6 +8,7 @@
         </div>
         <div class="box-body">
             <form enctype="multipart/form-data" class="update-item" method="POST">
+                <input type="hidden" name="suite" value="{{ Auth::user()->codigo_suite }}">
                 <input type="hidden" name="itemid" value="{{ $key }}">
                 <div class="form-group">
                     <div class="col-sm-6">
@@ -50,7 +51,7 @@
                     </div>
                     <div class="col-sm-2">
                         <label>Valor:</label>
-                        <input type="text" name="valorproduto" class="form-control" value="{{ $item['valor'] }}">
+                        <input type="text" name="valorproduto" class="form-control money" value="{{ $item['valor'] }}">
                     </div>
 
                     <div class="col-sm-8">
@@ -75,8 +76,8 @@
                                 <label>
                                     Se um item não estiver disponível:
                                     <select name="fora_estoque" class="form-control">
-                                        <option value="Compra os demais itens">Compra os demais itens</option>
-                                        <option value="Cancela o pedido">Cancela o pedido</option>
+                                        <option value="1">Compra os demais itens</option>
+                                        <option value="2">Cancela o pedido</option>
                                     </select>
                                 </label>
                             </div>

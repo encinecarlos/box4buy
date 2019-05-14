@@ -51,7 +51,38 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
+        <div class="box box-info">
+            <div class="box-header">
+                <h4>Novos clientes este mês</h4>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover">
+                    <thead>
+                        <th>Suite</th>
+                        <th>Nome</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                    {{--{{ dd($usuario_mes) }}--}}
+                    @foreach($usuario_mes as $usuario)
+                        <tr>
+                            <td>{{ $usuario->codigo_suite }}</td>
+                            <td>{{ $usuario->nome_completo }} {{ $usuario->sobrenome }}</td>
+                            <td class="col-sm-2">
+                                <a href="{{ route('pessoas-show', $usuario->codigo_suite) }}" class="btn btn-default btn-rounded boxColorTema">
+                                    <i class="fa fa-eye">Visualizar Cliente</i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
         <div class="box box-info">
             <div class="box-header">
                 <h4>Ultimos produtos enviados para a box4buy</h4>
@@ -60,24 +91,56 @@
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
-                            <th>Suite</th>
-                            <th>Descrição</th>
-                            <th></th>
+                        <th>Suite</th>
+                        <th>Descrição</th>
+                        <th></th>
                         </thead>
                         <tbody>
-                            @foreach($box_enviados as $enviados)
+                        @foreach($box_enviados as $enviados)
                             <tr>
-                                <td>{{ $enviados->codigo_suite }}</td>
+                                <td>CB{{ $enviados->codigo_suite }}</td>
                                 <td>{{ $enviados->descricao_produto }}</td>
                                 <td>
                                     <a href="{{ route('edit-produto', [$enviados->codigo_suite, $enviados->seq_produto]) }}"
                                        class="btn btn-info btn-rounded boxColorTema"><i class="fa fa-pencil"></i></a>
                                 </td>
                             </tr>
-                            @endforeach
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-sm-4">
+        <div class="box box-info">
+            <div class="box-header">
+                <h4>Solicitação de compra assistida</h4>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover">
+                    <thead>
+                        <th>Código</th>
+                        <th>Suite</th>
+                        <th>Status</th>
+                        <th>Data de Solicitação</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                    @foreach($compra_assistida as $assistida)
+                        <tr>
+                            <td>{{ $assistida->sequencia }}</td>
+                            <td>{{ $assistida->suite_id }}</td>
+                            <td><span class="badge bg-gray text-uppercase">Processando</span></td>
+                            <td>{{ $assistida->created_at->format('d/m/Y h:i:s') }}</td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -135,20 +198,19 @@
                     <table class="table table-hover">
                         <thead>
                             <th>ID</th>
-                            <th>Assunto</th>
-                            <th>Prioridade</th>
+                            <th>Status</th>
+                            <th></th>
                         </thead>
                         <tbody>
                             @foreach ($suporte_aberto as $aberto)
                             <tr>
                                 <td>{{ $aberto->ticket_id }}</td>
-                                <td><a href="{{ route('ticketadminshow', $aberto->ticket_id) }}">{{ $aberto->title }}</a>
+                                <td>
+                                    {{ $aberto->message }}
                                 </td>
                                 <td>
-                                    @switch($aberto->priority) @case('baixa')
-                                    <span class="badge bg-green">Baixa</span> @break @case('media')
-                                    <span class="badge bg-yellow">Média</span> @break @case('alta')
-                                    <span class="badge bg-red">Alta</span> @endswitch
+                                    <a href="{{ route('ticketadminshow', $aberto->ticket_id) }}"
+                                       class="btn btn-default btn-rounded boxColorTema"><i class="fa fa-eye"></i> Visualizar</a>
                                 </td>
                             </tr>
                             @endforeach

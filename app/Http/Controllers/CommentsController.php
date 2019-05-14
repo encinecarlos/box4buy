@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Pessoa;
 use App\Ticket;
@@ -22,7 +23,8 @@ class CommentsController extends Controller
             'comment' => $request->resposta
         ]);
 
-        DB::table('tickets')->where('ticket_id', $request->ticket_id)->update(['status' => 'aberto']);
+        DB::table('tickets')->where('ticket_id', $request->ticket_id)
+            ->update(['status' => 'aberto', 'updated_at' => new Carbon()]);
         Mail::send(new SupportResponse($request->ticket_id, Auth::user()->email));
         Mail::send(new SupportAdminResponse($request->ticket_id, Auth::user()->codigo_suite));
 

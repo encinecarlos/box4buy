@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Pessoa;
 use App\Ticket;
 use App\Category;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Mail\SupportMessage;
 use Illuminate\Support\Facades\Mail;
@@ -17,7 +17,7 @@ class SuporteController extends Controller
 {
     public function index()
     {
-        $tickets = DB::table('tickets')->where('user_id', Auth::user()->codigo_suite)->get();
+        $tickets = Ticket::where('user_id', Auth::user()->codigo_suite)->get();
         $category = Category::all();
 
         return view('suporte.main', ['mensagens' => $tickets, 'categorias' => $category]);
@@ -25,10 +25,18 @@ class SuporteController extends Controller
 
     public function adminIndex()
     {
-        $tickets = Ticket::all();
+        $tickets = Ticket::where('status', 'aberto')->orWhere('status', 'respondido')->get();
         $category = Category::all();
         
         return view('suporte.admin.main', ['mensagens' => $tickets, 'categorias' => $category]);
+    }
+
+    public function historico()
+    {
+        $tickets = Ticket::where('status', 'fechado')->get();
+        $category = Category::all();
+
+        return view('suporte.admin.history', ['mensagens' => $tickets, 'categorias' => $category]);
     }
 
     public function create()
@@ -42,13 +50,10 @@ class SuporteController extends Controller
     {
         $ticket_number = str_replace(".", "", substr(hexdec(uniqid(str_random(64))), 0, 6));
         DB::insert(
-            'insert into tickets (user_id, category_id, ticket_id, title, priority, message, status, created_at, updated_at) values (?,?,?,?,?,?,?,?,?)',
+            'insert into tickets (user_id, ticket_id, message, status, created_at, updated_at) values (?,?,?,?,?,?)',
         [
             Auth::user()->codigo_suite,
-            $request->category,
             $ticket_number,
-            $request->subject,
-            $request->priority,
             $request->message,
             'aberto',
             new Carbon,

@@ -20,7 +20,6 @@ use App\Mail\SendResetPassword;
 use App\Lib\CustomException;
 use App\Lib\UspsTest;
 use App\Configuration;
-use Route;
 use Carbon\Carbon;
 use App\Facades\CotacaoDolar;
 use App\Http\Requests\UsuarioRequest;
@@ -168,8 +167,10 @@ class UsuarioController extends Controller
                 //Auth::logoutOtherDevices($request->password);
                 if (Auth::user()->type_user == '1') {
                     return redirect()->intended('/admin/dashboard');
+                    Pessoa::where('type_user', '1')
+                        ->update(['ip_access' => $request->ip()]);
                 } else {
-                    session(['suite_prefix' => 'CB#']);
+                    session(['suite_prefix' => 'CB']);
                     return redirect()->intended(route('home'));
                 }
             } else {

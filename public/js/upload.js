@@ -1,19 +1,12 @@
 Dropzone.autoDiscover = false;
 
-// $('a[data-modal]').click(function () {
-//     $('#modalFotoPerfil').modal({
-//         showClose: false,
-//         fadeDuration: 200
-//     });
-// });
-
 $.modal.defaults = {
     fadeDuration: 200,
     clickClose: true,
     escapeClose: true
-}
+};
 
-var dropzonerg = new Dropzone('#rg', {
+var dropzonerg = new Dropzone('div#rg', {
     url: '/api/upload/docs/rg',
 });
 
@@ -29,7 +22,7 @@ dropzonerg.on('complete', function (file) {
     }, 2500)
 });
 
-var dropzonecomprovante = new Dropzone('#comprovante', {
+var dropzonecomprovante = new Dropzone('div#comprovante', {
     url: '/api/upload/docs/comprovante',
 });
 

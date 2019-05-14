@@ -85,7 +85,6 @@ class CompraAssistidaController extends Controller
         } else {
             session(['total_produtos' => number_format($this->total_produtos, 2)]);
         }
-        return response($this->total_produtos);
     }
 
     /**
@@ -94,6 +93,7 @@ class CompraAssistidaController extends Controller
      */
     public function updateItems(Request $request)
     {
+        $total_produtos = 0;
         session()->forget('items.'.$request->itemid);
 
         $data_items = [
@@ -112,6 +112,18 @@ class CompraAssistidaController extends Controller
         ];
 
         session()->push('items', $data_items);
+        foreach (session('items') as $item)
+        {
+            $total_produtos += $item['valor'];
+        }
+
+        if(session()->has('total_produtos'))
+        {
+            session()->forget('total_produtos');
+            session(['total_produtos' => number_format($total_produtos, 2)]);
+        } else {
+            session(['total_produtos' => number_format($total_produtos, 2)]);
+        }
     }
 
     /**
@@ -152,14 +164,15 @@ class CompraAssistidaController extends Controller
             $this->compra->status_solicitacao = 10;
 //            $this->compra->total_produtos = array_sum(session('items.'. $itemid .'valor'));
             $this->compra->total_produtos = session('total_produtos');
-            $this->compra->codigo_suite = session('items.'.$itemid.'.suite');
+            $this->compra->suite_id = session('items.'.$itemid.'.suite');
             $this->compra->observacoes = session('items.'.$itemid.'.observacoes_add');
             $this->compra->save();
 
             $compraid = DB::getPdo()->lastInsertId();
 
             foreach (session('items') as $item) {
-                DB::insert('INSERT INTO bxby_compra_assistida (compra_id, 
+                DB::insert('INSERT INTO bxby_compra_assistida (
+                                   compra_id, 
                                    link_produto,
                                    descricao,
                                    cor, 
@@ -185,8 +198,6 @@ class CompraAssistidaController extends Controller
                         $item['fora_estoque'],
                     ]);
             }
-
-
         } else {
             $data = [
                 'compra_id' => $request->compra_id,
@@ -239,21 +250,10 @@ class CompraAssistidaController extends Controller
         ];
 
         $solicitacao = CompraAssistidaInfo::find($id);
-        /*$cliente_email = User::select('email')
-                            ->where('codigo_suite', $solicitacao->suite_id)
-                            ->get();*/
 
-//        debugbar()->debug($cliente_email[0]->email);
         $solicitacao->update($data);
 
         Mail::send(new CompraAssistidaChangeStatus($id, '11', $solicitacao->usuario->email, $solicitacao->suite_id));
-
-
-        /*if(Auth::user()->type_user == '1')
-        {
-        } else {
-            Mail::send(new CompraAssistidaMail($id, Auth::id(), '10', session('items.'.$itemid.'.observacoes_add'), Auth::user()->email));
-        }*/
 
         return response('Valores inseridos com sucesso!');
     }
@@ -304,11 +304,12 @@ class CompraAssistidaController extends Controller
 
     public function destroyProduct($id)
     {
-        CompraAssistida::destroy($id);
+        CompraAssistida::where('compra_id', $id)->delete();
     }
 
     public function destroy($id)
     {
+        $this->destroyProduct($id);
         CompraAssistidaInfo::destroy($id);
         return response('Registro excluido com sucesso!');
     }

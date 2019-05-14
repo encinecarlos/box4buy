@@ -49,7 +49,8 @@
 											@switch($a->codigo_pacote) @case(1) First class @break @case(2) Priority Mail @break @case(3) Priority Express @break @endswitch
 										</td>
 										<td>
-											<a href="{{ route('orcamento-detalhe', $a->sequencia) }}" id="{{ $a->sequencia }}" class="btn btn-info boxColorTema">
+											<a href="{{ route('orcamento-detalhe', $a->sequencia) }}" id="{{ $a->sequencia }}"
+											   class="btn btn-info btn-rounded boxColorTema">
 												<i class="fa fa-eye"></i> Produtos</a>
 										</td>
 										<td>{{ $a->peso_total }}</td>
@@ -58,10 +59,10 @@
 											<span class="label label-warning">Pendente</span>
 										</td>
 										<td>
-											<a href="{{ route('orcamento-edit', $a->sequencia) }}" class="btn btn-info boxColorTema">
+											<a href="{{ route('orcamento-edit', $a->sequencia) }}" class="btn btn-info btn-rounded boxColorTema">
 												<i class="fa fa-pencil" aria-hidden="true"></i>
 											</a>
-											<button type="button" class="btn btn-danger or-delete" data-tab="aguardando" data-orcamento="{{ $a->sequencia }}"><i class="fa fa-trash"></i></button>
+											<button type="button" class="btn btn-danger btn-rounded or-delete" data-tab="aguardando" data-orcamento="{{ $a->sequencia }}"><i class="fa fa-trash"></i></button>
 										</td>
 									</tr>
 									@endforeach
@@ -109,10 +110,11 @@
 											<span class="label label-danger">Não</span>
 										</td>
 										<td>
-											<a href="{{ route('orcamento-edit', $ap->sequencia) }}" class="btn btn-warning">
+											<a href="{{ route('orcamento-edit', $ap->sequencia) }}"
+											   class="btn btn-info btn-rounded boxColorTema">
 												<i class="fa fa-pencil" aria-hidden="true"></i>
 											</a>
-											<button type="button" class="btn btn-danger or-delete" data-tab="pagamento1" data-orcamento="{{ $ap->sequencia }}"><i class="fa fa-trash"></i></button>
+											<button type="button" class="btn btn-danger btn-rounded or-delete" data-tab="pagamento1" data-orcamento="{{ $ap->sequencia }}"><i class="fa fa-trash"></i></button>
 										</td>
 									</tr>
 									@endforeach
@@ -150,23 +152,25 @@
 											@switch($pg->codigo_pacote) @case(1) First class @break @case(2) Priority Mail @break @case(3) Priority Express @break @endswitch
 										</td>
 										<td>
-											<a href="{{ route('orcamento-detalhe', $pg->sequencia) }}" id="{{ $pg->sequencia }}" class="btn btn-info boxColorTema">
+											<a href="{{ route('orcamento-detalhe', $pg->sequencia) }}" id="{{ $pg->sequencia }}"
+											   class="btn btn-info btn-rounded boxColorTema">
 												<i class="fa fa-eye"></i> Produtos</a>
 										</td>
 										<td>{{ $pg->peso_total }}</td>
 										<td>{{ $pg->vlr_final == '' ? '0.00' : $pg->vlr_final }} USD</td>
 										<td>
-											<span class="label label-success">Aprovado</span>
+											<span class="badge bg-green">Aprovado</span>
 										</td>
 										<td>
-											<span class="label label-success">Sim</span>
+											<span class="badge bg-green">Sim</span>
 										</td>
 										<td>
-											<a href="{{ route('orcamento-edit', $pg->sequencia) }}" class="btn btn-warning">
+											<a href="{{ route('orcamento-edit', $pg->sequencia) }}"
+											   class="btn btn-info btn-rounded boxColorTema">
 												<i class="fa fa-pencil" aria-hidden="true"></i>
 											</a>
-											<button type="button" class="btn btn-danger or-delete" data-tab="pagamento2" data-orcamento="{{ $pg->sequencia }}"><i class="fa fa-trash"></i></button>
-											<a href="{{ route('gerapdf', $pg->sequencia) }}" target="_blank" class="btn btn-default"><i class="fa fa-file-text"></i> Gerar Recibo</a>
+											<button type="button" class="btn btn-danger btn-rounded or-delete" data-tab="pagamento2" data-orcamento="{{ $pg->sequencia }}"><i class="fa fa-trash"></i></button>
+											<a href="{{ route('gerapdf', $pg->sequencia) }}" target="_blank" class="btn btn-default btn-rounded"><i class="fa fa-file-text"></i> Gerar Recibo</a>
 										</td>
 									</tr>
 									@endforeach

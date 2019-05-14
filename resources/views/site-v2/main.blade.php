@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Serviço de redirecionamento de encomendas. Do mundo até vc">
+    <meta name="author" content="Box4buy">
+    <meta property="og:url" content="https://box4buy.com">
+    <meta property="og:type" conntent="website">
+    <meta property="og:title" conntent="Serviço de redirecionamento de encomendas">
+    <meta property="og:description" conntent="Cadastre-sem gratuitamente e receba seu endereço americano.">
+    <meta property="og:image:secure_url" conntent="https://www.box4buy.com/postimage.jpg">
+    <title>Box4Buy - Redirecionamento de encomendas</title>
+            
+    <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}">
+
+    <!-- Global Stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/animate/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl-carousel/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl-carousel/owl.theme.default.min.css') }}">    
+    <link rel="stylesheet" href="{{ asset('css/careers.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pricing.css') }}">    
+    <link rel="stylesheet" href="{{ asset('bower_components/toastr/toastr.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    
+</head>
+
+<body id="page-top">
+    {{--@include('chat.plugin')--}}
+    <meta name="referrer" content="unsafe-url">
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                xfbml            : true,
+                version          : 'v3.2'
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/pt_BR/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat"
+         attribution=setup_tool
+         page_id="1933271053371600"
+         theme_color="#2095f4"
+         logged_in_greeting="Olá, como podemos ajuda-lo?"
+         logged_out_greeting="Olá, como podemos ajuda-lo?">
+    </div>
+    <!--====================================================
+                             HEADER
+    ======================================================-->
+    <header>
+        <!-- Top Navbar  -->
+        @include('site.topbar')
+
+        <!-- Navbar -->
+        @include('site.menu')
+    </header>
+    <!--====================================================
+                       LOGIN E REGISTRO
+    ======================================================-->
+    @include('site.login-site')
+    <!--====================================================
+                             HOME
+    ======================================================-->
+    <section id="home">
+        <div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
+            <!-- Carousel items -->
+            <div class="carousel-inner">
+                <div class="carousel-item active slides">
+                    <div class="overlay"></div>
+                    <div class="slide-1"></div>
+                    <div class="hero ">
+                        
+                        <hgroup class="wow fadeInUp">
+                            <h1>
+                                Serviço de redirecionamento de encomendas.
+                            </h1>
+                            <h4 class="corWhite">do mundo até vc</h4>
+                            <br>
+                        </hgroup>
+                        <a href="#" class="btn btn-general buttonPrimary wow fadeInUp btnMain btn-rounded" data-toggle="modal" data-target="#cadastro-modal">Cadastre-se já, é Gratis! <i class="fa fa-arrow-right"></i></a>
+                        {{--OU
+                        <a href="{{ route('login') }}" class="btn btn-general buttonPrimary wow fadeInUp btnMain btn-rounded">
+                            <i class="fa fa-lock"></i> ACESSE SUA CONTA
+                        </a>--}}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--====================================================
+                            ABOUT
+    ======================================================-->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="row title-bar">
+                <div class="col-md-12">
+                    <h1 class="wow fadeInUp">Nós ajudamos você.</h1>
+                    <div class="heading-border"></div>
+                    <p class="wow fadeInUp" data-wow-delay="0.4s">Redirecionamento de Encomendas nos EUA
+                        <br /> Compre nos Estados Unidos e no mundo e tenha suas compras redirecionadas para você!</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="story-descb">
+                            <img src="img/news/news-10.jpg" class="img-fluid" alt="...">
+                            <h6>Primeiro Passo</h6>
+                            <p>Cadastre-se gratuitamente na Box4Buy e obtenha seu endereço nos EUA</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="story-descb">
+                            <img src="img/news/news-2.jpg" class="img-fluid" alt="...">
+                            <h6>Segundo Passo</h6>
+                            <p>Compre em qualquer loja online e envie para o endereço que fornecemos!</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="story-descb">
+                            <img src="img/news/news-8.jpg" class="img-fluid" alt="...">
+                            <h6>Terceiro Passo</h6>
+                            <p>Recebemos e armazenamos sua compra sem custo.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="story-descb">
+                            <img src="img/news/news-15.jpg" class="img-fluid" alt="...">
+                            <h6>Passo Final</h6>
+                            <p>Consolidamos e enviamos suas compras conforme a sua solicitação.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--====================================================
+                           CAREER-P3
+    ======================================================-->
+    <div class="overlay-career-p3"></div>
+    <section id="career-p3">
+        <div class="container-fluide">
+            <div class="row career-p3-title">
+                <div class="col-md-12">
+                    <h3 class="text-center">Descubra nossas vantagens</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="career-p3-cont text-center">
+                        <i class="fa fa-user-plus"></i>
+                        <h5>ATENDIMENTO</h5>
+                        <br />
+                        <small>Nosso atendimento é personalizado.</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="career-p3-cont text-center">
+                        <i class="fa fa-money"></i>
+                        <h5>ARMAZENAMENTO</h5>
+                        <br />
+                        <small>Até 60 dias de armazenamento grátis.</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="career-p3-cont text-center">
+                        <i class="fa fa-shopping-bag"></i>
+                        <h5>CONSOLIDAÇÃO</h5>
+                        <br />
+                        <small>Para sua economia juntamos vários pacotes em apenas um.</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="career-p3-cont text-center">
+                        <i class="fa fa-id-badge"></i>
+                        <h5>FOTOS</h5>
+                        <br />
+                        <small>Receba fotos das encomendas e produtos gratuitamente.</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="career-p3-cont text-center">
+                        <i class="fa fa-rocket"></i>
+                        <h5>ENVIO DA MERCADORIA.</h5>
+                        <br />
+                        <small>Total agilidade no envio das suas mercadorias.</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="career-p3-cont text-center">
+                        <i class="fa fa-handshake-o"></i>
+                        <h5>COMPROMISSO</h5>
+                        <br />
+                        <small>Confiabilidade e profissionalismo.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--====================================================
+                      PRICE
+    ======================================================-->
+    <section id="price">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="pricingTable">
+                        <div class="pricing-icon">
+                            <i class="fa fa-globe"></i>
+                        </div>
+                        <div class="price-Value">
+                            <div class="line-currency">até 4 LBS <small>(1,8 kg)</small></div>
+                            <div class="custom-price">
+                                US$ 3,00
+                            </div>                            
+                        </div>
+                        
+                        <div class="pricingHeader">
+                            <br>
+                        </div>
+                        <div class="pricing-content">
+                            <ul>
+                                <li>+ Frete</li>
+                                <li>+ Taxa do Cartão</li>
+                                <li>
+                                    <small>(5% do total)</small>
+                                </li>
+                                <li>
+                                    <small>*valores em dólares</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="pricingTable">
+                        <div class="pricing-icon">
+                            <i class="fa fa-rocket"></i>
+                        </div>
+                        <div class="price-Value">
+                            <div class="line-currency">4.1 ATÉ 10 LBS <small>(1,85 até 4,5 kg)</small></div>
+                            <div class="custom-price">
+                                US$ 7,50
+                            </div>                            
+                        </div>
+                        {{-- <span class="month">
+                            <smal></smal>
+                        </span> --}}
+                        <div class="pricingHeader">
+                            <br>
+                        </div>
+                        <div class="pricing-content">
+                            <ul>
+                                <li>+ Frete</li>
+                                <li>+ Taxa do Cartão</li>
+                                <li>
+                                    <small>(5% do total)</small>
+                                </li>
+                                <li>
+                                    <small>*valores em dólares</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="pricingTable">
+                        <div class="pricing-icon">
+                            <i class="fa fa-briefcase"></i>
+                        </div>
+                        <div class="price-Value">
+                            <div class="line-currency">ACIMA DE 10.1 LBS <small id="up10">(mais de 4,5 kg)</small></div>
+                            <div class="custom-price">
+                                US$ 12,00
+                            </div>
+                        </div>
+                        {{-- <span class="month">
+                            A PARTIR DE 10.1 LBS (mais de 4,5 kg)
+                        </span> --}}
+                        <div class="pricingHeader">
+                            <br>
+                        </div>
+                        <div class="pricing-content">
+                            <ul>
+                                <li>+ Frete</li>
+                                <li>+ Taxa do Cartão</li>
+                                <li>
+                                    <small>(5% do total)</small>
+                                </li>
+                                <li>
+                                    <small>*valores em dólares</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <p class="text-center">As formas de envio que trabalhamos são: USPS First Class, USPS Priority Mail e USPS Express Mail</p>
+        </div>
+    </section>
+
+    <!--====================================================
+                      SIMULAÇÂO FRETE
+    ======================================================-->
+    <div class="overlay-career-p3"></div>
+    <section id="career-p3">
+        <div class="container-fluide">
+            <div class="row career-p3-title">
+                <div class="col-md-12">
+                    <h3 class="text-center">Faça uma simulação do frete agora!</h3>
+                    <br />
+                </div>
+            </div>
+            <a href="{{ route('calculadora-site') }}" target="_blank">
+                <h3 class="text-center">
+                    <button class="btn btn-general buttonPrimary wow fadeInUp btn-rounded" role="button">
+                        SIMULAR MEU FRETE
+                    </button>
+                </h3>
+            </a>
+        </div>
+    </section>
+    <!--====================================================
+                          MODALS
+    ======================================================-->
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="cadastro-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title titulo-modal-cadastro">CADASTRE-SE</h4>
+                    <button type="button" class="close btn_fechar_modal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal form-ajax noenter" id="form-cadastro" enctype="multipart/form-data" method="post">
+                        {{ csrf_field() }}
+                        <div class="alert alert-danger alert-errors" >
+                            <ul id="list-error" style="list-style-type: none">
+                            </ul>
+                        </div>
+                        <!-- <input type="hidden" name="nome"> -->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Nome:</label>
+                                    <input type="text" name="_nome" class="form-control" placeholder="Primeiro nome" autofocus>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Sobrenome:</label>
+                                    <input type="text" name="_sobrenome" placeholder="Ultimo nome" class="form-control" autofocus>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>E-mail:</label>
+                            <input type="email" name="email" class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Data de Nascimento:</label>
+                                    {{-- <input type="text" data-inputmask="'mask':'99/99/9999'" name="data_nascimento" class="form-control"> --}}
+                                    <input type="tex" name="data_nascimento" class="form-control date">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Telefone:</label>
+                                    <input type="text" name="celular" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Endereço:</label>
+                            <input type="text" name="endereco" class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Número:</label>
+                                    <input type="number" name="numero" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label>Bairro:</label>
+                                    <input type="text" name="bairro" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Complemento:</label>
+                            <input type="text" name="complemento" class="form-control">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>CEP:</label>
+                                    <input type="text" name="cep" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Cidade:</label>
+                                    <input type="text" name="cidade" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Estado:</label>
+                                    <select class="form-control" name="uf">
+                                        <option value="">Escolher</option>
+                                        <option value="AC">AC</option>
+                                        <option value="AL">AL</option>
+                                        <option value="AP">AP</option>
+                                        <option value="AM">AM</option>
+                                        <option value="BA">BA</option>
+                                        <option value="CE">CE</option>
+                                        <option value="DF">DF</option>
+                                        <option value="ES">ES</option>
+                                        <option value="GO">GO</option>
+                                        <option value="MA">MA</option>
+                                        <option value="MT">MT</option>
+                                        <option value="MS">MS</option>
+                                        <option value="MG">MG</option>
+                                        <option value="PA">PA</option>
+                                        <option value="PB">PB</option>
+                                        <option value="PR">PR</option>
+                                        <option value="PE">PE</option>
+                                        <option value="PI">PI</option>
+                                        <option value="RJ">RJ</option>
+                                        <option value="RN">RN</option>
+                                        <option value="RS">RS</option>
+                                        <option value="RO">RO</option>
+                                        <option value="RR">RR</option>
+                                        <option value="SC">SC</option>
+                                        <option value="SP">SP</option>
+                                        <option value="SE">SE</option>
+                                        <option value="TO">TO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>País:</label>
+                            <select name="pais" class="form-control">
+                                <option value="BR">Brasil</option>
+                                <option value="US">Estados Unidos</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Onde nos conheceu?</label>
+                            <input type="text" name="ondeconheceu" class="form-control">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Senha</label>
+                                    <div class="div-senha">
+                                        <input type="password" id="senha" name="password"/>
+                                        <i class="fa fa-eye" id="ver" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Confirmar senha</label>
+                                    <input type="password" id="confirm-senha" name="confirm-password" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" id="send-cadastro" class="btn btn-success btn-box4buy">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================================================
+                          FOOTER
+    ======================================================-->
+    @include('site.footer')
+
+    @include('site.javascript')
+    <script src="{{ asset('js/main.js') }}"></script>
+
+    {{--<script>
+        var botmanWidget = {
+            frameEndpoint: '/bxby/chat',
+            chatServer: 'https://messenger.carlosencine.com/botman',
+            title: 'Atendimento Online',
+            introMessage: 'Seja bem vindo a Box4buy. Em que podemos ajuda-lo?',
+            mainColor: '#2095f4',
+            placeholderText: 'Enviar Mensagem...',
+            bubbleBackground: '#2095f4',
+            bubbleAvatarUrl: 'img/chat/messenger1.png'
+        };
+    </script>
+    <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>--}}
+</body>
+
+</html>

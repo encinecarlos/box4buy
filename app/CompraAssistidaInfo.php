@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int status_solicitacao
- * @property \Illuminate\Session\SessionManager|\Illuminate\Session\Store|mixed codigo_suite
+ * @property int status_solicitacao *
  * @property \Illuminate\Session\SessionManager|\Illuminate\Session\Store|mixed observacoes
  * @property mixed produtos
  * @property mixed usuario
+ * @property \Illuminate\Session\SessionManager|\Illuminate\Session\Store|mixed suite_id
+ * @property \Illuminate\Session\SessionManager|\Illuminate\Session\Store|mixed total_produtos
  */
 class CompraAssistidaInfo extends Model
 {

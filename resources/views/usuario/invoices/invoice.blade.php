@@ -121,10 +121,11 @@
             <div class="col-xs-12">
                 {{-- <a href="#" onclick="window.print()" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a> --}}
                 <a href="{{ route('estoque') }}" class="btn btn-danger btn-lg"><i class="fa fa-arrow-left"></i> Voltar</a>
-                <form action="{{ route('payment', $orcamento[0]->sequencia) }}" method="POST">
+                {{--<form action="{{ route('payment', $orcamento[0]->sequencia) }}" method="POST">
                     @csrf
                     <button class="btn btn-info btn-lg boxColorTema pull-right" type="submit"><i class="fa fa-paypal"></i> Efetuar Pagamento</button>
-                </form>                
+                </form> --}}
+                <div class="paypal-container pull-right"></div>
             </div>  
         </div>
 
@@ -133,4 +134,62 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">    
+@endsection
+
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+@section('paypal')
+    <script
+            src="https://www.paypal.com/sdk/js?client-id={{ env('PAYPAL_CLIENT_ID') }}">
+    </script>
+@endsection
+@section('order')
+    <script>
+        paypal.Buttons({
+            style: {
+                size:'responsive',
+                color: 'blue',
+                shape: 'pill',
+                tagline: false,
+                label: 'pay'
+            },
+            createOrder(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: "{{ $orcamento[0]->vlr_final }}",
+                            breakdown: {
+                                // currency_code: 'USD',
+                                item_total: {
+                                    currency_code: 'USD',
+                                    value:"{{ $orcamento[0]->vlr_final }}"
+                                }
+                            }
+                        },
+                        items: [{
+                            name: "Entrega de produtos BOX4BUY",
+                            unit_amount: {
+                                currency_code: 'USD',
+                                value: "{{ $orcamento[0]->vlr_final }}"
+                            },
+                            description: "Entrega para a suite CB{{ Auth::user()->codigo_suite }}",
+                            quantity: 1
+                        }]
+                    }]
+                });
+            },
+
+            onApprove(data, actions) {
+                // Capture the funds from the transaction
+                // return actions.order.capture().then(function(details) {
+                //     // Show a success message to your buyer
+                //     alert('Transaction completed by ' + details.payer.name.given_name);
+                // });
+                axios.post("/invoice/payment/{{ $orcamento[0]->sequencia }}").then(response => {
+                    location.href = "/invoice/payment/recibo/{{ $orcamento[0]->sequencia }}"
+                });
+            }
+        }).render('.paypal-container');
+    </script>
 @endsection
