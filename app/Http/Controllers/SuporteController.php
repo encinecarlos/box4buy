@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\AnnouncementNotification;
+use App\User;
 use Illuminate\Http\Request;
 use App\Pessoa;
 use App\Ticket;
@@ -63,8 +65,10 @@ class SuporteController extends Controller
 
         $this->sendEmailSupport();
         $this->notifyAdmin();
+        $user_notify = User::find(Auth::user()->codigo_suite);
+        $user_notify->notify(new AnnouncementNotification('fa fa-check text-success',"Chamado de suporte $ticket_number aberto!"));
         
-        return redirect()->route('tickets');
+        return redirect()->route('tickets.usuario');
     }
 
     private function sendEmailSupport()

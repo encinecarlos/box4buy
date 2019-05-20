@@ -6,7 +6,7 @@
 Olá, {{ $userdata[0]->nome_completo }}
 Obrigado por entrar em contato com nossa equipe de suporte. Um ticket de suporte já foi aberto para a sua solicitação. Você será notificado por e-mail quando enviarmos uma resposta.
 
-@component('mail::button', ['url' => route('tickets')])
+@component('mail::button', ['url' => route('tickets.usuario')])
 Ver Tickets
 @endcomponent
 
