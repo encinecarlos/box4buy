@@ -13,16 +13,22 @@ class AnnouncementNotification extends Notification
 
     private $message;
     private $icon;
+    private $type;
+    private $extrainfo;
 
     /**
      * Create a new notification instance.
      *
-     * @param $icon
-     * @param $message
+     * @param $message A mensagem a ser exibida na notificação
+     * @param $type O modulo que esta chamando a notificação
+     * @param string $icon O icone da notificação
+     * @param null $extrainfo recebe um parametro extra, caso aplicavel
      */
-    public function __construct($icon = "fa fa-check", $message)
+    public function __construct($message, $type,$icon = "fa fa-check", $extrainfo = null)
     {
         $this->icon = $icon;
+        $this->type = $type;
+        $this->extrainfo = $extrainfo;
         $this->message = $message;
     }
 
@@ -68,7 +74,9 @@ class AnnouncementNotification extends Notification
     {
         return [
             'message' => $this->message,
-            'icon' => $this->icon
+            'type' => $this->type,
+            'icon' => $this->icon,
+            'extrainfo' => $this->extrainfo
         ];
     }
 }

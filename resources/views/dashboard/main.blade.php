@@ -136,7 +136,13 @@
                             <td>{{ $assistida->suite_id }}</td>
                             <td><span class="badge bg-gray text-uppercase">Processando</span></td>
                             <td>{{ $assistida->created_at->format('d/m/Y h:i:s') }}</td>
-                            <td></td>
+                            <td>
+                                <a href="{{ route('compra.edit', $assistida->sequencia) }}"
+                                   class="btn btn-default btn-rounded boxColorTema">
+                                    <i class="fa fa-edit"></i>
+                                    Editar
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

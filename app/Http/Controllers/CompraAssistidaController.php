@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CompraAssistida;
 use App\CompraAssistidaInfo;
 use App\Http\Requests\CompraRequest;
+use App\Lib\NotificationSystem;
 use App\Mail\CompraAssistidaChangeStatus;
 use App\Mail\CompraAssistidaMail;
 use App\User;
@@ -225,6 +226,13 @@ class CompraAssistidaController extends Controller
         session()->forget('items');
         \session()->forget('total_produtos');
 
+        /*NotificationSystem::notifyAdmin(
+            "Nova solicitação de compra assistida criada",
+            "compra_assistida",
+            "fa fa-plus-circle",
+            $compraid
+        );*/
+
         return response('Solicitação enviada com sucesso');
     }
 
@@ -252,6 +260,14 @@ class CompraAssistidaController extends Controller
         $solicitacao = CompraAssistidaInfo::find($id);
 
         $solicitacao->update($data);
+
+        /*NotificationSystem::notifyUser(
+            $solicitacao->suite_id,
+            "Sua solicitação acaba de ser respondida clique nesta notificação para maiores detalhes",
+            "compra_assistida",
+            "fa fa-paper-plane",
+            $solicitacao->sequencia
+            );*/
 
         Mail::send(new CompraAssistidaChangeStatus($id, '11', $solicitacao->usuario->email, $solicitacao->suite_id));
 
@@ -292,7 +308,6 @@ class CompraAssistidaController extends Controller
 
     public function foraEstoque(Request $request, $id)
     {
-//        return $request;
         CompraAssistida::find($id)->update(['fora_estoque' => $request->fora_estoque]);
     }
 

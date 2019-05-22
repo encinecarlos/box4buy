@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Lib\NotificationSystem;
 use App\Notifications\AnnouncementNotification;
 use App\User;
 use Illuminate\Http\Request;
 use App\Pessoa;
 use App\Ticket;
 use App\Category;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -64,9 +66,14 @@ class SuporteController extends Controller
         );
 
         $this->sendEmailSupport();
-        $this->notifyAdmin();
-        $user_notify = User::find(Auth::user()->codigo_suite);
-        $user_notify->notify(new AnnouncementNotification('fa fa-check text-success',"Chamado de suporte $ticket_number aberto!"));
+        $this->notifyAdminEmail();
+
+        /*NotificationSystem::notifyAdmin(
+            "Chamado de suporte $ticket_number aberto!",
+            "suporte",
+            "fa fa-ticket",
+            $ticket_number);*/
+
         
         return redirect()->route('tickets.usuario');
     }
@@ -78,7 +85,7 @@ class SuporteController extends Controller
         Mail::send(new SupportMessage($user_name));
     }
 
-    private function notifyAdmin()
+    private function notifyAdminEmail()
     {
         $ticket = DB::table('tickets')->orderBy('id', 'DESC')->get();
         Mail::send(new AdminSupportMessage($ticket));
@@ -105,14 +112,12 @@ class SuporteController extends Controller
     public function closeTicket($ticket_id)
     {
         DB::table('tickets')->where('ticket_id', $ticket_id)->update(['status' => 'fechado']);
-        // return redirect()->back();
         return response()->json(['msg' => 'Chamado encerrado com sucesso!', 'status' => '1']);
     }
     
     public function openTicket($ticket_id)
     {
         DB::table('tickets')->where('ticket_id', $ticket_id)->update(['status' => 'aberto']);
-        // return redirect()->back();
         return response()->json(['msg' => 'Chamado aberto com sucesso!', 'status' => '1']);
     }
 }

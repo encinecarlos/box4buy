@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Usuarios;
 
+use App\Lib\NotificationSystem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -134,6 +135,11 @@ class UsuarioController extends Controller
                 ]
             );
 
+            /*NotificationSystem::notifyAdmin(
+                "Novo cliente cadastrado com o código de suite CB$suiteId",
+                "usuario",
+                "fa fa-user",
+                $suiteId);*/
 
             Mail::to($request->input('email'))->send(new SenConfirmation($suiteId, $request->email));
 

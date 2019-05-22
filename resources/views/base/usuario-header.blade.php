@@ -13,33 +13,49 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- Notifications: style can be found in dropdown.less -->
-                <li class="dropdown notifications-menu">
+                {{--<li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
                         <span class="label label-warning">
                             {{ Auth::user()->unreadNotifications()->groupBy('notifiable_type')->count() }}
                         </span>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu notification">
                         <li class="header">
                             <a href="" class="btn btn-link">Apagar notificações</a>
                         </li>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
-                                @foreach(Auth::user()->notifications as $notification)
+                                @foreach(Auth::user()->unreadNotifications as $notification)
                                     <li>
-                                        <a href="#">
-                                            <i class="{{ $notification->data['icon'] }}"></i>
-                                            {{ $notification->data['message'] }}
-                                        </a>
+                                        @switch($notification->data['type'])
+                                            @case('suporte')
+                                            <a href="{{ route('ticketshow', $notification->data['extrainfo']) }}">
+                                                <i class="{{ $notification->data['icon'] }}"></i>
+                                                {{ $notification->data['message'] }}
+                                            </a>
+                                            @break
+                                            @case('usuario')
+                                            <a href="{{ route('usuario.exibir', $notification->data['extrainfo']) }}">
+                                                <i class="{{ $notification->data['icon'] }}"></i>
+                                                {{ $notification->data['message'] }}
+                                            </a>
+                                            @break
+                                            @case('compra_assistida')
+                                            <a href="{{ route('compra.edit', $notification->data['extrainfo']) }}">
+                                                <i class="{{ $notification->data['icon'] }}"></i>
+                                                {{ $notification->data['message'] }}
+                                            </a>
+                                            @break
+                                        @endswitch
                                     </li>
                                 @endforeach
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">View all</a></li>
+                        --}}{{--<li class="footer"><a href="#">View all</a></li>--}}{{--
                     </ul>
-                </li>
+                </li>--}}
 
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">

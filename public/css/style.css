@@ -1256,6 +1256,10 @@ span.label {
     cursor: pointer; /* Cursor on hover */
 }
 
+.notification {
+    width: 340px !important;
+}
+
 /* FIM CUSTOMIZAÇÕES - CARLOS ENCINE */
 
 
