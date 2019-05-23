@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\AlertRepository;
+use App\Repositories\Contracts\RepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -26,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(RepositoryInterface::class, AlertRepository::class);
     }
 }

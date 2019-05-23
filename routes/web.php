@@ -18,6 +18,7 @@ Route::group(['middleware' => ['calculadorasite']], function () {
         return view('site.main', ['dolar' => $dolar]);
     })->name('site');
 
+
     Route::get('/duvidas', function () {
         $dolar = DB::select('select cfg_dolar from bxby_configurations');
         return view('site.duvidas', ['dolar' => $dolar]);
@@ -111,6 +112,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
 
     //manipulação de imagens
     Route::get('/rotate/left/{imgid}', 'EstoqueImagemController@rotateLeft')->name('rotateleft');
+
+    // Sistema de anuncios
+    Route::get('alerts/all', 'AlertController@index');
+    Route::get('alerts/save', 'AlertController@store');
+    Route::get('alerts/{id}', 'AlertController@show');
+    Route::get('alerts/update/{id}', 'AlertController@update');
+    Route::get('alerts/delete/{id}', 'AlertController@destroy');
 });
 
 /* Views do painel do usuário */
