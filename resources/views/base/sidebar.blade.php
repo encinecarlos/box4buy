@@ -60,6 +60,13 @@
       </li>
 
       <li>
+        <a href="{{ route('alerts.all') }}">
+          <i class="fa fa-paragraph"></i>
+          <span>Anuncios</span>
+        </a>
+      </li>
+
+      <li>
         <a href="{{ route('configuracoes') }}">
           <i class="fa fa-cog"></i>
           <span>Configurações</span>          

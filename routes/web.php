@@ -113,12 +113,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     //manipulação de imagens
     Route::get('/rotate/left/{imgid}', 'EstoqueImagemController@rotateLeft')->name('rotateleft');
 
-    // Sistema de anuncios
-    Route::get('alerts/all', 'AlertController@index');
-    Route::get('alerts/save', 'AlertController@store');
-    Route::get('alerts/{id}', 'AlertController@show');
-    Route::get('alerts/update/{id}', 'AlertController@update');
-    Route::get('alerts/delete/{id}', 'AlertController@destroy');
+    // Sistema de alerts
+    Route::get('alerts/all', 'AlertController@index')->name('alerts.all');
+    Route::get('alerts/add', 'AlertController@add')->name('alerts.add');
+    Route::post('alerts/save', 'AlertController@store')->name('alerts.save');
+    Route::get('alerts/{id}', 'AlertController@show')->name('alerts.edit');
+    Route::put('alerts/update/{id}', 'AlertController@update')->name('alerts.update');
+    Route::delete('alerts/delete/{id}', 'AlertController@destroy')->name('alerts.delete');
 });
 
 /* Views do painel do usuário */
@@ -153,8 +154,6 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::post('/usuario/suporte/resposta', 'CommentsController@postComment')->name('ticketresponse');
     Route::get('/suporte/{ticket_id}/close', 'SuporteController@closeTicket')->name('closeticket');
     Route::get('/suporte/{ticket_id}/open', 'SuporteController@openTicket')->name('openticket');
-
-
 
     // Estoque
     Route::get('/estoque/{id}', 'EstoqueController@exibeEstoqueUsuario');

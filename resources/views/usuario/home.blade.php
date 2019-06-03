@@ -11,7 +11,7 @@
     </div>
     
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-3">
             <div class="box box-info box-solid">
                 <div class="box-header with-border text-center">
                     <h4><b><i class="fa fa-address-card"></i> ENDEREÇO NOS ESTADOS UNIDOS</b></h4>
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-3">
             <div class="box box-info box-solid">
                 <div class="box-header with-border text-center">
                     <h4><b><i class="fa fa-link"></i> ATALHOS</b></h4>
@@ -114,8 +114,43 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-sm-6 ">
+            <div class="box box-info box-solid">
+                <div class="box-header with-border text-center">
+                    <i class="fa fa-newspaper-o"> NOVIDADES BOX4BUY</i>
+                </div>
+                <div class="box-body box-scroll">
+                    @foreach($novidades as $news)
+                        <div class="box box-widget">
+                            <div class="box-header with-border">
+                                <div class="user-block">
+                                    <img src="{{ asset('favicon-32x32.png') }}" alt="">
+                                    <span class="username">Equipe Box4Buy - {{ $news->title }}</span>
+                                    <span class="description">Publicado em {{ $news->created_at->format('d/m/Y') }} as {{ $news->created_at->format('h:i') }}</span>
+                                </div>
+                                <div class="box-tools">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        {!! $news->description !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
-    
+
+
+
     <div class="row">
         <div class="col-sm-6">
             <div class="box box-info box-solid">
@@ -144,12 +179,43 @@
                             src="https://www.youtube.com/embed/videoseries?list=PLbumAGpgT6JpJ5fdpRVAWJO30yp_KT04u"
                             frameborder="0"
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe> {{ strtotime() }}
+                            allowfullscreen></iframe>
 
                 </div>
             </div>
         </div>
     </div>
+
+    {{--<div class="row">
+        <div class="col-sm-12">
+            <div class="box box-info box-solid">
+                <div class="box-header with-border text-center">
+                    <i class="fa fa-newspaper-o"> NOVIDADES BOX4BUY</i>
+                </div>
+                <div class="box-body">
+                    @foreach($novidades as $news)
+                        <div class="box box-widget">
+                            <div class="box-header with-border">
+                                <div class="user-block">
+                                    <img src="{{ asset('favicon-32x32.png') }}" alt="">
+                                    <span class="username">Equipe Box4Buy - {{ $news->title }}</span>
+                                    <span class="description">Publicado em {{ $news->created_at->format('d/m/Y') }} as {{ $news->created_at->format('h:i') }}</span>
+                                </div>
+                                <div class="box-tools">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                {!! $news->description !!}
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>--}}
 @stop
 
 @section('css')

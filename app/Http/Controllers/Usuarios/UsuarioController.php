@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Usuarios;
 
+use App\Alert;
 use App\Lib\NotificationSystem;
+use App\Repositories\AlertRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +30,12 @@ use Debugbar;
 
 class UsuarioController extends Controller
 {
-    private $pass;
+    private $alerts;
+
+    public function __construct(AlertRepository $alert)
+    {
+        $this->alerts = $alert;
+    }
 
     public function renderHome()
     {
@@ -38,7 +45,9 @@ class UsuarioController extends Controller
             ->where('codigo_suite', Auth::user()->codigo_suite)
             ->get();
 
-        return view('usuario.home', ['configs' => $configs, 'enable_pay' => $enable_pay]);
+        $news = $this->alerts->orderRecords('sequencia', 'desc');
+
+        return view('usuario.home', ['configs' => $configs, 'enable_pay' => $enable_pay, 'novidades' => $news]);
     }
 
     public function gerarSuite()

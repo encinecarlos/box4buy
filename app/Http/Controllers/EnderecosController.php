@@ -67,4 +67,10 @@ class EnderecosController extends Controller
             CustomException::trataErro($ex);
         }
     }
+
+    public function destroy($id)
+    {
+        Enderecos::where('seq_endereco', $id)->delete();
+        return response('Endereço excluido com sucesso.');
+    }
 }

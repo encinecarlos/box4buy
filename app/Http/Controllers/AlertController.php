@@ -17,37 +17,41 @@ class AlertController extends Controller
 
     public function index()
     {
-        return $this->alert->getAll();
+        $alerts = $this->alert->getAll();
+//        $alerts = $this->alert->orderRecords('created_at', 'desc');
+        return view('alerts.main', ['alerts' => $alerts]);
     }
 
-    public function store()
+    public function add()
     {
-        $data = [
-            'title' => str_random(10),
-            'description' => str_random(200),
-            'expires_at' => Carbon::now()->addDays(15)
-        ];
+        return view('alerts.add');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->all();
+
         $this->alert->create($data);
-        return $data;
+        return response('Publicado com sucesso!');
     }
 
     public function show($id)
     {
-        return $this->alert->getById($id);
+        $alert = $this->alert->getById($id);
+        return view('alerts.edit', ['alert' => $alert]);
     }
 
-    public function update($id)
+    public function update(Request $request,$id)
     {
-        $data = [
-            'description' => uniqid()
-        ];
+        $data = $request->all();
+
         $this->alert->update($data, $id);
-        return [$data, $id];
+        return response('Atualizado com sucesso!');
     }
 
     public function destroy($id)
     {
         $this->alert->delete($id);
-        return "Registro $id excluido!";
+        return response("O registro foi excluido com sucesso!");
     }
 }

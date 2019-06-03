@@ -38,6 +38,7 @@ Route::delete('/pessoas/delete/{id}', ['as' => 'pessoas.edit', 'uses' => 'Pessoa
 Route::post('/endereco', 'EnderecosController@cadastrar');
 Route::get('/endereco/{seq_endereco}/{id}', 'EnderecosController@show');
 Route::put('/endereco/update/{id}', 'EnderecosController@update');
+Route::delete('/endereco/delete/{id}', 'EnderecosController@destroy');
 
 Route::post('/produtos/new', 'EstoqueController@cadastrar')->name('produto-new');
 // Route::post('/produtos/upload', 'EstoqueController@uploadEstoque')->name('upload-estoque');

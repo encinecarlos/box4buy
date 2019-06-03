@@ -1260,6 +1260,11 @@ span.label {
     width: 340px !important;
 }
 
+.box-scroll {
+    height: 313px;
+    overflow-x: scroll;
+}
+
 /* FIM CUSTOMIZAÇÕES - CARLOS ENCINE */
 
 

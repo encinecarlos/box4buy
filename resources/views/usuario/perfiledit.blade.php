@@ -189,6 +189,49 @@
                             Editar endereço
                         </a>
                     </div>
+
+                    <div class="form-group notMarging">
+                        <label class="col-sm-2 control-label" for="inputAdicionaEdereco">
+                            Endereços:
+                        </label>
+                        <div class="col-sm-9">
+                            <table class="table">
+                                <thead>
+                                    <th>Rua</th>
+                                    <th>n°</th>
+                                    <th>Bairro</th>
+                                    <th>Cidade</th>
+                                    <th>UF</th>
+                                    <th>Complemento</th>
+                                    <th>CEP</th>
+                                    <th>País</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                @foreach($perfil_endereco as $endereco)
+                                    <tr>
+                                        <td>{{ $endereco->endereco }}</td>
+                                        <td>{{ $endereco->numero }}</td>
+                                        <td>{{ $endereco->bairro }}</td>
+                                        <td>{{ $endereco->cidade }}</td>
+                                        <td>{{ $endereco->estado }}</td>
+                                        <td>{{ $endereco->complemento }}</td>
+                                        <td>{{ $endereco->codigo_postal }}</td>
+                                        <td>{{ $endereco->pais }}</td>
+                                        <td>
+                                            <button class="btn btn-danger btn-rounded address-delete"
+                                                    type="button"
+                                                    title="Excluir endereço"
+                                                    onclick="deleteAddress({{ $endereco->seq_endereco }})">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 					
                 </div>
                 <div class="form-group notMarging">
@@ -277,6 +320,36 @@
                 $('#foto_perfil').load(window.location.href + " #foto_perfil");
             }, 1500);
         });
+
+
+        function deleteAddress(id) {
+            Swal.fire({
+                title: 'Você tem certeza disso?',
+                text: 'Deseja deletar este registro?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim',
+                confirmButtonColor: '#d33',
+                cancelButtonText: 'Não',
+            }).then(result => {
+                if (result.value) {
+                    axios.delete('/api/endereco/delete/' + id).then(response => {
+                        Swal.fire({
+                            title: 'Tudo certo!',
+                            text: response.data,
+                            type: 'success',
+                            confirmButtonText: 'OK',
+                            onClose: reloadPage
+                        });
+                    });
+                }
+
+            });
+        }
+
+        function reloadPage() {
+            location.href = location.href;
+        }
     </script>
     {{-- <script src="{{ asset('js/upload.js') }}"></script> --}}
 @stop

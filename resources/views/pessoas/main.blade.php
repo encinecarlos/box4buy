@@ -49,7 +49,7 @@
 
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap.css" />
-<link rel="stylesheet" href="{{asset('css/style.css')}}"> 
+
 @stop
 
 @section('js')
@@ -94,5 +94,5 @@
         function reloadPage() {
             location.href = location.href;
         }
-    </script>    
+    </script>
 @endsection

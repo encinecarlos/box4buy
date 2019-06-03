@@ -155,23 +155,14 @@ $(document).ready(function () {
         var data = addForm.serialize();
 
         axios.post('/api/endereco', data).then(response => {
-            if (response.msg.status == '1') {
-                Swal({
-                    title: 'Sucesso!',
-                    text: response.data.msg,
-                    type: 'success',
-                    confirmButtonText: 'OK',
-                    onClose: closeModal
-                });
-            } else {
-                Swal({
-                    title: 'Sucesso!',
-                    text: response.data.msg,
-                    type: 'success',
-                    confirmButtonText: 'OK',
-                    onClose: closeModal
-                });
-            }
+            Swal({
+                title: 'Tudo certo!',
+                text: response.data.msg,
+                type: 'success',
+                confirmButtonText: 'OK',
+                onClose: closeModal
+            });
+
             if(Swal.isVisible())
             {
                 $('#form-enderecoadd :input[type="text"]').val('');

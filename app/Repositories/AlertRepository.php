@@ -26,6 +26,11 @@ class AlertRepository implements RepositoryInterface
         return $this->model->all();
     }
 
+    public function orderRecords($filter, $order)
+    {
+        return $this->model->orderBy($filter, $order)->get();
+    }
+
     public function getById($id)
     {
         return $this->model->find($id);
