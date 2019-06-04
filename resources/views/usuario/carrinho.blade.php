@@ -53,8 +53,10 @@
                                         </td>
                                         <td class="col-sm-1"
                                             id="peso_valor">{{ $value['peso'] != '' ? $value['peso'] : '0' }}</td>
-                                        <td id="valor_declarado"><input type="text" name="valor_declarado[]"
-                                                                        data-product="{{ $value['id'] }}" id="{{ $es }}"
+                                        <td id="valor_declarado"><input type="text"
+                                                                        name="valor_declarado[]"
+                                                                        data-product="{{ $value['id'] }}"
+                                                                        id="{{ $es }}"
                                                                         class="form-control"
                                                                         placeholder="Valor unitário"></td>
                                         <td><a href="#" id="{{ $es }}" class="btn btn-danger removeproduto"

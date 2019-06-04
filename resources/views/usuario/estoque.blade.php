@@ -125,18 +125,25 @@
                                         <td class="text-center">
                                             <a href="#fotoproduto-{{ $produto->seq_produto }}" rel="modal:open"
                                                class="btn btn-primary btn-rounded boxColorTema"
-                                               title="Visualizar Fotos"><i
-                                                        class="fa fa-image"></i></a>
+                                               {{--{{ $produto->data_chegada == '' || $produto->qtde == 0 ? 'disabled' : '' }}--}}
+                                               title="Visualizar Fotos">
+                                                <i class="fa fa-image"></i>
+                                            </a>
                                         </td>
                                         <td>{{ $produto->peso }}</td>
                                         <td>{{ $produto->data_chegada != '' ? $produto->data_chegada->diffInDays() : 'Produto não chegou' }}</td>
                                         <td class="col-sm-2">{{ $produto->data_chegada != '' ? $produto->qtde : 'Produto não chegou' }}</td>
-                                        <td class="col-sm-2"><input type="number" name="qtenvio" class="form-control"
-                                                                    id="qtde-{{ $produto->seq_produto }}" value="1"
-                                                                    max="{{ $produto->qtde }}"></td>
+                                        <td class="col-sm-2">
+                                            <input type="number"
+                                                   name="qtenvio"
+                                                   class="form-control"
+                                                   id="qtde-{{ $produto->seq_produto }}" value="1"
+                                                   max="{{ $produto->qtde }}">
+                                        </td>
                                         <td>
                                             @if($produto->data_chegada == '' || $produto->qtde == 0)
-                                                <button type="button" class="btn btn-danger btn-rounded qt"
+                                                <button type="button"
+                                                        class="btn btn-danger btn-rounded qt"
                                                         title="Adicionar ao carrinho" disabled>
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </button>
@@ -166,7 +173,10 @@
                                                 </div>
                                             </div>
                                             <div class="box-body">
-                                                @foreach ($produto->fotos as $imagem)
+                                                @if($produto->fotos->isEmpty())
+                                                    <p class="alert alert-warning text-center">NENHUMA FOTO DISPONIVEL PARTA ESTE PRODUTO.</p>
+                                                @else
+                                                    @foreach ($produto->fotos as $imagem)
                                                     <li class="col-lg-4 col-md-6 col-sm-6 col-xs-12 img-list"
                                                         style="list-style: none">
                                                         <div class="card estoque-card">
@@ -200,6 +210,7 @@
                                                         </div>
                                                     </li>
                                                 @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

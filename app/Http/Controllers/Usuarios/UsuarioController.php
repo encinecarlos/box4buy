@@ -13,7 +13,7 @@ use App\Pessoa;
 use App\Enderecos;
 use App\PessoaContato;
 use App\ConfirmaDados;
-use App\Mail\SenConfirmation;
+use App\Mail\SendConfirmation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
@@ -108,7 +108,9 @@ class UsuarioController extends Controller
 
             $suiteId = DB::getPdo()->lastInsertId();
 
-            DB::insert("INSERT INTO bxby_pconfirma_dados (codigo_suite, data_cadastro) VALUES (?, ?)", [$suiteId, new Carbon()]);
+            DB::insert("INSERT INTO bxby_pconfirma_dados (codigo_suite, data_cadastro, libera_pagamento) 
+                             VALUES (?, ?, ?)",
+                [$suiteId, 1,new Carbon()]);
 
             DB::insert(
                 "INSERT INTO bxby_pendereco (codigo_suite,
@@ -150,7 +152,7 @@ class UsuarioController extends Controller
                 "fa fa-user",
                 $suiteId);*/
 
-            Mail::to($request->input('email'))->send(new SenConfirmation($suiteId, $request->email));
+            Mail::to($request->input('email'))->send(new SendConfirmation($suiteId, $request->email));
 
             return response()->json(['msg' => 'Cadastro efetuado com sucesso!', 'status' => '1']);
         } catch (QueryException $e) {
@@ -161,14 +163,12 @@ class UsuarioController extends Controller
 
     public function enablePayment($suite)
     {
-        $enable_customer = DB::table('bxby_pconfirma_dados')->where('codigo_suite', $suite)->get();
         DB::table('bxby_pconfirma_dados')->where('codigo_suite', $suite)->update(['libera_pagamento' => '2']);
         return response()->json(['msg' => 'Função pagamento liberada para o cliente!', 'status' => '1']);
     }
 
     public function disablePayment($suite)
     {
-        $enable_customer = DB::table('bxby_pconfirma_dados')->where('codigo_suite', $suite)->get();
         DB::table('bxby_pconfirma_dados')->where('codigo_suite', $suite)->update(['libera_pagamento' => '1']);
         return response()->json(['msg' => 'Função pagamento bloqueada para o cliente!', 'status' => '1']);
     }
@@ -404,10 +404,12 @@ class UsuarioController extends Controller
 
     public function removeDocComprovante($id)
     {
-        $rgpath = DB::table('bxby_pconfirma_dados')->select(['caminho_comprovante'])->where('codigo_suite', $id)->get();
-        $filetoremove = public_path() . $rgpath[0]->caminho_rg;
-        unlink($filetoremove);
-        DB::table('bxby_pconfirma_dados')->where('codigo_suite', $id)->update(['caminho_comprovante' => '']);
+        $rgpath = DB::table('bxby_pconfirma_dados')->select(['caminho_comporvante'])->where('codigo_suite', $id)->get();
+
+        Storage::delete($rgpath[0]->caminho_rg);
+        DB::table('bxby_pconfirma_dados')
+            ->where('codigo_suite', $id)
+            ->update(['caminho_comprovante' => '']);
         return response()->json(['msg' => 'Documento removido com sucesso.']);
     }
 

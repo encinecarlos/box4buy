@@ -290,7 +290,7 @@ $(document).ready(function () {
         });
     });
 
-    function removedocumento(suite) {
+    /*function removedocumento(suite) {
         var doctype = $('.removedoc').data('documento');
         if (doctype == 'rg') {
             axios.delete('/documento/delete/rg/' + id).then(response => {
@@ -313,7 +313,7 @@ $(document).ready(function () {
                 });
             });
         }
-    }
+    }*/
 
     $('.updateproduto').click(function (e) {
         var produto = e.target.id;

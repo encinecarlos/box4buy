@@ -103,9 +103,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::post('/configuracoes', 'Configuracoes\ConfiguracaoController@index')->name('configuracoes');
     Route::get('/configuracoes/password/generate', 'Configuracoes\ConfiguracaoController@generatePassword')->name('generate-pass');
 
-    // Gestão de documentos
-    Route::get('/documento/delete/rg/{id}', 'Usuarios\UsuarioController@removeDocRG')->name('deletarg');
-    Route::get('/documento/delete/comprovante/{id}', 'Usuarios\UsuarioController@removeDocRG')->name('deletacomprovante');
+    // Gestão de documentos - o termo delete é apenas para refrencia na url
+    Route::put('/documento/delete/rg/{id}', 'Usuarios\UsuarioController@removeDocRG')->name('deletarg');
+    Route::put('/documento/delete/comprovante/{id}', 'Usuarios\UsuarioController@removeDocRG')->name('deletacomprovante');
 
     // Dashboard do sistema
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
