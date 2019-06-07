@@ -226,7 +226,7 @@
                         <div class="price-Value">
                             <div class="line-currency">até 4 LBS <small>(1,8 kg)</small></div>
                             <div class="custom-price">
-                                US$ 3,00
+                                US$ {{ str_replace('.', ',', $configurations[0]->cfg_taxa_01) }}
                             </div>                            
                         </div>
                         
@@ -255,7 +255,7 @@
                         <div class="price-Value">
                             <div class="line-currency">4.1 ATÉ 10 LBS <small>(1,85 até 4,5 kg)</small></div>
                             <div class="custom-price">
-                                US$ 7,50
+                                US$ {{ str_replace('.', ',', $configurations[0]->cfg_taxa_02) }}
                             </div>                            
                         </div>
                         {{-- <span class="month">
@@ -286,7 +286,7 @@
                         <div class="price-Value">
                             <div class="line-currency">ACIMA DE 10.1 LBS <small id="up10">(mais de 4,5 kg)</small></div>
                             <div class="custom-price">
-                                US$ 12,00
+                                US$ {{ str_replace('.', ',', $configurations[0]->cfg_taxa_03) }}
                             </div>
                         </div>
                         {{-- <span class="month">

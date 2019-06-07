@@ -27,7 +27,7 @@
                     @foreach($pessoas as $pessoa)
                     <tr>                        
                         <td>{{ session('suite_prefix') }}{{ $pessoa->codigo_suite }}</td>
-                        <td>{{ $pessoa->nome_completo }}</td>
+                        <td>{{ $pessoa->nome_completo }} {{ $pessoa->sobrenome }}</td>
                         <td>{{ $pessoa->email }}</td>                                    
                         <td>
                             <a href="{{ route('pessoas-show', $pessoa->codigo_suite) }}"

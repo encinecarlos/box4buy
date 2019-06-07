@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Configuration;
 use App\Repositories\AlertRepository;
 use App\Repositories\Contracts\RepositoryInterface;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        View::share('configurations', Configuration::all());
     }
 
     /**

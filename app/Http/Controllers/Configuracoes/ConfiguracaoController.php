@@ -25,10 +25,14 @@ class ConfiguracaoController extends Controller
                 'cfg_state' => $request->cfg_state,
                 'cfg_zipcode' => $request->cfg_zipcode,
                 'cfg_phone' => $request->cfg_phone,
+                'cfg_taxa_01' => $request->taxa01,
+                'cfg_taxa_02' => $request->taxa02,
+                'cfg_taxa_03' => $request->taxa03,
         ];
 
         Configuration::where('sequencia', '1')->update($data_update);
-        return redirect(route('configuracoes'))->with(['msg' => 'Configurações alteradas com sucesso!']);
+//        return redirect(route('configuracoes'))->with(['msg' => 'Configurações alteradas com sucesso!']);
+        return response('Configurações salvas com sucesso!');
     }
 
     public function generatePassword()

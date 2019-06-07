@@ -8,4 +8,5 @@ class Configuration extends Model
 {
     protected $table = 'bxby_configurations';
     protected $primaryKey = 'sequencia';
+    public $timestamps = false;
 }

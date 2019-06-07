@@ -100,7 +100,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
 
     // Configurações do sistema
     Route::get('/configuracoes', 'Configuracoes\ConfiguracaoController@index')->name('configuracoes');
-    Route::post('/configuracoes', 'Configuracoes\ConfiguracaoController@index')->name('configuracoes');
+//    Route::post('/configuracoes', 'Configuracoes\ConfiguracaoController@index')->name('configuracoes');
+    Route::match(['post', 'put'],'/configuracoes/add', 'Configuracoes\ConfiguracaoController@update')->name('configuracoes.add');
     Route::get('/configuracoes/password/generate', 'Configuracoes\ConfiguracaoController@generatePassword')->name('generate-pass');
 
     // Gestão de documentos - o termo delete é apenas para refrencia na url

@@ -359,4 +359,17 @@ $(document).ready(function () {
         });
     });
 
+    $('.save-config').click(function() {
+        var configData = $('#config-save').serialize();
+        axios.put('/admin/configuracoes/add', configData).then(response => {
+            Swal({
+                title: 'Tudo certo!',
+                text: response.data,
+                type: 'success',
+                confirmButtonText: 'OK',
+                onClose: reloadpage
+            });
+        });
+    });
+
 });
