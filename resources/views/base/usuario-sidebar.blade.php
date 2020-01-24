@@ -8,7 +8,7 @@
             <li>
                 <a href="{{ route('estoque') }}" data-toggle="tooltip"
                    title="Gerenciamento de estoque e orçamentos">
-                    <i class="fa fa-archive"></i>
+                    <i class="fa fa-send"></i>
                     <span>Meus Produtos</span>
                 </a>
             </li>
