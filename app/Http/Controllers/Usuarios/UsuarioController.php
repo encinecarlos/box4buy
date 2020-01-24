@@ -2,42 +2,37 @@
 
 namespace App\Http\Controllers\Usuarios;
 
+use App\Http\Requests\UserRequest;
+use App\Services\UsuarioService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Pessoa;
-use App\Enderecos;
-use App\PessoaContato;
 use App\ConfirmaDados;
-use App\Mail\SenConfirmation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Hash;
 use App\Usuario;
 use Illuminate\Database\QueryException;
 use App\Mail\SendResetPassword;
 use App\Lib\CustomException;
 use App\Lib\UspsTest;
-use App\Configuration;
 use Carbon\Carbon;
 use App\Facades\CotacaoDolar;
-use App\Http\Requests\UsuarioRequest;
-use Debugbar;
+use App\Http\Requests\UserAdminRequest;
 
 class UsuarioController extends Controller
 {
-    private $pass;
+    private $userService;
+
+    public function __construct(UsuarioService $service)
+    {
+        $this->userService = $service;
+    }
 
     public function renderHome()
     {
-        $configs = Configuration::find(1);
-        $enable_pay = DB::table('bxby_pconfirma_dados')
-            ->select('libera_pagamento')
-            ->where('codigo_suite', Auth::user()->codigo_suite)
-            ->get();
-
-        return view('usuario.home', ['configs' => $configs, 'enable_pay' => $enable_pay]);
+        return $this->userService->getAll();
     }
 
     public function gerarSuite()
@@ -55,87 +50,15 @@ class UsuarioController extends Controller
         return $suiteID;
     }
 
-    public function cadastrar(UsuarioRequest $request)
+    /**
+     * cadastra um usuario no sistema
+     * @param UserAdminRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cadastrar(UserRequest $request)
     {
         try {
-            //$suite = $this->gerarSuite();
-            //$pass = password_hash($request->password, PASSWORD_BCRYPT);
-            $pass = Hash::make($request->password);
-            $token = uniqid('', true);
-
-            $splitdata = explode('/', $request->data_nascimento);
-            $dia = $splitdata[0];
-            $mes = $splitdata[1];
-            $ano = $splitdata[2];
-
-            $data_nascimento = Carbon::create($ano, $mes, $dia);
-
-            DB::insert(
-                "INSERT INTO bxby_pessoas (nome_completo,
-                                                  sobrenome,
-                                                  tipo_cadastro,
-                                                  type_user,
-                                                  data_nascimento,
-                                                  email,
-                                                  password,
-                                                  tipo_pessoa,
-                                                  onde_conheceu,
-                                                  data_cadastro)
-                                            VALUES (?,?,?,?,?,?,?,?,?,?)",
-                [
-                    $request->_nome,
-                    $request->_sobrenome,
-                    1,
-                    2,
-                    $data_nascimento,
-                    $request->email,
-                    $pass,
-                    1,
-                    $request->ondeconheceu,
-                    new Carbon()
-                ]
-            );
-
-            $suiteId = DB::getPdo()->lastInsertId();
-
-            DB::insert("INSERT INTO bxby_pconfirma_dados (codigo_suite, data_cadastro) VALUES (?, ?)", [$suiteId, new Carbon()]);
-
-            DB::insert(
-                "INSERT INTO bxby_pendereco (codigo_suite,
-            			    codigo_postal,
-                            endereco,
-                            numero,
-                            complemento,
-                            bairro,
-                            cidade,
-                            estado,
-                            pais)
-                    VALUES (?,?,?,?,?,?,?,?,?)",
-                [
-                    $suiteId,
-                    $request->cep,
-                    $request->endereco,
-                    $request->numero,
-                    $request->complemento,
-                    $request->bairro,
-                    $request->cidade,
-                    $request->uf,
-                    'BR'
-                ]
-            );
-
-            DB::insert(
-                "INSERT INTO bxby_pcontato (codigo_suite,
-                           celular)
-                   VALUES (?,?)",
-                [
-                    $suiteId,
-                    $request->celular
-                ]
-            );
-
-
-            Mail::to($request->input('email'))->send(new SenConfirmation($suiteId, $request->email));
+            $this->userService->create($request->all());
 
             return response()->json(['msg' => 'Cadastro efetuado com sucesso!', 'status' => '1']);
         } catch (QueryException $e) {
@@ -146,14 +69,12 @@ class UsuarioController extends Controller
 
     public function enablePayment($suite)
     {
-        $enable_customer = DB::table('bxby_pconfirma_dados')->where('codigo_suite', $suite)->get();
         DB::table('bxby_pconfirma_dados')->where('codigo_suite', $suite)->update(['libera_pagamento' => '2']);
         return response()->json(['msg' => 'Função pagamento liberada para o cliente!', 'status' => '1']);
     }
 
     public function disablePayment($suite)
     {
-        $enable_customer = DB::table('bxby_pconfirma_dados')->where('codigo_suite', $suite)->get();
         DB::table('bxby_pconfirma_dados')->where('codigo_suite', $suite)->update(['libera_pagamento' => '1']);
         return response()->json(['msg' => 'Função pagamento bloqueada para o cliente!', 'status' => '1']);
     }
@@ -165,10 +86,13 @@ class UsuarioController extends Controller
 
             if (Auth::attempt($credentials)) {
                 //Auth::logoutOtherDevices($request->password);
-                if (Auth::user()->type_user == '1') {
+                if (Auth::user()->type_user == '1' || Auth::user()->type_user == '3') {
+                    /*Pessoa::where('type_user', '1')
+                        ->orWhere('type_user', '3')
+                        ->update(['ip_access' => $request->ip()]);*/
+
                     return redirect()->intended('/admin/dashboard');
-                    Pessoa::where('type_user', '1')
-                        ->update(['ip_access' => $request->ip()]);
+
                 } else {
                     session(['suite_prefix' => 'CB']);
                     return redirect()->intended(route('home'));
@@ -194,53 +118,18 @@ class UsuarioController extends Controller
 
     public function perfil($id)
     {
-        try {
-            $perfil = Pessoa::find($id);
-            $perfil_endereco = Enderecos::where('codigo_suite', $id)->get();
-            $perfil_contato = PessoaContato::where(['codigo_suite' => $id])->get();
-            $estado_civil = DB::table('bxby_estado_civil')->get();
-            $data = DB::table('bxby_pconfirma_dados')->where(['codigo_suite' => Auth::user()->codigo_suite])->get();
-
-            return view('usuario.meuperfil', ['perfil' => $perfil,
-                'perfil_endereco' => $perfil_endereco,
-                'contato' => $perfil_contato,
-                'estado_civil' => $estado_civil,
-                'data' => $data]);
-        } catch (QueryException $e) {
-            return CustomException::trataErro($e);
-        }
+        return $this->userService->showById($id);
     }
 
     public function perfilEdit($id)
     {
-        try {
-            $perfil = Pessoa::find($id);
-            $perfil_endereco = Enderecos::where('codigo_suite', $id)->get();
-            $perfil_contato = PessoaContato::where(['codigo_suite' => $id])->get();
-            $estado_civil = DB::table('bxby_estado_civil')->get();
-            $data = DB::table('bxby_pconfirma_dados')->where(['codigo_suite' => Auth::user()->codigo_suite])->get();
-            $enable_pay = DB::table('bxby_pconfirma_dados')
-                ->select('libera_pagamento')
-                ->where('codigo_suite', Auth::user()->codigo_suite)
-                ->get();
-
-            return view('usuario.perfiledit', [
-                'perfil' => $perfil,
-                'perfil_endereco' => $perfil_endereco,
-                'contato' => $perfil_contato,
-                'estado_civil' => $estado_civil,
-                'data' => $data,
-                'enable_pay' => $enable_pay
-            ]);
-        } catch (QueryException $e) {
-            return CustomException::trataErro($e);
-        }
+        return $this->userService->getById($id);
     }
 
     public function atualizar(Request $request, $id)
     {
         try {
-            if ($request->nova_senha != '' && $request->nova_senha == $request->confirma_nova_senha) {
+            /*if ($request->nova_senha != '' && $request->nova_senha == $request->confirma_nova_senha) {
                 $pass = Hash::make($request->input('nova_senha'));
                 $update_pass = "update bxby_pessoas set password = '$pass' where codigo_suite = '$id'";
                 DB::update($update_pass);
@@ -249,24 +138,25 @@ class UsuarioController extends Controller
             }
 
             $dataformat = date('Y-m-d', strtotime($request->data_nascimento));
-            DB::update("UPDATE bxby_pessoas 
+            DB::update("UPDATE bxby_pessoas
                         SET nome_completo = '$request->_nome',
                             sobrenome = '$request->_sobrenome',
                             data_nascimento = '$dataformat',
                             sexo = '$request->sexo',
-                            email = '$request->email',                            
+                            email = '$request->email',
                             cpf_cnpj = '$request->cpf_cnpj',
                             rg_ie = '$request->rg_ie',
                             estado_civil = '$request->estado_civil'
                             where codigo_suite = $id");
 
-            DB::update("UPDATE bxby_pcontato 
+            DB::update("UPDATE bxby_pcontato
                                         SET telefone = '$request->telefone',
                                             celular = '$request->celular',
                                             telefone_01 = '$request->telefone_01',
                                             celular_01 = '$request->celular_01'
-                                        WHERE CODIGO_SUITE = $id");
+                                        WHERE CODIGO_SUITE = $id");*/
 
+            $this->userService->update($request->all(), $id);
             return response()->json(['msg' => 'Registro atualizado com sucesso!', 'status' => '1']);
         } catch (QueryException $ex) {
             return CustomException::trataErro($ex);
@@ -309,30 +199,7 @@ class UsuarioController extends Controller
     public function uploadDocRG(Request $request)
     {
         try {
-            if ($request->hasFile('file')) {
-                $filename = uniqid('DOC_RG_', true) . '.' . $request->file('file')->clientExtension();
-
-                $user_folder = 'docs_perfil_' . $request->id;
-                if(!is_dir($user_folder)) {
-                    Storage::disk('s3')->makeDirectory($user_folder);
-                }
-
-                if (Storage::allFiles($user_folder) == []) {
-                    $path = $request->file('file')->storePubliclyAs($user_folder, $filename);
-                    DB::table('bxby_pconfirma_dados')
-                        ->where('codigo_suite', $request->id)
-                        ->update(['caminho_rg' => Storage::url($path)]);
-                } else {
-                    $files = Storage::files($user_folder);
-                    if (count($files[0]) != 0) {
-                        Storage::delete($files[0]);
-                        $path = $request->file('file')->storePubliclyAs($user_folder, $filename);
-                        DB::table('bxby_pconfirma_dados')
-                            ->where('codigo_suite', $request->id)
-                            ->update(['caminho_rg' => Storage::url($path)]);
-                    }
-                }
-            }
+            $this->userService->uploadIdentification($request->all());
 
             return response()->json(['msg' => 'Documento cadastrado com sucesso', 'status' => '1']);
         } catch (QueryException $ex) {
@@ -343,33 +210,7 @@ class UsuarioController extends Controller
     public function uploadDocComprovante(Request $request)
     {
         try {
-            if ($request->hasFile('file')) {
-                $filename = uniqid('DOC_COMPROVANTE_', true) . '.' . $request->file('file')->clientExtension();
-
-                $user_folder = 'docs_perfil_' . $request->id;
-
-                if(!is_dir($user_folder))
-                {
-                    Storage::disk('s3')->makeDirectory($user_folder);
-                }
-
-                if (Storage::allFiles($user_folder) == []) {
-                    $path = $request->file('file')->storePubliclyAs($user_folder, $filename);
-                    DB::table('bxby_pconfirma_dados')
-                        ->where('codigo_suite', $request->id)
-                        ->update(['caminho_comprovante' => Storage::url($path)]);
-                } else {
-                    $files = Storage::files($user_folder);
-                    if (count($files[0]) != 0) {
-                        Storage::delete($files[0]);
-                        $path = $request->file('file')->storePubliclyAs($user_folder, $filename);
-                        DB::table('bxby_pconfirma_dados')
-                            ->where('codigo_suite', $request->id)
-                            ->update(['caminho_comprovante' => Storage::url($path)]);
-                    }
-                }
-            }
-
+            $this->userService->proofAddress($request->all());
             return response()->json(['msg' => 'Documento cadastrado com sucesso', 'status' => '1']);
         } catch (QueryException $ex) {
             return CustomException::trataErro($ex);
@@ -378,21 +219,25 @@ class UsuarioController extends Controller
 
     public function removeDocRG($id)
     {
-        $rgpath = DB::table('bxby_pconfirma_dados')->select(['caminho_rg'])->where('codigo_suite', $id)->get();
+        $file_directory = 'docs_perfil_'.$id;
+        $rgpath = ConfirmaDados::select(['file_id'])->where('codigo_suite', $id)->get();
+        debugbar()->info($rgpath);
 
-        Storage::delete($rgpath[0]->caminho_rg);
-        DB::table('bxby_pconfirma_dados')
-            ->where('codigo_suite', $id)
-            ->update(['caminho_rg' => '']);
+        Storage::delete($file_directory.DIRECTORY_SEPARATOR.$rgpath[0]->file_id);
+        ConfirmaDados::where('codigo_suite', $id)
+            ->update(['caminho_rg' => null, 'file_id' => null]);
         return response()->json(['msg' => 'Documento removido com sucesso.']);
     }
 
     public function removeDocComprovante($id)
     {
-        $rgpath = DB::table('bxby_pconfirma_dados')->select(['caminho_comprovante'])->where('codigo_suite', $id)->get();
-        $filetoremove = public_path() . $rgpath[0]->caminho_rg;
-        unlink($filetoremove);
-        DB::table('bxby_pconfirma_dados')->where('codigo_suite', $id)->update(['caminho_comprovante' => '']);
+        $file_directory = 'docs_perfil_'.$id;
+        $docpath = ConfirmaDados::select(['file_address'])->where('codigo_suite', $id)->get();
+        debugbar()->info($docpath);
+
+        Storage::delete($file_directory.DIRECTORY_SEPARATOR.$docpath[0]->file_address);
+        ConfirmaDados::where('codigo_suite', $id)
+            ->update(['caminho_comprovante' => null, 'file_address' => null]);
         return response()->json(['msg' => 'Documento removido com sucesso.']);
     }
 
@@ -492,9 +337,7 @@ class UsuarioController extends Controller
 
     public function destroy($id)
     {
-        PessoaContato::where('codigo_suite', $id)->delete();
-        Enderecos::where('codigo_auite', $id)->delete();
-        Pessoa::find($id)->delete();
+        $this->userService->delete($id);
     }
 
     public function dolarTest()

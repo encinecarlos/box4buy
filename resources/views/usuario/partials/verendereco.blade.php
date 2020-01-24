@@ -31,16 +31,16 @@
             </label>
             <div class="col-sm-6">
                 <input class="form-control" id="inputEndereco" name="newendereco" placeholder="Endereço" type="text">
-                </input>
+                
             </div>
             <label class="col-sm-1 control-label" for="inputEndereco">
                 Nº
             </label>
             <div class="col-sm-2">
                 <input class="form-control" id="inputNumero" name="newnumero" placeholder="Nº" type="text">
-                </input>
+                
             </div>
-            </input>
+            
         </div>
 
         <div class="form-group">
@@ -49,14 +49,14 @@
             </label>
             <div class="col-sm-5">
                 <input class="form-control" id="inputBairro" name="newbairro" placeholder="Bairro" type="text">
-                </input>
+                
             </div>
             <label class="col-sm-1 control-label" for="inputBairro">
                 Cidade
             </label>
             <div class="col-sm-4">
                 <input class="form-control" id="inputCidade" name="newcidade" placeholder="Cidade" type="text">
-                </input>
+                
             </div>
         </div>
 
@@ -66,14 +66,14 @@
             </label>
             <div class="col-sm-5">
                 <input class="form-control" id="inputEstado" name="newuf" placeholder="Estado" type="text">
-                </input>
+                
             </div>
             <label class="col-sm-1 control-label" for="inputEstado">
                 Comp.
             </label>
             <div class="col-sm-4">
                 <input class="form-control" id="inputComplemento" name="newcomplemento" placeholder="Complemento" type="text">
-                </input>
+                
             </div>
         </div>
         <div class="form-group">
@@ -82,25 +82,29 @@
             </label>
             <div class="col-sm-5">
                 <input class="form-control" id="inputPais" name="newpais" placeholder="Pais" type="text">
-                </input>
+                
             </div>
             <label class="col-sm-1 control-label" for="inputPaís">
                 CEP
             </label>
             <div class="col-sm-4">
                 <input class="form-control" id="inputCep" name="newcep" placeholder="CEP" type="text">
-                </input>
+                
             </div>
         </div>
         <div class="row">
             <div class="form-group">
                 <div class="col-sm-2 pull-right">
-                    <button class="btn text-white boxColorTema pull-right paddingLft" data-dismiss="modal" id="send-endereco" type="button">
+                    <button class="btn text-white btn-rounded boxColorTema pull-right paddingLft"
+                            data-dismiss="modal"
+                            id="send-endereco"
+                            type="button">
+                        <i class="fa fa-check"></i>
                         SALVAR
                     </button>
                 </div>
                 <div class="col-sm-2 pull-right">
-                    <a href="#" class="btn btn-danger  pull-right paddingRht" rel="modal:close">
+                    <a href="#" class="btn btn-danger btn-rounded pull-right paddingRht" rel="modal:close">
                         <i class="fa fa-close"></i>
                         Fechar
                     </a>

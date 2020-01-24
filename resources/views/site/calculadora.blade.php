@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <div class="container">
                             <div class="col-md-12 mt-2 text-center">
-                                <button type="button" class="btn btn-info boxColorTema btn-lg" id="btn-peso"><i class="fa fa-calculator"></i> Calcular Frete</button>
+                                <button type="button" class="btn btn-gradient btn-rounded btn-lg" id="btn-peso"><i class="fa fa-calculator"></i> Calcular Frete</button>
                             </div>
                         </div>
                                                 

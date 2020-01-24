@@ -15,8 +15,11 @@
 Route::group(['middleware' => ['calculadorasite']], function () {
     Route::get('/', function () {
         $dolar = DB::select('select cfg_dolar from bxby_configurations');
-        return view('site.main', ['dolar' => $dolar]);
+//        $configs = \App\Configuration::all();
+        $banner_home = \App\SiteImage::all();
+        return view('site.main', ['dolar' => $dolar, 'images' => $banner_home]);
     })->name('site');
+
 
     Route::get('/duvidas', function () {
         $dolar = DB::select('select cfg_dolar from bxby_configurations');
@@ -54,7 +57,7 @@ Route::group(['middleware' => ['calculadorasite']], function () {
         return view('usuario.addestoque');
     })->name('add-produto');
 
-    Route::get('/cadastrar-se', function() {
+    Route::get('/cadastrar-se', function () {
         return view('site.cadastro_social');
     })->name('cadastre_se');
 });
@@ -88,29 +91,38 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('/messages/direct/all', 'DirectMessageController@index')->name('send-direct-message');
     Route::post('/messages/direct/send', 'DirectMessageController@sendToAll')->name('postSend-direct-message');
     Route::post('/messages/direct/single/send', 'DirectMessageController@sendToSingle')->name('postSend-single-message');
-    
+
     //orcamento
     Route::get('/orcamento', 'OrcamentoController@index')->name('orcamento');
     // Route::get('/orcamento/add', 'OrcamentoController@add')->name('orcamento-add');
-    Route::get('/orcamento/{id}/edit', 'OrcamentoController@edit')->name('orcamento-edit');    
-    Route::get('/orcamento/{id}/show', 'OrcamentoController@show')->name('orcamento-show');    
+    Route::get('/orcamento/{id}/edit', 'OrcamentoController@edit')->name('orcamento-edit');
+    Route::get('/orcamento/{id}/show', 'OrcamentoController@show')->name('orcamento-show');
     Route::get('/orcamento/detalhe/{produto_id}', 'OrcamentoController@orcamentoDetalhe')->name('orcamento-detalhe');
     Route::delete('/orcamento/delete/{orcamento_id}', 'OrcamentoController@destroy')->name('orcamento-delete');
 
     // Configurações do sistema
     Route::get('/configuracoes', 'Configuracoes\ConfiguracaoController@index')->name('configuracoes');
-    Route::post('/configuracoes', 'Configuracoes\ConfiguracaoController@index')->name('configuracoes');
+    Route::match(['post', 'put'], '/configuracoes/add', 'Configuracoes\ConfiguracaoController@update')->name('configuracoes.add');
     Route::get('/configuracoes/password/generate', 'Configuracoes\ConfiguracaoController@generatePassword')->name('generate-pass');
+    Route::post('/configuracoes/site/upload', 'Configuracoes\ConfiguracaoController@uploadHomeImage')->name('configuracoes.site.upload');
 
-    // Gestão de documentos
-    Route::get('/documento/delete/rg/{id}', 'Usuarios\UsuarioController@removeDocRG')->name('deletarg');
-    Route::get('/documento/delete/comprovante/{id}', 'Usuarios\UsuarioController@removeDocRG')->name('deletacomprovante');
+    // Gestão de documentos - o termo delete é apenas para refrencia na url
+    Route::put('/documento/delete/rg/{id}', 'Usuarios\UsuarioController@removeDocRG')->name('deletarg');
+    Route::put('/documento/delete/comprovante/{id}', 'Usuarios\UsuarioController@removeDocComprovante')->name('deletacomprovante');
 
     // Dashboard do sistema
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     //manipulação de imagens
     Route::get('/rotate/left/{imgid}', 'EstoqueImagemController@rotateLeft')->name('rotateleft');
+
+    // Sistema de alerts
+    Route::get('alerts/all', 'AlertController@index')->name('alerts.all');
+    Route::get('alerts/add', 'AlertController@add')->name('alerts.add');
+    Route::post('alerts/save', 'AlertController@store')->name('alerts.save');
+    Route::get('alerts/{id}', 'AlertController@show')->name('alerts.edit');
+    Route::put('alerts/update/{id}', 'AlertController@update')->name('alerts.update');
+    Route::delete('alerts/delete/{id}', 'AlertController@destroy')->name('alerts.delete');
 });
 
 /* Views do painel do usuário */
@@ -146,8 +158,6 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::get('/suporte/{ticket_id}/close', 'SuporteController@closeTicket')->name('closeticket');
     Route::get('/suporte/{ticket_id}/open', 'SuporteController@openTicket')->name('openticket');
 
-
-
     // Estoque
     Route::get('/estoque/{id}', 'EstoqueController@exibeEstoqueUsuario');
     Route::post('/estoque', 'EstoqueController@cadastrar');
@@ -159,7 +169,7 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::get('/estoque/adiciona/quantidade/{seq_produto}/produto', 'EstoqueController@removeProduto')->name('remove-item');
     Route::delete('/estoque/delete/{id}', 'EstoqueController@destroy')->name('deleta-produto-usuario');
     Route::put('/estoque/update/produto/{idproduto}', 'EstoqueController@updateProduto')->name('update-estoque-usuario');
-    
+
     // Carrinho
     Route::get('usuario/carrinho', 'OrcamentoController@cartIndex')->name('user-carrinho');
     Route::get('/carrinho/atualiza/{produto}/quantidade', 'OrcamentoController@mudaQuantidade');
@@ -238,7 +248,7 @@ Route::get('/calculadora', function () {
 
 Route::get('/calculadora/clear', 'Usuarios\UsuarioController@clearFrete');
 
-Route::get('/bxby/chat', function() {
+Route::get('/bxby/chat', function () {
     return view('chat.main');
 });
 

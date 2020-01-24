@@ -8,18 +8,24 @@
 
 namespace App\Lib;
 
+use Ixudra\Curl\Facades\Curl as Api;
 
 use App\CompraAssistidaInfo;
 
+/**
+ * @property  endpointCountry
+ */
 class Utils
 {
     private static $subtotal;
     private $totalGeral;
+    private static $endpointCountry;
 
 
     public function __construct()
     {
         $this->totalGeral = 0;
+        self::$endpoinCountry = "https://restcountries.eu/rest/v2/all?fields=name;alpha2Code";
     }
 
     /**
@@ -48,5 +54,15 @@ class Utils
         }
 
         return number_format($this->totalGeral, 2);
+    }
+
+    public static function getCountries()
+    {
+        $response = Api::to("https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;translations")
+            ->returnResponseObject()
+            ->get();
+//        $countries = json_decode($response, true);
+        $countries = json_decode($response->content, true);
+        return $countries;
     }
 }

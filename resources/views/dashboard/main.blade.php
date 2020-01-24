@@ -57,27 +57,32 @@
                 <h4>Novos clientes este mês</h4>
             </div>
             <div class="box-body">
-                <table class="table table-hover">
-                    <thead>
-                        <th>Suite</th>
-                        <th>Nome</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                    {{--{{ dd($usuario_mes) }}--}}
-                    @foreach($usuario_mes as $usuario)
-                        <tr>
-                            <td>{{ $usuario->codigo_suite }}</td>
-                            <td>{{ $usuario->nome_completo }} {{ $usuario->sobrenome }}</td>
-                            <td class="col-sm-2">
-                                <a href="{{ route('pessoas-show', $usuario->codigo_suite) }}" class="btn btn-default btn-rounded boxColorTema">
-                                    <i class="fa fa-eye">Visualizar Cliente</i>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                @if($usuario_mes->isEmpty())
+                    <p class="alert alert-warning text-uppercase">Nenhum usuário cadastrado no mês atual.</p>
+                @else
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <th>Suite</th>
+                            <th>Nome</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                        @foreach($usuario_mes as $usuario)
+                            <tr>
+                                <td>{{ $usuario->codigo_suite }}</td>
+                                <td>{{ $usuario->nome_completo }} {{ $usuario->sobrenome }}</td>
+                                <td class="col-sm-2">
+                                    <a href="{{ route('pessoas-show', $usuario->codigo_suite) }}" class="btn btn-default btn-rounded boxColorTema">
+                                        <i class="fa fa-eye">Visualizar Cliente</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -88,6 +93,9 @@
                 <h4>Ultimos produtos enviados para a box4buy</h4>
             </div>
             <div class="box-body">
+                @if($box_enviados->isEmpty())
+                    <p class="alert alert-warning text-uppercase">Nenhum produto enviado até o momento.</p>
+                @else
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -109,6 +117,7 @@
                         </tbody>
                     </table>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -121,26 +130,38 @@
                 <h4>Solicitação de compra assistida</h4>
             </div>
             <div class="box-body">
-                <table class="table table-hover">
-                    <thead>
-                        <th>Código</th>
-                        <th>Suite</th>
-                        <th>Status</th>
-                        <th>Data de Solicitação</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                    @foreach($compra_assistida as $assistida)
-                        <tr>
-                            <td>{{ $assistida->sequencia }}</td>
-                            <td>{{ $assistida->suite_id }}</td>
-                            <td><span class="badge bg-gray text-uppercase">Processando</span></td>
-                            <td>{{ $assistida->created_at->format('d/m/Y h:i:s') }}</td>
-                            <td></td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                @if($compra_assistida->isEmpty())
+                    <p class="alert alert-warning text-uppercase">Nenhuma solicitação enviada.</p>
+                @else
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <th>Código</th>
+                            <th>Suite</th>
+                            <th>Status</th>
+                            <th>Data de Solicitação</th>
+                            <th></th>
+                            </thead>
+                            <tbody>
+                            @foreach($compra_assistida as $assistida)
+                                <tr>
+                                    <td>{{ $assistida->sequencia }}</td>
+                                    <td>{{ $assistida->suite_id }}</td>
+                                    <td><span class="badge bg-gray text-uppercase">Processando</span></td>
+                                    <td>{{ $assistida->created_at->format('d/m/Y h:i:s') }}</td>
+                                    <td>
+                                        <a href="{{ route('compra.edit', $assistida->sequencia) }}"
+                                           class="btn btn-default btn-rounded boxColorTema">
+                                            <i class="fa fa-edit"></i>
+                                            Editar
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @endif
             </div>
         </div>
     </div>
@@ -194,6 +215,9 @@
                 <h4>Ultimos chamados de suporte abertos</h4>
             </div>
             <div class="box-body">
+                @if($suporte_aberto->isEmpty())
+                    <p class="alert alert-warning text-uppercase">nenhum chamado aberto até o momento.</p>
+                @else
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -217,6 +241,7 @@
                         </tbody>
                     </table>
                 </div>
+                @endif
             </div>
         </div>
     </div>

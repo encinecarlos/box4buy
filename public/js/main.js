@@ -1,7 +1,7 @@
 $('.alert-errors').hide();
 
 $('.date').inputmask("99/99/9999");
-if($('div').hasClass('money')) {
+if ($('div').hasClass('money')) {
     $('.money').maskMoney();
 }
 
@@ -31,7 +31,7 @@ $(document).ready(function () {
         var data = form.serialize();
 
         var id = location.href.split('/').pop();
-        axios.put('/api/usuario/update/' + id, data).then(response => {
+        axios.patch('/api/usuario/update/' + id, data).then(response => {
             Swal({
                 title: 'Sucesso!',
                 text: response.data.msg,
@@ -149,31 +149,21 @@ $(document).ready(function () {
     var btnAddEndereco = $('#send-add');
     var btnEndereco = $('#send-endereco');
 
-    btnAddEndereco.on('click', function (event) {
-        event.preventDefault();
+    btnAddEndereco.on('click', function () {
         var addForm = $('#form-enderecoadd');
         var data = addForm.serialize();
 
         axios.post('/api/endereco', data).then(response => {
-            if (response.msg.status == '1') {
-                Swal({
-                    title: 'Sucesso!',
-                    text: response.data.msg,
-                    type: 'success',
-                    confirmButtonText: 'OK',
-                    onClose: closeModal
-                });
-            } else {
-                Swal({
-                    title: 'Sucesso!',
-                    text: response.data.msg,
-                    type: 'success',
-                    confirmButtonText: 'OK',
-                    onClose: closeModal
-                });
-            }
-            if(Swal.isVisible())
-            {
+            $.modal.close();
+            Swal({
+                title: 'Tudo certo!',
+                text: response.data.msg,
+                type: 'success',
+                confirmButtonText: 'OK',
+                onClose: reloadpage
+            });
+
+            if (Swal.isVisible()) {
                 $('#form-enderecoadd :input[type="text"]').val('');
             }
         });
@@ -185,19 +175,19 @@ $(document).ready(function () {
         var dataEndereco = enderecoForm.serialize();
 
         axios.put('/api/endereco/update/' + optionId, dataEndereco).then(response => {
+            $.modal.close();
             Swal({
                 title: 'Sucesso!',
                 text: response.data.msg,
                 type: 'success',
                 confirmButtonText: 'OK',
-                onClose: closeModal
+                onClose: reloadpage
             });
 
         });
     });
 
-    function closeModal()
-    {
+    function closeModal() {
         setTimeout(function () {
             $.modal.close();
         }, 3500);
@@ -299,7 +289,7 @@ $(document).ready(function () {
         });
     });
 
-    function removedocumento(suite) {
+    /*function removedocumento(suite) {
         var doctype = $('.removedoc').data('documento');
         if (doctype == 'rg') {
             axios.delete('/documento/delete/rg/' + id).then(response => {
@@ -322,7 +312,7 @@ $(document).ready(function () {
                 });
             });
         }
-    }
+    }*/
 
     $('.updateproduto').click(function (e) {
         var produto = e.target.id;
@@ -368,4 +358,22 @@ $(document).ready(function () {
         });
     });
 
+    $('.save-config').click(function () {
+        // console.log($('#duvidas').val());
+        // $('#faq_data').val(quill.container.firstChild.innerHTML);
+        $('#faq_data').val(quill.root.innerHTML);
+
+        var configData = $('#config-save').serialize();
+
+        // var configData = $('#duvidas :input').serialize();
+        axios.put('/admin/configuracoes/add', configData).then(response => {
+            Swal({
+                title: 'Tudo certo!',
+                text: response.data,
+                type: 'success',
+                confirmButtonText: 'OK',
+                onClose: reloadpage
+            });
+        });
+    });
 });

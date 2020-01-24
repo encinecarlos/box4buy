@@ -108,7 +108,7 @@
                                         <div class="col-sm-4">
                                             <input class="form-control" data-inputmask='"mask": "(99) 999-9999"'
                                                    data-mask="" name="telefone" placeholder="Telefone 01" type="text"
-                                                   value="{{ $contato[0]['telefone'] != '' ? $contato[0]['telefone'] : '' }}">
+                                                   value="{{ $contato->isEmpty() ? '' : $contato[0]['telefone'] }}">
                                         </div>
                                         <label class="col-sm-1 control-label" for="inputTelefone">
                                             Telefone 02
@@ -116,7 +116,7 @@
                                         <div class="col-sm-4">
                                             <input class="form-control" data-inputmask='"mask": "(99) 999-9999"'
                                                    data-mask="" name="telefone_01" placeholder="Telefone 02" type="text"
-                                                   value="{{ $contato[0]['telefone_01'] }}">
+                                                   value="{{ $contato->isEmpty() ? '' : $contato[0]['telefone_01'] }}">
 
                                         </div>
                                     </div>
@@ -127,7 +127,7 @@
                                         <div class="col-sm-4">
                                             <input class="form-control" data-inputmask='"mask": "(99) 9999-9999"'
                                                    data-mask="" name="celular" placeholder="Celular 01" type="text"
-                                                   value="{{ $contato[0]['celular'] != '' ? $contato[0]['celular'] : '' }}">
+                                                   value="{{ $contato->isEmpty() ? '' : $contato[0]['celular'] }}">
 
                                         </div>
                                         <label class="col-sm-1 control-label" for="inputCelular">
@@ -136,7 +136,7 @@
                                         <div class="col-sm-4">
                                             <input class="form-control" data-inputmask='"mask": "(99) 9999-9999"'
                                                    data-mask="" name="celular_01" placeholder="Celular 02" type="text"
-                                                   value="{{ $contato[0]['celular_01'] != '' ? $contato[0]['celular_01'] : '' }}">
+                                                   value="{{ $contato->isEmpty() ? '' : $contato[0]['celular_01'] }}">
 
                                         </div>
                                     </div>
@@ -274,7 +274,7 @@
 
                     <div class="tab-pane" id="documentos">
                         <div class="row">
-                            @if($documentos[0]->caminho_rg == null && $documentos[0]->caminho_comprovante == null)
+                            @if($documentos->isEmpty())
                                 <div class="col-sm-12">
                                     <p class="alert alert-warning text-uppercase text-center">nenhum documento
                                         enviado!</p>
@@ -282,19 +282,50 @@
                             @else
                                 @foreach ($documentos as $documento)
                                     <div class="col-sm-6">
-                                        <img class="img-responsive img-thumbnail" src="{{ $documento->caminho_rg }}"
-                                             alt="Documento de identificação">
-                                        <button class="btn btn-danger removedoc" data-documento="rg"
-                                                onclick="removedocumento({{ $pessoa->codigo_suite }})"><i
-                                                    class="fa fa-trash"></i></button>
+                                        <div class="box box-info">
+                                            <div class="box-header">
+                                                <h4>Documento 01</h4>
+                                                <div class="box-tools">
+                                                    <button class="btn btn-danger btn-rounded removedoc"
+                                                            type="button"
+                                                            onclick="removedocumento({{ $pessoa->codigo_suite }}, 'rg')">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <img class="img-responsive img-thumbnail"
+                                                             src="{{ $documento->caminho_rg }}"
+                                                             alt="Documento de identificação">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <img class="img-responsive img-thumbnail"
-                                             src="{{ $documento->caminho_comprovante }}"
-                                             alt="Comprovante de residencia">
-                                        <button class="btn btn-danger btn-rounded removedoc" data-documento="comprovante"
-                                                onclick="removedocumento({{ $pessoa->codigo_suite }})"><i
-                                                    class="fa fa-trash"></i></button>
+                                        <div class="box box-info">
+                                            <div class="box-header">
+                                                <h4>Documento 02</h4>
+                                                <div class="box-tools">
+                                                    <button class="btn btn-danger btn-rounded removedoc"
+                                                            type="button"
+                                                            onclick="removedocumento({{ $pessoa->codigo_suite }}, 'comprovante')">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <img class="img-responsive img-thumbnail"
+                                                             src="{{ $documento->caminho_comprovante }}"
+                                                             alt="Comprovante de residencia">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endforeach
                             @endif
@@ -305,7 +336,7 @@
                                         id="{{ $pessoa->codigo_suite }}"><i class="fa fa-check"></i> Liberar
                                 </button>
                                 <button type="button" class="btn btn-danger btn-rounded disablepayment"
-                                        id="{{ $pessoa->codigo_suite }}" 8><i class="fa fa-check"></i> Bloquear
+                                        id="{{ $pessoa->codigo_suite }}"><i class="fa fa-check"></i> Bloquear
                                 </button>
                             </div>
                         </div>
@@ -315,3 +346,36 @@
         </div>
     </div>
 @stop
+
+@section('js')
+    <script>
+        function removedocumento(suite, doctype) {
+            console.log(doctype);
+            if (doctype === 'rg') {
+                axios.put('/admin/documento/delete/rg/' + suite).then(response => {
+                    Swal({
+                        title: 'Sucesso!',
+                        text: response.data.msg,
+                        type: 'success',
+                        confirmButtonText: 'OK',
+                        onClose: reloadPage
+                    });
+                });
+            } else if (doctype === 'comprovante') {
+                axios.put('/admin/documento/delete/comprovante/' + suite).then(response => {
+                    Swal({
+                        title: 'Sucesso!',
+                        text: response.data.msg,
+                        type: 'success',
+                        confirmButtonText: 'OK',
+                        onClose: reloadPage
+                    });
+                });
+            }
+        }
+
+        function reloadPage() {
+            location.href = location.href;
+        }
+    </script>
+@endsection

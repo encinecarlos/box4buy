@@ -8,6 +8,12 @@ class PessoaContato extends Model
 {
     protected $table = 'bxby_pcontato';
     protected $primaryKey = "codigo_suite";
-    const CREATED_AT = 'data_cadastro';
-    const UPDATED_AT = 'data_atualizacao';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'telefone',
+        'telefone_01',
+        'celular',
+        'celular_01',
+    ];
 }

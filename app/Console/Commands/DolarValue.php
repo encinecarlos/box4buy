@@ -40,7 +40,7 @@ class DolarValue extends Command
     public function handle()
     {
         $dolar = number_format(CotacaoDolar::getDolar(), 2);
-        // config(['app.dolar_value' => $dolar]);
+
         DB::update("update bxby_configurations set cfg_dolar = $dolar where sequencia = ?", ['1']);
         $this->info('Dolar Atualizado!');
     }

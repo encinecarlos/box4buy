@@ -12,8 +12,9 @@ class Pessoa extends Model
     
     protected $table = 'bxby_pessoas';
     protected $primaryKey = "codigo_suite";
-    const CREATED_AT = 'data_cadastro';
-    const UPDATED_AT = 'data_atualizacao';
+    public $timestamps = false;
+    /*const CREATED_AT = 'data_cadastro';
+    const UPDATED_AT = 'data_atualizacao';*/
 
     public function estadoCivil()
     {

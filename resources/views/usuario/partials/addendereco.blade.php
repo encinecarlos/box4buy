@@ -8,7 +8,7 @@
         <div class="form-group">
             @if(Auth::user()->type_user == 1)           
             <input id="codpessoa" name="codigo_suite" type="hidden" value="{{ $perfil->codigo_suite }}">
-            @elseif(Auth::user()->type_user == 1)
+            @elseif(Auth::user()->type_user == 2)
             <input id="codpessoa" name="codigo_suite" type="hidden" value="{{ Auth::user()->codigo_suite }}">
             @endif
             <label class="col-sm-2 control-label" for="inputEndereco">
@@ -31,14 +31,12 @@
             </label>
             <div class="col-sm-5">
                 <input class="form-control" id="inputBairro" name="newbairro" placeholder="Bairro" type="text">
-                </input>
             </div>
             <label class="col-sm-1 control-label" for="inputBairro">
                 Cidade
             </label>
             <div class="col-sm-4">
                 <input class="form-control" id="inputCidade" name="newcidade" placeholder="Cidade" type="text">
-                </input>
             </div>
         </div>
 
@@ -47,15 +45,20 @@
                 Estado
             </label>
             <div class="col-sm-5">
-                <input class="form-control" id="inputEstado" name="newuf" placeholder="Estado" type="text">
-                </input>
+                <input class="form-control"
+                       id="inputEstado"
+                       name="newuf"
+                       placeholder="Estado"
+                       type="text">
             </div>
             <label class="col-sm-1 control-label" for="inputEstado">
                 Comp.
             </label>
             <div class="col-sm-4">
-                <input class="form-control" id="inputComplemento" name="newcomplemento" placeholder="Complemento" type="text">
-                </input>
+                <input class="form-control"
+                       id="inputComplemento"
+                       name="newcomplemento"
+                       placeholder="Complemento" type="text">
             </div>
         </div>
         <div class="form-group">
@@ -63,24 +66,33 @@
                 Pais
             </label>
             <div class="col-sm-5">
-                <input class="form-control" id="inputPais" name="newpais" placeholder="Pais" type="text">
-                </input>
+                {{--<input class="form-control" id="inputPais" name="newpais" placeholder="Pais" type="text">                --}}
+                <select name="newpais" class="form-control">
+                    @foreach($countries as $pais)
+                        <option value="{{ $pais['alpha2Code'] }}">{{ $pais['translations']['br'] }}</option>
+                    @endforeach
+                </select>
             </div>
             <label class="col-sm-1 control-label" for="inputPaís">
                 CEP
             </label>
             <div class="col-sm-4">
-                <input class="form-control" id="inputCep" name="newcep" placeholder="CEP" type="text">
-                </input>
+                <input class="form-control" id="inputCep" name="newcep" placeholder="CEP" type="text">                
             </div>
         </div>
         <div class="row">
             <div class="form-group">
                 <div class="col-sm-2 pull-right">
-                    <a href="#" id="send-add" class="btn btn-info boxColorTema">SALVAR</a>
+                    <button type="button"
+                            id="send-add"
+                            class="btn btn-info btn-rounded boxColorTema">
+                        <i class="fa fa-check"></i> SALVAR
+                    </button>
                 </div>
                 <div class="col-sm-2 pull-right">
-                    <a href="#" class="btn btn-danger" rel="modal:close" ><i class="fa fa-close"></i> FECHAR</a>
+                    <a href="#" class="btn btn-rounded btn-danger" rel="modal:close" >
+                        <i class="fa fa-close"></i> FECHAR
+                    </a>
                 </div>
             </div>
         </div>

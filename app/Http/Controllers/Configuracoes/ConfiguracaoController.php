@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Configuracoes;
 
+use App\Services\Contracts\ConfiguracaoService;
+use App\Services\UploadService;
+use App\SiteImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Status;
@@ -9,31 +12,32 @@ use App\Configuration;
 
 class ConfiguracaoController extends Controller
 {
+    private $service;
+    private $upload;
+
+    public function __construct(ConfiguracaoService $service, UploadService $uploadService)
+    {
+        $this->service = $service;
+        $this->upload = $uploadService;
+    }
+
     public function index()
     {
-        $status = Status::all();
-        $configs = Configuration::find(1);
-        return view('configuracoes.main', ['status' => $status, 'configs' => $configs]);
+        return $this->service->render();
     }
 
     public function update(Request $request)
     {
-        $data_update = [
-                'cfg_name' => $request->cfg_name,
-                'cfg_address' => $request->cfg_address,
-                'cfg_city' => $request->cfg_city,
-                'cfg_state' => $request->cfg_state,
-                'cfg_zipcode' => $request->cfg_zipcode,
-                'cfg_phone' => $request->cfg_phone,
-        ];
-
-        Configuration::where('sequencia', '1')->update($data_update);
-        return redirect(route('configuracoes'))->with(['msg' => 'Configurações alteradas com sucesso!']);
+        return $this->service->save($request->all());
     }
 
     public function generatePassword()
     {
-        $random_Pass = str_replace(".", "", substr(uniqid('', true), 0, 8));
-        return response()->json(['password' => $random_Pass]);
+        return $this->service->passGenerator();
+    }
+
+    public function uploadHomeImage(Request $request)
+    {
+        $this->upload->upload($request->all(), new SiteImage());
     }
 }

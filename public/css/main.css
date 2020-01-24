@@ -528,11 +528,9 @@ header .topmenu .top-data li a.log-top:hover {
 ======================================================*/
 
 .carousel-fade {
-    height: 90vh;
+    height: 100vh;
+    background: #2095f4 center center no-repeat;
     background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-image: url(../img/home-banner-bg.jpg);
 }
 
 .carousel-fade .carousel-inner .carousel-item {
@@ -639,9 +637,9 @@ header .topmenu .top-data li a.log-top:hover {
 .overlay {
     position: absolute;
     width: 100%;
-    height: 90%;
+    height: 90vh;
     z-index: 2;
-    background: rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0.25);
 }
 
 .carousel-fade .carousel-inner .carousel-item {
@@ -830,7 +828,7 @@ header .topmenu .top-data li a.log-top:hover {
 .title-bar .heading-border {
     width: 60px;
     height: 10px;
-    background-color: #2196f3;
+    background: linear-gradient(to right, #2095f4, #002570) no-repeat;
     margin: 0 auto 20px auto;
 }
 
@@ -2627,11 +2625,12 @@ h5Style:focus {
 
 #career-p3 {
     width: 100%;
-    background: #f0f0f0;
+    background: linear-gradient(to right, #2095f4, #002570) no-repeat;
     padding: 50px;
 }
 
 #career-p3 .career-p3-title h3 {
+    color: #fff;
     text-align: center;
     font-weight: 700;
     margin-bottom: 20px;
@@ -2641,14 +2640,12 @@ h5Style:focus {
     padding: 30px;
     margin: 15px 0;
     background: #fff;
-    box-shadow: 2px 2px 2px #ddd;
     -webkit-transition: all .5s ease-in-out;
     transition: all .5s ease-in-out;
 }
 
 #career-p3 .career-p3-cont:hover {
-    border-bottom: 3px solid #2196f3;
-    box-shadow: 2px 2px 2px #aaa;
+    border-bottom: 3px solid #fdd303;
     margin-top: 12px;
 }
 
@@ -2670,7 +2667,6 @@ h5Style:focus {
         padding: 10px 30px 30px 30px;
         margin: 15px 0;
         background: #fff;
-        box-shadow: 2px 2px 2px #ddd;
         -webkit-transition: all .5s ease-in-out;
         transition: all .5s ease-in-out;
     }
@@ -2687,14 +2683,13 @@ h5Style:focus {
 @media (max-width: 420px) {
     #career-p3 {
         width: 100%;
-        background: #f0f0f0;
+        background: linear-gradient(to right, #2095f4, #002570) no-repeat;
         padding: 100px 30px;
     }
     #career-p3 .career-p3-cont {
         padding: 20px;
         margin: 15px 0;
         background: #fff;
-        box-shadow: 2px 2px 2px #ddd;
         -webkit-transition: all .5s ease-in-out;
         transition: all .5s ease-in-out;
     }
@@ -4109,7 +4104,7 @@ h5.colors {
 
 
 .price .header {
-    background-color: #105f9e;
+    background: linear-gradient(to right, #2095f4, #002570);
     color: white;
     font-size: 25px;
 }
@@ -4159,16 +4154,12 @@ small {
 } */
 
 .overlay-slide {
-    position: fixed; 
-    display: block; 
+    position: absolute;
     width: 100%; 
-    height: 100%; 
+    height: 90vh;
     top: 0; 
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
-    z-index: 2;
+    background-color: rgba(0,0,0,0.5);
 }
 
 .cardcustom {
@@ -4188,7 +4179,7 @@ small {
 }
 
 .btn-rounded {
-    border-radius: 2rem !important;
+    border-radius: 100px !important;
 }
 
 .slidercontainer {
@@ -4228,6 +4219,22 @@ small {
     height: 25px; /* Slider handle height */
     background: #fdd303; /* Green background */
     cursor: pointer; /* Cursor on hover */
+}
+
+.btn-gradient {
+    background: linear-gradient(to right, #2095f4, #002570) no-repeat;
+    color: #fff;
+    border-radius: 100px;
+}
+
+.btn-gradient-light {
+    background: linear-gradient(to right, #2095f4, #0b58a2) no-repeat;
+    color: #fff;
+    border-radius: 100px;
+}
+
+.btn-gradient:hover {
+    color: #fff;
 }
 
 /* FIM CUSTOMIZAÇÕES - CARLOS ENCINE */

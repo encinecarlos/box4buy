@@ -6,7 +6,7 @@
                         <!-- About Us -->
                         <div class="col-md-4 col-sm-6 ">
                             <div>
-                                <img src="img/logo-w.png" alt="" class="img-fluid">
+                                <img src="img/logo-s.png" alt="" class="img-fluid">
                             </div>
                             <ul class="list-unstyled comp-desc-f">
                                 <li>

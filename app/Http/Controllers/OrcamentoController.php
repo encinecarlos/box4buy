@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Lib\NotificationSystem;
 use App\Lib\ProductServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 //use illuminate\Support\Facades\Auth;
-use Auth;
-use Mail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Orcamento;
 use App\OrcamentoProduto;
 use Illuminate\Database\QueryException;
@@ -92,6 +93,14 @@ class OrcamentoController extends Controller
                 }
 
                 Mail::send(new OrderNotification($cod_suite, $email, $cod_orcamento));
+
+                /*NotificationSystem::notifyAdmin(
+                    "Nova solicitação de orçamento disponível",
+                    "orcamento",
+                    "fa fa-shopping-cart",
+                    $cod_orcamento
+                );*/
+
                 session()->forget('produtos');
 
                 return response()->json(['msg' => 'Orçamento gerado com sucesso!', 'status' => '1']);
@@ -208,6 +217,15 @@ class OrcamentoController extends Controller
             DB::table('bxby_orcamento_produto')->where('codigo_orcamento', $id)->update(['status' => '8']);
         }
         DB::table('bxby_orcamento')->where('sequencia', $id)->update($data);
+        $id_user = Orcamento::select('codigo_suite')->where('sequencia', $id)->get();
+
+        /*NotificationSystem::notifyUser(
+            $id_user,
+            "Orçamento $id acaba de ser atualizado",
+            "orcamento",
+            "fa fa-pencil",
+            $id);*/
+
         return response()->json(['msg' => 'Orçamento atualizado com sucesso', 'status' => '1']);
     }
 

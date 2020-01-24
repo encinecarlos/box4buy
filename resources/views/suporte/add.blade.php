@@ -7,37 +7,7 @@
         </div>
         <div class="box-body">            
             <form class="form-horizontal" action="{{ route('ticketadd') }}" method="POST">
-                @csrf                
-                {{--<div class="form-group">
-                    <label class="control-label col-sm-2">Assunto:</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="subject" class="form-control">
-                    </div>
-                </div>--}}
-
-                {{--<div class="form-group">
-                    <label class="control-label col-sm-2">Categoria:</label>
-                    <div class="col-sm-9">
-                        <select name="category" class="form-control">
-                            @foreach ($categorias as $categoria)
-                                <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>                    
-                </div>--}}
-
-                {{--<div class="form-group">
-                    <label class="control-label col-sm-2">Prioridade:</label>
-                    <div class="col-sm-9">
-                        <select name="priority" class="form-control">
-                            <option value="">Selecione</option>
-                            <option value="alta">Alta</option>
-                            <option value="media">Média</option>
-                            <option value="baixa">Baixa</option>
-                        </select>
-                    </div>
-                </div>--}}
-
+                @csrf
                 <div class="form-group">
                     <label class="control-label col-sm-2">Mensagem:</label>
                     <div class="col-sm-9">

@@ -163,6 +163,7 @@ class EstoqueController extends Controller
         $email = Pessoa::select('email', 'nome_completo')->where('codigo_suite', $request->suite)->get();
         if ($request->status == '2') {
             $produto->update(['status' => $request->status, 'data_chegada' => date('Y-m-d')]);
+            Estoque::where('status', $request->status)->update(['data_chegada' => Carbon::now()]);
             debugbar()->info($email[0]->email);
             Mail::send(new StatusNotification($produto->get(), $email[0]->email, $email[0]->nome_completo, $request->status));
         } else {

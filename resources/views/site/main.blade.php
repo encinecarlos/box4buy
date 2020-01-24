@@ -13,7 +13,7 @@
     <meta property="og:image:secure_url" conntent="https://www.box4buy.com/postimage.jpg">
     <title>Box4Buy - Redirecionamento de encomendas</title>
             
-    <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}">
+    <link rel="shortcut icon" href="{{asset('img')}}">
 
     <!-- Global Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" rel="stylesheet">
@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="{{ asset('css/animate/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl-carousel/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl-carousel/owl.theme.default.min.css') }}">    
-    <link rel="stylesheet" href="{{ asset('css/careers.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/pricing.css') }}">    
+    {{--<link rel="stylesheet" href="{{ asset('css/careers.css') }}">--}}
+    {{--<link rel="stylesheet" href="{{ asset('css/pricing.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('bower_components/toastr/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     
@@ -76,28 +76,36 @@
                              HOME
     ======================================================-->
     <section id="home">
+
         <div id="carousel" class="carousel slide carousel-fade" data-ride="carousel">
             <!-- Carousel items -->
             <div class="carousel-inner">
+                @if($images[0]->is_overlay)
+                <div class="overlay-slide">
+                </div>
+                @endif
                 <div class="carousel-item active slides">
                     <div class="overlay"></div>
                     <div class="slide-1"></div>
                     <div class="hero ">
-                        
+
                         <hgroup class="wow fadeInUp">
                             <h1>
-                                Serviço de redirecionamento de encomendas.
+                                {{ $configurations[0]->cfg_main_text }}
                             </h1>
                             <h4 class="corWhite">do mundo até vc</h4>
                             <br>
                         </hgroup>
-                        <a href="#" class="btn btn-general buttonPrimary wow fadeInUp btnMain btn-rounded" data-toggle="modal" data-target="#cadastro-modal">Cadastre-se já, é Gratis! <i class="fa fa-arrow-right"></i></a>
+                        <a href="#"
+                           class="btn btn-gradient btn-rounded btn-lg"
+                           data-toggle="modal"
+                           data-target="#cadastro-modal">Cadastre-se já, é Gratis! <i class="fa fa-arrow-right"></i></a>
                         {{--OU
                         <a href="{{ route('login') }}" class="btn btn-general buttonPrimary wow fadeInUp btnMain btn-rounded">
                             <i class="fa fa-lock"></i> ACESSE SUA CONTA
                         </a>--}}
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -226,7 +234,7 @@
                         <div class="price-Value">
                             <div class="line-currency">até 4 LBS <small>(1,8 kg)</small></div>
                             <div class="custom-price">
-                                US$ 3,00
+                                US$ {{ str_replace('.', ',', $configurations[0]->cfg_taxa_01) }}
                             </div>                            
                         </div>
                         
@@ -255,7 +263,7 @@
                         <div class="price-Value">
                             <div class="line-currency">4.1 ATÉ 10 LBS <small>(1,85 até 4,5 kg)</small></div>
                             <div class="custom-price">
-                                US$ 7,50
+                                US$ {{ str_replace('.', ',', $configurations[0]->cfg_taxa_02) }}
                             </div>                            
                         </div>
                         {{-- <span class="month">
@@ -286,7 +294,7 @@
                         <div class="price-Value">
                             <div class="line-currency">ACIMA DE 10.1 LBS <small id="up10">(mais de 4,5 kg)</small></div>
                             <div class="custom-price">
-                                US$ 12,00
+                                US$ {{ str_replace('.', ',', $configurations[0]->cfg_taxa_03) }}
                             </div>
                         </div>
                         {{-- <span class="month">
@@ -329,7 +337,7 @@
             </div>
             <a href="{{ route('calculadora-site') }}" target="_blank">
                 <h3 class="text-center">
-                    <button class="btn btn-general buttonPrimary wow fadeInUp btn-rounded" role="button">
+                    <button class="btn btn-white btn-lg btn-rounded" role="button">
                         SIMULAR MEU FRETE
                     </button>
                 </h3>
@@ -353,155 +361,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal form-ajax noenter" id="form-cadastro" enctype="multipart/form-data" method="post">
-                        {{ csrf_field() }}
-                        <div class="alert alert-danger alert-errors" >
-                            <ul id="list-error" style="list-style-type: none">
-                            </ul>
-                        </div>
-                        <!-- <input type="hidden" name="nome"> -->
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label>Nome:</label>
-                                    <input type="text" name="_nome" class="form-control" placeholder="Primeiro nome" autofocus>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label>Sobrenome:</label>
-                                    <input type="text" name="_sobrenome" placeholder="Ultimo nome" class="form-control" autofocus>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>E-mail:</label>
-                            <input type="email" name="email" class="form-control">
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Data de Nascimento:</label>
-                                    {{-- <input type="text" data-inputmask="'mask':'99/99/9999'" name="data_nascimento" class="form-control"> --}}
-                                    <input type="tex" name="data_nascimento" class="form-control date">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Telefone:</label>
-                                    <input type="text" name="celular" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Endereço:</label>
-                            <input type="text" name="endereco" class="form-control">
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Número:</label>
-                                    <input type="number" name="numero" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="form-group">
-                                    <label>Bairro:</label>
-                                    <input type="text" name="bairro" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Complemento:</label>
-                            <input type="text" name="complemento" class="form-control">
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>CEP:</label>
-                                    <input type="text" name="cep" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Cidade:</label>
-                                    <input type="text" name="cidade" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Estado:</label>
-                                    <select class="form-control" name="uf">
-                                        <option value="">Escolher</option>
-                                        <option value="AC">AC</option>
-                                        <option value="AL">AL</option>
-                                        <option value="AP">AP</option>
-                                        <option value="AM">AM</option>
-                                        <option value="BA">BA</option>
-                                        <option value="CE">CE</option>
-                                        <option value="DF">DF</option>
-                                        <option value="ES">ES</option>
-                                        <option value="GO">GO</option>
-                                        <option value="MA">MA</option>
-                                        <option value="MT">MT</option>
-                                        <option value="MS">MS</option>
-                                        <option value="MG">MG</option>
-                                        <option value="PA">PA</option>
-                                        <option value="PB">PB</option>
-                                        <option value="PR">PR</option>
-                                        <option value="PE">PE</option>
-                                        <option value="PI">PI</option>
-                                        <option value="RJ">RJ</option>
-                                        <option value="RN">RN</option>
-                                        <option value="RS">RS</option>
-                                        <option value="RO">RO</option>
-                                        <option value="RR">RR</option>
-                                        <option value="SC">SC</option>
-                                        <option value="SP">SP</option>
-                                        <option value="SE">SE</option>
-                                        <option value="TO">TO</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>País:</label>
-                            <select name="pais" class="form-control">
-                                <option value="BR">Brasil</option>
-                                <option value="US">Estados Unidos</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Onde nos conheceu?</label>
-                            <input type="text" name="ondeconheceu" class="form-control">
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Senha</label>
-                                    <div class="div-senha">
-                                        <input type="password" id="senha" name="password"/>
-                                        <i class="fa fa-eye" id="ver" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Confirmar senha</label>
-                                    <input type="password" id="confirm-senha" name="confirm-password" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group text-center">
-                            <button type="submit" id="send-cadastro" class="btn btn-success btn-box4buy">Cadastrar</button>
-                        </div>
-                    </form>
+                    @include('site.partials.cadastro')
                 </div>
             </div>
         </div>
@@ -512,6 +372,7 @@
     @include('site.footer')
 
     @include('site.javascript')
+
     <script src="{{ asset('js/main.js') }}"></script>
 
     {{--<script>
@@ -523,10 +384,13 @@
             mainColor: '#2095f4',
             placeholderText: 'Enviar Mensagem...',
             bubbleBackground: '#2095f4',
-            bubbleAvatarUrl: 'img/chat/messenger1.png'
+            bubbleAvatarUrl: 'img/chat/me_imgnger1.png'
         };
     </script>
     <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>--}}
+    <script>
+        $('.carousel-fade').css('background-image', "url('{{ $images[0]->home_image }}')");
+    </script>
 </body>
 
 </html>

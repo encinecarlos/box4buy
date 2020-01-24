@@ -24,7 +24,7 @@ Route::post('/usuario/admin/new', 'PessoaController@store')->name('novo-usuario-
 
 Route::get('/{token}', 'Usuarios\UsuarioController@confirmaToken')->name('token');
 Route::get('/usuario/editar/{suite}', 'Usuarios\UsuarioController@exibirUsuario')->name('usuario.exibir');
-route::put('/usuario/update/{id}', 'Usuarios\UsuarioController@atualizar')->name('usuario.atualizar');
+route::patch('/usuario/update/{id}', 'Usuarios\UsuarioController@atualizar')->name('usuario.atualizar');
 Route::delete('/usuario/delete/{id}', 'Usuarios\UsuarioController@destroy')->name('usuario.deletar');
 Route::post('/upload', 'Usuarios\UsuarioController@uploadImgPerfil')->name('upload');
 Route::post('/upload/docs/rg', 'Usuarios\UsuarioController@uploadDocRG')->name('upload.rg');
@@ -38,6 +38,7 @@ Route::delete('/pessoas/delete/{id}', ['as' => 'pessoas.edit', 'uses' => 'Pessoa
 Route::post('/endereco', 'EnderecosController@cadastrar');
 Route::get('/endereco/{seq_endereco}/{id}', 'EnderecosController@show');
 Route::put('/endereco/update/{id}', 'EnderecosController@update');
+Route::delete('/endereco/delete/{id}', 'EnderecosController@destroy');
 
 Route::post('/produtos/new', 'EstoqueController@cadastrar')->name('produto-new');
 // Route::post('/produtos/upload', 'EstoqueController@uploadEstoque')->name('upload-estoque');

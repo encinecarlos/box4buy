@@ -21,7 +21,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'nome_completo', 'email', 'password',
+        'nome_completo', 'sobrenome', 'type_user','email', 'password',
     ];
     
 
@@ -47,5 +47,10 @@ class User extends Authenticatable
     public function CompraAssistida()
     {
         return $this->hasMany(CompraAssistidaInfo::class);
+    }
+
+    public function dados()
+    {
+        return $this->hasOne(ConfirmaDados::class);
     }
 }

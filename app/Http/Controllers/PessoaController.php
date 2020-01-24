@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Mail\PessoaNotificationMessage;
-use App\Http\Requests\UsuarioRequest;
+use App\Http\Requests\UserAdminRequest;
 use Mail;
 
 class PessoaController extends Controller
@@ -23,7 +23,7 @@ class PessoaController extends Controller
         return view('pessoas.main', ['pessoas' => $pessoas]);
     }
 
-    public function store(UsuarioRequest $request)
+    public function store(UserAdminRequest $request)
     {
         // $pass = Hash::make($request->password);
         $data_nascimento = $request->data_nascimento;
@@ -113,9 +113,12 @@ class PessoaController extends Controller
         $perfil_contato = PessoaContato::where(['codigo_suite' => $id])->get();
         $estado_civil = DB::table('bxby_estado_civil')->get();
         $pessoa_estoque = Estoque::where('codigo_suite', $id)->get();
-        $pessoa_documentos = DB::table('bxby_pconfirma_dados')->select(['caminho_rg', 'caminho_comprovante', 'libera_pagamento'])
-                                                              ->where('codigo_suite', $id)
-                                                              ->get();
+        $pessoa_documentos = DB::table('bxby_pconfirma_dados')
+            ->select(['caminho_rg', 'caminho_comprovante', 'libera_pagamento'])
+            ->whereNotNull('caminho_rg')
+            ->whereNotNull('caminho_comprovante')
+            ->where('codigo_suite', $id)
+            ->get();
 
         return view('pessoas.show', ['pessoa' => $pessoa,
                                      'estoque' => $pessoa_estoque,

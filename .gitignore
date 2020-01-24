@@ -16,3 +16,4 @@ yarn-error.log
 *.rar
 *.tag.gz
 *.todo
+.DS_Store

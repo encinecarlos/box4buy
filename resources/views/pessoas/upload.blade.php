@@ -4,8 +4,10 @@
     <div class="box box-info">
         <div class="box-header">
             <h4>
-                <b>Editar Produto - Suite: {{ session('suite_prefix') }}{{ $cliente[0]['codigo_suite'] }} ({{ $cliente[0]['nome_completo']
-                }})</b>
+                <b>
+                    Editar Produto - Suite: {{ session('suite_prefix') }}{{ $cliente[0]['codigo_suite'] }}
+                    ({{ $cliente[0]['nome_completo'] }})
+                </b>
             </h4>
             <div class="box-tools">
                 <a href="{{ url()->previous() }}" class="btn btn-link">
@@ -186,8 +188,13 @@
                                 </div>
                                 <div class="card-body">
                                     {{-- <h5 class="card-title">COD: {{ $fotos[$i]->codigo_produto }}</h5> --}}
-                                    <p class="card-text">Postado em: {{ $fotos[$i]->data_cadastro->format('d/m/Y') }}</p>
-                                    <p><button onclick="deleteImage({{ $fotos[$i]->seq_imagem }})" class="btn btn-danger remove-foto"><i class="fa fa-trash"></i> Excluir</button></p>
+                                    <p class="card-text">Postado
+                                        em: {{ $fotos[$i]->data_cadastro->format('d/m/Y') }}</p>
+                                    <p>
+                                        <button onclick="deleteImage({{ $fotos[$i]->seq_imagem }})"
+                                                class="btn btn-danger remove-foto"><i class="fa fa-trash"></i> Excluir
+                                        </button>
+                                    </p>
                                 </div>
                             </div>
                         </li>
@@ -197,28 +204,11 @@
         </div>
     </div>
 
-    <div id="tpl">
-        <div class="dz-preview dz-file-preview">
-            <div class="dz-details">
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <img id="img-editable" data-dz-thumbnail/>
-                    </div>
-                </div>
-                {{--<div class="row">
-                    <div class="col-sm-12 text-center">
-                        <button class="btn btn-default boxColorTema btn-lg" id="left"><i class="fa fa-rotate-left"></i></button>
-                        <button class="btn btn-default boxColorTema btn-lg" id="save"><i class="fa fa-cloud-upload"></i> Salvar</button>
-                        <button class="btn btn-default boxColorTema btn-lg" id="right"><i class="fa fa-rotate-right"></i></button>
-                    </div>
-                </div>--}}
-            </div>
-        </div>
-    </div>
+    @include('base.partials.tpl')
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/cropper.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/cropper.css') }}"/>
 @stop
 
 @section('js')
@@ -231,8 +221,8 @@
     <script src="{{ asset('js/uploadfotoproduto.js') }}"></script>
     <script>
         $('.money').maskMoney();
-        function deleteImage(id)
-        {
+
+        function deleteImage(id) {
             Swal.fire({
                 title: 'Você tem certeza disso?',
                 text: 'Deseja apagar esta imagem?',
@@ -242,8 +232,7 @@
                 confirmButtonColor: '#d33',
                 cancelButtonText: 'Não',
             }).then(result => {
-                if(result.value)
-                {
+                if (result.value) {
                     axios.get('/admin/produto/foto/delete/' + id).then(response => {
                         Swal.fire({
                             title: 'Sucesso!',
@@ -257,8 +246,7 @@
 
         }
 
-        function reloadPage()
-        {
+        function reloadPage() {
             location.href = location.href;
         }
     </script>

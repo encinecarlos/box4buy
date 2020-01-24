@@ -31,7 +31,7 @@ sup {
 /* navbar */
 
 .navbar-static-top {
-    background-color: #2196f3 !important;
+    background-color: #2095f4 !important;
 }
 
 .logo {
@@ -43,11 +43,11 @@ sup {
 }
 
 .sidebar {
-    background-color: #003d6f;
+    background-color: #002570;
 }
 
 .skin-blue .main-sidebar {
-    background-color: #003d6f !important;
+    background-color: #002570 !important;
 }
 
 .sidebar-menu {
@@ -236,11 +236,11 @@ sup {
 }
 
 .active-lista {
-    background-color: #003d6e;
+    background-color: #002570;
     color: #fff !important;
     border-radius: 5px;
     padding: 4px 10px !important;
-    border: 1px solid #003d6e;
+    border: 1px solid #002570;
 }
 
 .active-lista a {
@@ -248,11 +248,11 @@ sup {
 }
 
 .active-lista a:hover {
-    background-color: #003d6e !important;
+    background-color: #002570 !important;
 }
 
 .active-lista a:focus {
-    background-color: #003d6e !important;
+    background-color: #002570 !important;
 }
 
 .input-status {
@@ -1255,6 +1255,37 @@ span.label {
     background: #fdd303; /* Green background */
     cursor: pointer; /* Cursor on hover */
 }
+
+.notification {
+    width: 340px !important;
+}
+
+.box-scroll {
+    height: 313px;
+    overflow-x: scroll;
+}
+
+.btn-gradient {
+    background-image: linear-gradient(to right, #2095f4, #1a7ed1, #1267af, #08528e, #003d6f);
+}
+
+#duvidas {
+    height: 450px;
+    min-height: 100%;
+    padding: 0;
+}
+/*
+
+#duvidas .ql-editor {
+    overflow-x: visible;
+}
+
+!* Specify our own scrolling container *!
+#editor-container {
+    height: 100%;
+    min-height: 100%;
+    overflow-y: auto;
+}*/
 
 /* FIM CUSTOMIZAÇÕES - CARLOS ENCINE */
 

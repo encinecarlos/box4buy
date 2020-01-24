@@ -13,7 +13,7 @@
     <meta property="og:image:secure_url" conntent="https://www.box4buy.com/postimage.jpg">
     <title>Box4Buy - Redirecionamento de encomendas</title>
             
-    <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}">
+    <link rel="shortcut icon" href="{{asset('img')}}">
 
     <!-- Global Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" rel="stylesheet">

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Configuration;
+use App\Lib\Utils;
+use App\Services\AlertService;
+use App\Services\Contracts\ServiceInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -16,7 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        View::share('configurations', Configuration::all());
+        View::share('countries', Utils::getCountries());
     }
 
     /**
@@ -26,6 +31,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(ServiceInterface::class, AlertService::class);
     }
 }

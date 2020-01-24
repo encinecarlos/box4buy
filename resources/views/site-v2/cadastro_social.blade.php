@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row mt-3 text-center">
                 <div class="col-sm-12">
-                    <img src="{{ asset('img/logo-s.png') }}" width="200px" height="44px" alt="">
+                    <img src="{{ asset('img') }}" width="200px" height="44px" alt="">
                 </div>
             </div>
             <div class="row mt-lg-5">
