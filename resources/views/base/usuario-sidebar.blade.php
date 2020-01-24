@@ -5,8 +5,19 @@
             </li>
             <li><a href="{{ route('perfil', Auth::user()->codigo_suite) }}"><i class="fa fa-user"></i>
                     <span>Meu Perfil</span></a></li>
-            <li><a href="{{ route('estoque') }}" data-toggle="tooltip"
-                   title="Gerenciamento de estoque, orçamentos e produtos enviados"><i class="fa fa-archive"></i> <span>Meus Produtos</span></a>
+            <li>
+                <a href="{{ route('estoque') }}" data-toggle="tooltip"
+                   title="Gerenciamento de estoque e orçamentos">
+                    <i class="fa fa-archive"></i>
+                    <span>Meus Produtos</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('enviados') }}" data-toggle="tooltip"
+                   title="Histórico de produtos Enviados">
+                    <i class="fa fa-archive"></i>
+                    <span>Produtos Enviados</span>
+                </a>
             </li>
             <li><a href="{{ route('compra.main') }}"><i class="fa fa-shopping-cart"></i> Compra Assistida</a></li>
             <li><a href="{{ route('tickets.usuario') }}"><i class="fa fa-bullhorn"></i> <span>Suporte</span></a></li>
