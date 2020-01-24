@@ -1,0 +1,74 @@
+
+/*====================================================
+                   FINANCIAL-P1
+======================================================*/
+ 
+.financial-p2-bg {
+    background-image: url(../img/image-1.jpg);
+    background-repeat: no-repeat;
+}
+
+.financial-p3-bg {
+    background-image: url(../img/image-2.jpg);
+    background-repeat: no-repeat;
+}
+
+#financial-p1 .financial-p1-emp-desc-d {
+    display: block;
+}
+
+#financial-p1 .financial-p1-pos {
+    /*height: 600px;*/
+    width: 100%;
+    padding: 50px 50px;
+    background: #fff;
+}
+
+#financial-p1 .financial-p1-pos .financial-p1-cont {
+    padding-left: 70px;
+}
+
+#financial-p1 .financial-p1-pos .financial-p1-cont h3 {
+    font-weight: normal;
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding:5px 0 10px 0;
+}
+
+#financial-p1 .financial-p1-pos .financial-p1-cont p {
+    font-size: 15px;
+}
+
+@media (max-width: 767px) {
+
+    #financial-p1 .financial-p1-emp-desc-u {
+        display: block;
+    }
+
+    #financial-p1 .financial-p1-emp-desc-d {
+        display: none;
+    }
+    .financial-p1-emp-img {
+        height: 300px;
+    }
+    #financial-p1 .financial-p1-pos {
+        width: 100%;
+        padding: 50px 50px;
+        background: #fff;
+    }
+}
+
+@media (max-width: 420px) {
+
+    #financial-p1 .financial-p1-pos .financial-p1-cont {
+        padding-left: 10px;
+    }
+}
+
+@media (min-width: 1600px) {
+    #financial-p1 .financial-p1-pos .financial-p1-cont p {
+        font-size: 16px;
+    }
+}
+

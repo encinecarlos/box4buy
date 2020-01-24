@@ -1,0 +1,142 @@
+﻿body {
+    height: 100vh;
+    background: url("../img/login/fundo.jpg") center center no-repeat;
+    background-size: cover;
+}
+
+.left-form {
+    background: linear-gradient(to right top, rgba(32,149,244, 0.7), rgba(0,37,112, 0.7)) center center no-repeat;
+    opacity: .7;
+    text-align: center;
+    vertical-align: center;
+    height: 100vh;
+    max-height: 100vh;
+    color: #fff;
+}
+
+.left-form h1 {
+    margin-top: 40vh;
+    font-size: 6rem;
+    text-transform: uppercase;
+}
+
+.right-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #fff;
+}
+
+.col-sm-6 {
+    padding: 0;
+}
+
+.form-container {
+    width: 50%;
+    min-width: 200px;
+    color: #2095f4;
+}
+
+.custom-control {
+    border-radius: 100px;
+    border-color: #2095f4;
+    outline: none;
+}
+
+.btn-rounded {
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+}
+
+.btn-login {
+    background: linear-gradient(to right, #2095f4, #002570) center center no-repeat;
+    color: #fff;
+    font-weight: bold;
+    transition: all .3s ease-in-out;
+}
+
+.btn-login:hover {
+    opacity: .8;
+}
+
+.btn-login:hover {
+    color: #fff;
+}
+
+.img-custom {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.img-custom img {
+    width: 200px;
+    height: 40px;
+}
+
+.btn-transparent {
+    position: absolute;
+    border-radius: 100px;
+    border: 2px #fff solid;
+    color: #fff;
+    background-color: rgba(255,255,255,0);
+    transition: all .3s ease-in-out;
+}
+
+.btn-transparent:hover {
+    background-color: #fff;
+    color: #2095f4;
+    font-weight: 700;
+}
+
+.btn-container a {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    margin-left: 80%;
+}
+
+.text-divider {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.btn-reset {
+    color: #2095f4;
+    transition: all .3s ease-in-out;
+}
+
+.btn-reset:hover {
+    border: #2095f4 1px solid;
+    border-radius: 100px;
+    text-decoration: none;
+}
+
+.custom-modal {
+    height: auto !important;
+    background: linear-gradient(to right, #2095f4, #002570) center center no-repeat;
+    padding: 0;
+}
+
+.bxb-header {
+    color: #fff;
+}
+
+.bxb-body {
+    background-color: #fff;
+    height: auto;
+    width: 100%;
+    padding: 15px;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 990px) {
+    .left-form {
+        display: none;
+    }
+}
+
