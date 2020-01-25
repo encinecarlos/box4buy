@@ -255,3 +255,4 @@ Route::get('/bxby/chat', function () {
 
 // Rotas d eteste
 Route::get('/pacote/{tracknumber}', 'Usuarios\UsuarioController@rastreiaPacote');
+
