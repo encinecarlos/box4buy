@@ -11,7 +11,7 @@ class EnviadosController extends Controller
 {
     public function index()
     {
-        $enviados = Estoque::where([['codigo_suite', auth()->id()], ['status', '4']]);
+        $enviados = Estoque::where([['codigo_suite', auth()->id()], ['status', '8']]);
 
         return view('usuario.enviados', ['enviados' => $enviados]);
     }
