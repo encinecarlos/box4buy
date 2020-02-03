@@ -88,7 +88,7 @@ class OrcamentoController extends Controller
                         number_format((float)$request->valor_declarado[$i], 2),
                         $produtos[$i]['dias_estoque'],
                         $produtos[$i]['qtde'] == '' ? '0' : $produtos[$i]['qtde'],
-                        9
+                        7
                     ]);
 
                 }
@@ -194,6 +194,7 @@ class OrcamentoController extends Controller
         $data = [
             'codigo_pacote' => $request->pacote,
             'cod_rastreio' => $request->codigorastreio,
+            'peso_embalado' => $request->pesocaixa,
             'seguro' => $request->seguro2,
             'recebe_nota' => $request->envianf,
             'preco_etiqueta' => $request->etiquetaoriginal,
@@ -203,6 +204,7 @@ class OrcamentoController extends Controller
             'vlr_entrega' => $request->valorentrega != '' ? str_replace(',', '.', $request->valorentrega) : '0.00',
             'vlr_seguro' => $request->valorseguro != '' ? str_replace(',', '.', $request->valorseguro) : '0.00',
             'vlr_taxa' => $request->valorbxby != '' ? str_replace(',', '.', $request->valorbxby) : '0.00',
+            'vlr_subtotal' => $request->valorsubtotal != '' ? str_replace(',', '.', $request->valorsubtotal) : '0.00',
             'vlr_final' => $request->valortotal != '' ? str_replace(',', '.', $request->valortotal) : '0.00',
             'enviado' => $request->enviado,
             'data_envio' => $request->dataenvio,

@@ -207,7 +207,7 @@ $(document).ready(function () {
             $('#itens-total').val('');
             $('#peso-total').val('');
 
-            if (response.data.status == '1') {
+            if (response.data.status === '1') {
                 Swal({
                     title: 'Sucesso!',
                     text: response.data.msg,
@@ -259,7 +259,7 @@ $(document).ready(function () {
         var valortotal = parseFloat(frete) + parseFloat(valorseguro) + parseFloat(taxabox);
         var taxa = (valortotal / 100) * 5;
         var valorfinal = valortotal + taxa;
-        $('#total').val(valorfinal.toFixed(2));
+        $('#subtotal').val(valorfinal.toFixed(2));
     });
 
     // Atualiza o orçamento com os valores para o cliente
@@ -298,7 +298,7 @@ $(document).ready(function () {
 
     function reloadpage()
     {
-        location.href = location.href;
+        location.reload();
     }
 
     // Deleta ou cancela um orçamento

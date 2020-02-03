@@ -111,15 +111,6 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2">Valor Total:</label>
-                <div class="col-sm-1">
-                    <input type="text" id="total" name="valortotal" class="form-control money" value="{{ $orcamento[0]->vlr_final }}">
-                </div>
-                
-                <div class="col-sm-1">
-                    <button type="button" id="calcularvalor" class="btn btn-info boxColorTema">Calcular</button>
-                </div>
-
                 <label class="control-label col-sm-2">Status do Orçamento:</label>
                 <div class="col-sm-2">
                     <select name="statusorcamento" class="form-control statusorcamento">
@@ -137,6 +128,36 @@
                         <option value="2" {{ $orcamento[0]->enviado == '2' ? 'selected' : '' }}>Não</option>
                     </select>
                 </div>   
+            </div>
+
+            <div class="form-group">
+
+                <label class="control-label col-sm-2">Peso sem caixa:</label>
+                <div class="col-sm-1">
+                    <input type="text" id="total" name="pesocaixa" class="form-control money" value="{{ $orcamento[0]->peso_total }}">
+                </div>
+
+                <label class="control-label col-sm-2">Peso com caixa:</label>
+                <div class="col-sm-1">
+                    <input type="text" id="total" name="pesocaixa" class="form-control money" value="{{ $orcamento[0]->peso_embalado }}">
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Valor sem a caixa:</label>
+                <div class="col-sm-1">
+                    <input type="text" id="subtotal" name="valorsubtotal" class="form-control money" value="{{ $orcamento[0]->vlr_subtotal }}">
+                </div>
+
+                <label class="control-label col-sm-2">Valor com a caixa:</label>
+                <div class="col-sm-1">
+                    <input type="text" id="total" name="valortotal" class="form-control money" value="{{ $orcamento[0]->vlr_final }}">
+                </div>
+
+                <div class="col-sm-1">
+                    <button type="button" id="calcularvalor" class="btn btn-info boxColorTema">Calcular</button>
+                </div>
             </div>
 
             <div class="form-group infoenvio">
