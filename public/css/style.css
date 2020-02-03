@@ -35,7 +35,15 @@ sup {
 }
 
 .logo {
-    background-color: #106ebb !important;
+    background-color: #011b4e !important;
+}
+
+.logo img {
+    width: 115px !important;
+}
+
+.header-gradient {
+    background: linear-gradient(45deg, #011b4e, transparent);
 }
 
 .content-wrapper {

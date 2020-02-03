@@ -18,6 +18,11 @@ class OrcamentoProduto extends Model
 
     public function estoque()
     {
-        return $this->hasOne(Estoque::class, 'codigo_produto', 'seq_produto');
+        return $this->hasMany(Estoque::class, 'codigo_produto', 'seq_produto');
+    }
+
+    public function fotos()
+    {
+        return $this->hasMany(EstoqueImagem::class, 'codigo_produto', 'seq_imagem');
     }
 }

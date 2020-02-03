@@ -148,6 +148,7 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     })->name('orcamentos');
 
     Route::get('/usuario/enviados', 'Usuarios\EnviadosController@index')->name('enviados');
+    Route::get('/usuario/enviados/fotos/{productid}', 'Usuarios\EnviadosController@showFotos')->name('enviados.fotos');
 
     Route::get('/usuario/suporte', 'SuporteController@index')->name('tickets.usuario');
     Route::get('/usuario/suporte/add', 'SuporteController@create')->name('ticketadd');

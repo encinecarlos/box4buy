@@ -1,10 +1,10 @@
 <header class="main-header boxColorTema">
     <!-- Logo -->
     <a href="{{ route('dashboard') }}" class="logo">
-        <img src="{{asset('img')}}" alt="">
+        <img src="{{asset('img/logo-mini.png')}}" alt="">
     </a>
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
+    <nav class="navbar navbar-static-top header-gradient">
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <i class="fa fa-bars" aria-hidden="true"></i>

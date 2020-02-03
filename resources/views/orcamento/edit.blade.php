@@ -113,7 +113,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">Valor Total:</label>
                 <div class="col-sm-1">
-                    <input type="text" id="total" name="valortotal" class="form-control money" value="{{ $orcamento[0]->vlr_final }}" readonly>                    
+                    <input type="text" id="total" name="valortotal" class="form-control money" value="{{ $orcamento[0]->vlr_final }}">
                 </div>
                 
                 <div class="col-sm-1">
