@@ -19,7 +19,7 @@ class EnviadosController extends Controller
                 ['status', '6']
             ])->withTrashed();
         }, 'fotos'])
-          ->where('status', '9')
+          ->where('status', '8')
           ->get();
 
         return view('usuario.enviados', ['enviados' => $enviados]);
