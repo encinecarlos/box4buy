@@ -26,6 +26,9 @@ use App\User;
 
 class EstoqueController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function exibeEstoqueUsuario()
     {
         $produtos = Estoque::where(['codigo_suite' => Auth::user()->codigo_suite])->get();

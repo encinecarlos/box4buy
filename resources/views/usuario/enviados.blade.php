@@ -10,64 +10,47 @@
             <div class="box-tools pull-right"></div>
         </div>
         <div class="box-body">
-            <h4 class="box-title">PACOTES EM TRANSITO</h4>
-            <table id="example2" class="table table-bordered table-hover">
+            <h4 class="box-title text-uppercase">Produtos enviados</h4>
+            <table id="enviados" class="table table-bordered table-hover">
                 <thead>
                 <tr>
+                    <th class="text-center">Orçamento</th>
                     <th class="text-center">Código Rastreio</th>
+                    <th class="text-center">Descrição</th>
+                    <th class="text-center">Valor</th>
+                    <th class="text-center">Fotos</th>
                     <th class="text-center">Peso Total</th>
                     <th class="text-center">Data de Envio</th>
-                    <th class="text-center">Confirmar Recebimento</th>
-                    <th class="text-center">Suporte</th>
+                    {{--<th class="text-center">Confirmar Recebimento</th>
+                    <th class="text-center">Suporte</th>--}}
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($enviados as $env)
                     <tr>
-                        <td class="text-center">{{ $env->cod_rastreio }}</td>
-                        <td class="text-center">{{ $env->peso_total }}</td>
-                        <td class="text-center">{{ $env->data_envio->format('d/m/Y') }}</td>
-                        <td class="text-center"><a href="#" class="btn btn-info BoxColorTema"><i class="fa da-check"></i></a></td>
-                        <td class="text-center"><a href="#" class="btn btn-info boxColorTema"><i class="fa fa-ticket"></i></a></td>
+                        <td class="text-center">{{ $env->codigo_orcamento }}</td>
+                        <td class="text-center">{{ $env->orcamento->cod_rastreio }}</td>
+                        <td class="text-center">{{ $env->descricao }}</td>
+                        <td class="text-center">{{ $env->orcamento->vlr_final }}</td>
+                        <td class="text-center">
+                            <a href="{{ route('enviados.fotos', $env->codigo_produto) }}"
+                               class="btn btn-primary btn-rounded boxColorTema"
+                               title="Visualizar Fotos">
+                                <i class="fa fa-image"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">{{ $env->orcamento->peso_total }}</td>
+                        <td class="text-center">
+                            {{ !is_null($env->orcamento->data_envio) ? $env->orcamento->data_envio->format('d/m/Y') : 'Não informado' }}
+                        </td>
+                        {{--<td class="text-center"><a href="#" class="btn btn-info BoxColorTema"><i class="fa da-check"></i></a></td>
+                        <td class="text-center"><a href="#" class="btn btn-info boxColorTema"><i class="fa fa-ticket"></i></a></td>--}}
                     </tr>
                 @endforeach
                 </tbody>
             </table>
         </div>
         <br>
-        <div class="box-body">
-            <h4 class="box-title">PACOTES ENTREGUES</h4>
-            <div class="tableover">
-                <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th class="text-center">Código Rastreio</th>
-                        <th class="text-center">Peso Total</th>
-                        <th class="text-center">Data Envio</th>
-                        <th class="text-center">Cod. Seguro</th>
-                        <th class="text-center">Observações</th>
-                        <th class="text-center">Data Recebimento</th>
-                        <th class="text-center">Avaliar Serviço</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="text-center">12234422-BR</td>
-                        <td class="text-center">12 LBS</td>
-                        <td class="text-center">01/01/2018</td>
-                        <td class="text-center">332232-RR</td>
-                        <td class="text-center">Não Há</td>
-                        <td class="text-center">02/02/2018</td>
-                        <td class="text-center"><a href="#" class="btn boxColorTema" data-toggle="modal" data-target="#avalieEntrega" id="inputValida">
-                                <i class="fa fa-star"></i>
-                            </a>
-                            @include('usuario.partials.avaliacao')
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
     <!-- ==============  FIM DO ORÇAMENTO ==============  -->
 @stop
@@ -80,4 +63,17 @@
 
 @section('js')
     <script src="{{ asset('js/usuario-estoque.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    {{--<script src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"></script>--}}
+
+    <script>
+        $('#enviados').dataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json'
+            },
+            order: [[0, 'desc']],
+        });
+    </script>
 @stop

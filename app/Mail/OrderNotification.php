@@ -37,8 +37,8 @@ class OrderNotification extends Mailable
     {
         return $this->subject("Box4Buy [SUITE CB#$this->suite] - NOVO ORÇAMENTO SOLICITADO")
             ->from('atendimento@box4buy.com')
-            ->to(['info@box4buy.com'])
-            ->cc($this->email)
+            ->to([$this->email])
+            ->bcc('info@box4buy.com')
             ->markdown('emails.ordernotification');
     }
 }

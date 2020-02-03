@@ -8,7 +8,7 @@ class Estoque extends Model
 {
     protected $primaryKey = "seq_produto";
     protected $table = 'bxby_produtos_estoque';
-    protected $dates = ['data_compra', 'data_chegada'];
+    protected $dates = ['data_compra', 'data_chegada', 'data_envo'];
     // const CREATED_AT = 'data_cadastro';
     // const UPDATED_AT = 'data_atualizacao';
     public $timestamps = false;

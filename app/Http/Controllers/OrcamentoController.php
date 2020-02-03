@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\NotificationSystem;
 use App\Lib\ProductServices;
+use DebugBar\DebugBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 //use illuminate\Support\Facades\Auth;
@@ -129,7 +130,14 @@ class OrcamentoController extends Controller
             return $orcamento->status == '6';
         });
 
-        return view('orcamento.main', ['aguardando' => $aguardando, 'aprovado' => $aprovado, 'pago' => $pago, 'produtos' => $produtos]);
+//        $enviado = $orcamentos->orcamento_produtos;
+
+        return view('orcamento.main', [
+            'aguardando' => $aguardando,
+            'aprovado' => $aprovado,
+            'pago' => $pago,
+            'produtos' => $produtos,
+        ]);
     }
 
     public function orcamentoDetalhe($id_produto)
@@ -214,7 +222,11 @@ class OrcamentoController extends Controller
                 'codigorastreio' => 'required',
                 'dataenvio' => 'required'
             ], $messages);
-            DB::table('bxby_orcamento_produto')->where('codigo_orcamento', $id)->update(['status' => '8']);
+            DB::table('bxby_orcamento_produto')->where('codigo_orcamento', $id)
+                ->update([
+                    'status' => '8',
+                    'data_envio' => $request->dataenvio
+                ]);
         }
         DB::table('bxby_orcamento')->where('sequencia', $id)->update($data);
         $id_user = Orcamento::select('codigo_suite')->where('sequencia', $id)->get();
@@ -279,11 +291,12 @@ class OrcamentoController extends Controller
                 }
             }
 
-            $orcamento = Orcamento::find($id);
-            $orcamento->delete();
-            return response()->json(['msg' => 'Registro excluido com sucesso!']);
+            $orcamento = Orcamento::destroy($id);
+            if($orcamento) {
+                return response()->json(['msg' => 'Registro excluido com sucesso!']);
+            }
         } catch (Exception $e) {
-            Debugbar::info($e->getMessage());
+            \debugbar()->info($e->getMessage());
         }
     }
 
