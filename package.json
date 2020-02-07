@@ -22,6 +22,7 @@
     "dependencies": {
         "admin-lte": "^3.0.0-alpha",
         "cropperjs": "^1.4.3",
-        "jquery-cropper": "^1.0.0"
+        "jquery-cropper": "^1.0.0",
+        "jquery-smartcart": "^3.0.1"
     }
 }

@@ -189,7 +189,7 @@
                     {{--@dd($pago[0]->orcamento_produtos)--}}
                     <div class="tab-pane" id="enviados">
                         <div class="box box-info">
-                            <div class="box-body">
+                            <div class="box-body table-responsive">
                                 <h4 class="box-title text-uppercase">Produtos enviados ao cliente</h4>
                                 <table id="enviados" class="table table-bordered table-hover tb-orcamento">
                                     <thead>

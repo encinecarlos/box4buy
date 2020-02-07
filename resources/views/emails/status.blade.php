@@ -5,7 +5,7 @@
 
 Olá {{ $customer_name }}
 
-O status do seu produto foi alterado. Confira abaixo informações mais detalhadas a respeito.
+O status do seu produto foi atualizado. Confira abaixo informações mais detalhadas a respeito.
 
 
 @switch($product_status)
@@ -16,6 +16,8 @@ O status do seu produto foi alterado. Confira abaixo informações mais detalhad
 ## STATUS: EM ORÇAMENTO
 @break
 @case('4')
+@case('6')
+@case('8')
 ## STATUS: ENVIADO PARA O CLIENTE
 @break
 @endswitch

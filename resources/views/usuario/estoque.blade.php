@@ -1,16 +1,16 @@
 @extends('base.usuario-base')
 @section('content')
-
     <div class="box box-info">
         <div class="box-header">
             <h4>ESTOQUE</h4>
             <div class="box-tools">
-                @if (Session::has('produtos'))
-                    <a href="{{ route('user-carrinho') }}" id="user-cart" class="btn btn-default boxColorTema"><i
-                                class="fa fa-shopping-cart"></i> Carrinho
-                        <small class="label badge">{{ count(session('produtos')) == 0 ? '0' : count(session('produtos')) }}</small>
-                    </a>
-                @endif
+                <a href="{{ route('user-carrinho') }}"
+                   id="user-cart"
+                   class="btn btn-rounded btn-default boxColorTema"
+                   {{ !session('produtos') ? 'disabled' : '' }}>
+                    <i class="fa fa-shopping-cart"></i> Carrinho
+                    <small class="label badge">{{ session('produtos') ? count(session('produtos')) : '0' }}</small>
+                </a>
             </div>
         </div>
         <div class="box-body" id="estoque-content">
@@ -43,6 +43,38 @@
                                 </a>
                             </div>
                         </div>
+                        {{--<div class="box-body">
+                            <div class="row">
+                                @foreach($produtos as  $produto)
+                                    --}}{{--@dd($produto->fotos[1]->caminho_imagem)--}}{{--
+                                    <div class="col-md-3">
+                                        <div class="sc-product-item">
+                                            --}}{{--<img data-name="{{ $produto->descricao_produto }}"
+                                                 src="{{ asset('img/logo-mini.png') }}" alt="{{ $produto->descricao_produto }}">--}}{{--
+                                            <h4 data-name="product_name">{{ $produto->descricao_produto }}</h4>
+                                            <p data-name="product_desc">
+                                                <a href="#track-{{ $produto->seq_produto }}"
+                                                   data-codigo="{{ $produto->codigo_rastreio }}"
+                                                   data-produto="{{ $produto->seq_produto }}"
+                                                   class="rastreamento"
+                                                   rel="modal:open">{{ $produto->codigo_rastreio }}
+                                                </a>
+                                            </p>
+                                            <input name="product_price" value="{{ $produto->peso }}" type="hidden" />
+                                            <input name="product_id" value="{{ $produto->seq_produto }}" type="hidden" />
+                                            <button class="sc-add-to-cart btn btn-success">Adicionar ao Carrinho</button>
+                                        </div>
+                                    </div>
+
+                                @endforeach
+                                    <div class="col-sm-3">
+                                        <form method="POST">
+                                            <!-- SmartCart element -->
+                                            <div id="smartcart"></div>
+                                        </form>
+                                    </div>
+                            </div>
+                        </div>--}}
                         <div class="box-body table-responsive">
                             <table class="table table-bordered table-hover" id="estoque-produtos">
                                 <thead>
@@ -125,7 +157,7 @@
                                         <td class="text-center">
                                             <a href="#fotoproduto-{{ $produto->seq_produto }}" rel="modal:open"
                                                class="btn btn-primary btn-rounded boxColorTema"
-                                               {{--{{ $produto->data_chegada == '' || $produto->qtde == 0 ? 'disabled' : '' }}--}}
+                                               {{ $produto->data_chegada == '' || $produto->qtde == 0 ? 'disabled' : '' }}
                                                title="Visualizar Fotos">
                                                 <i class="fa fa-image"></i>
                                             </a>
@@ -289,7 +321,8 @@
                                     <th>Pacote</th>
                                     <th>Produtos</th>
                                     <th>Peso(lbs)</th>
-                                    <th>Valor</th>
+                                    <th>Peso com a caixa(lbs)</th>
+                                    <th>Valor com a caixa</th>
                                     <th>status pagamento</th>
                                     <th>Status</th>
                                     <th>Ações</th>
@@ -319,6 +352,7 @@
                                                 <i class="fa fa-eye"></i> Produtos</a>
                                         </td>
                                         <td>{{ $ap->peso_total }}</td>
+                                        <td>{{ $ap->peso_embalado }}</td>
                                         <td>{{ number_format($ap->vlr_final,2,',', '.') }}</td>
                                         <td>
                                             <span class="label label-warning">Aguardando pagamento</span>
@@ -373,8 +407,17 @@
                                         <td>{{ $pg->sequencia }}</td>
                                         <td>{{ session('suite_prefix') }}{{ $pg->codigo_suite }}</td>
                                         <td>
-                                            @switch($pg->codigo_pacote) @case(1) First class @break @case(2) Priority
-                                            Mail @break @case(3) Priority Express @break @endswitch
+                                            @switch($pg->codigo_pacote)
+                                                @case(1)
+                                                    First class
+                                                    @break
+                                                @case(2)
+                                                    Priority Mail
+                                                    @break
+                                                @case(3)
+                                                    Priority Express
+                                                    @break
+                                            @endswitch
                                         </td>
                                         <td>
                                             <a href="{{ route('orcamento-detalhe-usuario', $pg->sequencia) }}"
@@ -393,12 +436,12 @@
                                                class="btn btn-default btn-rounded"><i class="fa fa-file-text"></i> Gerar
                                                 Recibo</a>
                                         </td>
-                                        {{--
-                                        <td>
-                                            <a href="{{ route('orcamento-edit', $a->sequencia) }}">
+
+                                        {{--<td>
+                                            <a href="{{ route('orcamento-edit', $pg->sequencia) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
-                                        </td> --}}
+                                        </td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -478,8 +521,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
 
@@ -488,6 +529,7 @@
 @section('css')
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="{{ asset('css/smart_cart.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @stop
 @section('js')
@@ -496,9 +538,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"></script>
+    <script src="{{ asset('js/jquery.smartCart.js') }}"></script>
 
     <script>
 
+        /*$('#smartcart').smartCart({
+            cartItemQtyTemplate: '{display_quantity}',
+            lang: {
+                cartTitle: "Carrinho Box4Buy",
+                checkout: 'Gerar Orçamento',
+                clear: 'Limpar Carrinho',
+                subtotal: 'Peso Total:',
+                cartRemove:'×',
+                cartEmpty: 'Carrinho vazio!<br />Selecione os produtos para orçamento'
+            },
+            currencyOptions:  {
+                style: 'decimal',
+                currency: 'USD',
+                currencyDisplay: 'symbol'
+            },
+            toolbarSettings: {
+                showCartSummary: false,
+            }
+        });*/
 
         $('#estoque-produtos').dataTable({
             language: {
@@ -626,6 +688,5 @@
         });
     </script>
     <script src="{{ asset('js/orcamento.js') }}"></script>
-
 
 @stop

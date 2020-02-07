@@ -4,12 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cmgmyr\Messenger\Traits\Messagable;
+use Illuminate\Notifications\Notifiable;
 
 
 class Pessoa extends Model
 {
     use Messagable;
-    
+    use Notifiable;
+
     protected $table = 'bxby_pessoas';
     protected $primaryKey = "codigo_suite";
     public $timestamps = false;
