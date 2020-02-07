@@ -11,9 +11,9 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.copy('node_modules/cropperjs/dist/cropper.js', 'public/js')
-    .copy('node_modules/cropperjs/dist/cropper.css', 'public/css')
-    .copy('node_modules/jquery-cropper/dist/jquery-cropper.js', 'public/js');
+mix.copy('node_modules/jquery-smartcart/dist/js/jquery.smartCart.min.js', 'public/js/smartcart.js')
+    .copy('node_modules/jquery-smartcart/dist/css/smart_cart.min.css', 'public/css/smartcart.css');
+
 
 // mix.js('resources/assets/js/app.js', 'public/js')
 //    .sass('resources/assets/sass/app.scss', 'public/css');

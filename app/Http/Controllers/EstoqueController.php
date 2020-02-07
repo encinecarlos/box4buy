@@ -9,6 +9,7 @@ use App\Http\Requests\EstoqueRequest;
 use App\Lib\ProductServices;
 use App\Mail\StatusNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
@@ -263,6 +264,7 @@ class EstoqueController extends Controller
 
     public function alteraQuantidade(Request $request, $seq_produto)
     {
+//        $quantidade = 0;
         $produto = DB::table('bxby_produtos_estoque')->where('seq_produto', $seq_produto)->get();
         if ($produto[0]->qtde > 0) {
             if ($produto[0]->qtde == 0) {
@@ -282,6 +284,15 @@ class EstoqueController extends Controller
         $sql_produto_update = "UPDATE bxby_produtos_estoque SET qtde = qtde - {$request->qtenvio} WHERE seq_produto = {$seq_produto}";
         DB::statement($sql_produto_update);
 
+        /*if (Cache::has('produtos'))
+        {
+
+            Cache::forget('produtos');
+            Cache::forever('produtos', $data_produtos);
+        } else {
+            Cache::forever('produtos', $data_produtos);
+        }*/
+
         $produtos = session('produtos');
         if ($produtos) {
             $idproduto = array_search($seq_produto, array_column($produtos, 'id'));
@@ -299,6 +310,8 @@ class EstoqueController extends Controller
             $request->session()->push('produtos', $data_produtos);
         }
         //return redirect(route('estoque'))->with('produtos', $produtos);
+//        $produtos = Cache::get('produtos');
+        debugbar()->info($produtos);
         return $produtos;
         //return response()->json(['msg' => "produto adicionado com sucesso!"]);
     }

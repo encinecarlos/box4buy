@@ -150,17 +150,19 @@
                     <input type="text" id="subtotal" name="valorsubtotal" class="form-control money" value="{{ $orcamento[0]->vlr_subtotal }}">
                 </div>
 
+                <div class="col-sm-1">
+                    <button type="button" id="calcularvalor" class="btn btn-info boxColorTema">Calcular</button>
+                </div>
+
                 <label class="control-label col-sm-2">Valor com a caixa:</label>
                 <div class="col-sm-1">
                     <input type="text" id="total" name="valortotal" class="form-control money" value="{{ $orcamento[0]->vlr_final }}">
                 </div>
 
-                <div class="col-sm-1">
-                    <button type="button" id="calcularvalor" class="btn btn-info boxColorTema">Calcular</button>
-                </div>
+
             </div>
 
-            <div class="form-group infoenvio">
+            <div class="form-group">
                 <label class="control-label col-sm-2">Track Number:</label>
                 <div class="col-sm-5">
                     <input type="text" class="form-control" name="codigorastreio" value="{{ $orcamento[0]->cod_rastreio }}">
@@ -284,7 +286,7 @@
             $('select').removeAttr('readonly');
         });
 
-        var produto_enviado = $("select[name='enviado']");
+        /*var produto_enviado = $("select[name='enviado']");
         
         produto_enviado.change(function() {
             if($(this).val() == '1') {
@@ -292,7 +294,7 @@
             } else {
                 $('.infoenvio').hide();
             } 
-        });
+        });*/
     });
 </script>
 @stop

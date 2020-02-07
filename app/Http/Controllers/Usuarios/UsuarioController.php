@@ -108,7 +108,10 @@ class UsuarioController extends Controller
     public function logout()
     {
         try {
-            session()->flush();
+            if (session('suite_prefix')) {
+                session()->forget('suite_prefix');
+            }
+
             Auth::logout();
             return redirect('/');
         } catch (\Exception $ex) {

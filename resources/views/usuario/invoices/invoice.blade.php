@@ -158,12 +158,12 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: "{{ $orcamento[0]->vlr_final }}",
+                            value: "{{ $orcamento[0]->vlr_final == '0' ? '0.01' : $orcamento[0]->vlr_final }}",
                             breakdown: {
                                 // currency_code: 'USD',
                                 item_total: {
                                     currency_code: 'USD',
-                                    value:"{{ $orcamento[0]->vlr_final }}"
+                                    value:"{{ $orcamento[0]->vlr_final == '0' ? '0.01' : $orcamento[0]->vlr_final }}"
                                 }
                             }
                         },
@@ -171,7 +171,7 @@
                             name: "Entrega de produtos BOX4BUY",
                             unit_amount: {
                                 currency_code: 'USD',
-                                value: "{{ $orcamento[0]->vlr_final }}"
+                                value: "{{ $orcamento[0]->vlr_final == '0' ? '0.01' : $orcamento[0]->vlr_final }}"
                             },
                             description: "Entrega para a suite CB{{ Auth::user()->codigo_suite }}",
                             quantity: 1
@@ -181,11 +181,6 @@
             },
 
             onApprove(data, actions) {
-                // Capture the funds from the transaction
-                // return actions.order.capture().then(function(details) {
-                //     // Show a success message to your buyer
-                //     alert('Transaction completed by ' + details.payer.name.given_name);
-                // });
                 axios.post("/invoice/payment/{{ $orcamento[0]->sequencia }}").then(response => {
                     location.href = "/invoice/payment/recibo/{{ $orcamento[0]->sequencia }}"
                 });

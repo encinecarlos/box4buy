@@ -3,10 +3,13 @@
 namespace App\Lib;
 
 use App\Lib\Contracts\PaymentInterface;
+use App\Notifications\OrderStatusNotification;
+use App\Pessoa;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Facades\CotacaoDolar;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Request as req;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
@@ -17,8 +20,6 @@ use PayPalCheckoutSdk\Core\SandboxEnvironment;
  */
 class Pagamento implements PaymentInterface
 {
-
-
     /**
      * Gera o invoice do pagamento
      * @param $orcamento_id
@@ -42,7 +43,11 @@ class Pagamento implements PaymentInterface
     {
 //        $orcamento = DB::table('bxby_orcamento')->where('sequencia', $orcamento_id)->get();
         DB::table('bxby_orcamento')->where('sequencia', $orcamento_id)->update(['status' => '6']);
-        return self::geraRecibo($orcamento_id);
+        $users = Pessoa::where('codigo_suite', auth()->user()->codigo_suite)->get();
+        $admins = Pessoa::where('type_user', 1)->get();
+        Notification::send($users, new OrderStatusNotification($orcamento_id, '6'));
+        Notification::send($admins, new OrderStatusNotification($orcamento_id, '6'));
+        return static::geraRecibo($orcamento_id);
     }
 
     /**

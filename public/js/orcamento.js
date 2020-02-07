@@ -213,19 +213,26 @@ $(document).ready(function () {
                     text: response.data.msg,
                     type: 'success',
                     confirmButtonText: 'OK',
-                    onClose: reloadpage
+                }).then(result => {
+                    if (result.value) {
+                        $.modal.close();
+                        location.href = location.origin + '/usuario/estoque';
+                    }
                 });
-                $.modal.close();
-                setTimeout(() => {
-                    location.href = location.origin + '/usuario/estoque';
-                }, 2500);
+
+                /*setTimeout(() => {
+
+                }, 1000);*/
             } else {
                 Swal({
                     title: 'Tivemos um problema!',
                     text: response.data.msg,
                     type: 'error',
                     confirmButtonText: 'OK',
-                    onClose: reloadpage
+                }).then(result => {
+                    if (result.value) {
+                        location.reload();
+                    }
                 });
             }
         }).catch(error => {
@@ -252,7 +259,7 @@ $(document).ready(function () {
         var valorseguro = $('#seguro-valor').val();
         var taxabox = $('#taxabox').val();
 
-        if (valorseguro == '') {
+        if (valorseguro === '') {
             valorseguro = 0;
         }
 
@@ -269,16 +276,17 @@ $(document).ready(function () {
         var data = form.serialize();
 
         axios.put('/orcamento/' + seq_id, data).then(response => {
-            if (response.data.status == '1') {
+            if (response.data.status === '1') {
                 Swal({
-                    title: 'Sucesso!',
-                    text: 'Quantidade atualizada com sucesso.',
+                    text: 'Atualizado com sucesso!.',
                     type: 'success',
                     confirmButtonText: 'OK',
                     onClose: reloadpage
+                }).then(result => {
+                    if (result.value) {
+                        location.reload();
+                    }
                 });
-            } else {
-
             }
         }).catch(error => {
             var erros = error.response.data.errors;

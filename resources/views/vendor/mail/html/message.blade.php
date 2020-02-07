@@ -2,7 +2,7 @@
     {{-- Header --}}
     @slot('header')
         @component('mail::header', ['url' => route('site')])
-            <img src="{{ asset('img') }}" alt="Box4Buy">
+            <img src="{{ asset('img/logo-mini.png') }}" alt="Box4Buy">
         @endcomponent
     @endslot
 
