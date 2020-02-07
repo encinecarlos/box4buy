@@ -320,9 +320,9 @@
                                     <th>Suite</th>
                                     <th>Pacote</th>
                                     <th>Produtos</th>
-                                    <th>Peso(lbs)</th>
-                                    <th>Peso com a caixa(lbs)</th>
-                                    <th>Valor com a caixa</th>
+                                    <th>Peso Produtos(lbs)</th>
+                                    <th>Peso final</th>
+                                    <th>Valor final</th>
                                     <th>status pagamento</th>
                                     <th>Status</th>
                                     <th>Ações</th>
@@ -382,7 +382,7 @@
                         </div>
                     </div>
 
-                    <div class="box box-info">
+                    {{--<div class="box box-info">
                         <div class="box-header">
                             <h4>ORÇAMENTOS PAGOS</h4>
                         </div>
@@ -437,17 +437,17 @@
                                                 Recibo</a>
                                         </td>
 
-                                        {{--<td>
+                                        --}}{{--<td>
                                             <a href="{{ route('orcamento-edit', $pg->sequencia) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
-                                        </td>--}}
+                                        </td>--}}{{--
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div>--}}
                 </div>
             </div>
         </div>
