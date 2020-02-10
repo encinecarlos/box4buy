@@ -214,11 +214,18 @@ class OrcamentoController extends Controller
                 'codigorastreio' => 'required',
                 'dataenvio' => 'required'
             ], $messages);*/
-            DB::table('bxby_orcamento_produto')->where('codigo_orcamento', $id)
-                ->update([
-                    'status' => '8',
-                    'data_envio' => $request->dataenvio
+            $orcamentoProdutoStatus = OrcamentoProduto::where('codigo_orcamento', $id)->get();
+
+            if ($orcamentoProdutoStatus[0]->status == 8) {
+                OrcamentoProduto::where('codigo_orcamento', $id)->update([
+                    'status' => '7',
                 ]);
+            } else {
+                OrcamentoProduto::where('codigo_orcamento', $id)->update([
+                    'status' => '8',
+                ]);
+            }
+
         }
 
         DB::table('bxby_orcamento')->where('sequencia', $id)->update($data);
@@ -226,13 +233,6 @@ class OrcamentoController extends Controller
 
         $user = Pessoa::where('codigo_suite', $id_user[0]->codigo_suite)->get();
         Notification::send($user, new OrderStatusNotification($id, $request->statusorcamento));
-
-        /*NotificationSystem::notifyUser(
-            $id_user,
-            "Orçamento $id acaba de ser atualizado",
-            "orcamento",
-            "fa fa-pencil",
-            $id);*/
 
         return response()->json(['msg' => 'Orçamento atualizado com sucesso', 'status' => '1']);
     }

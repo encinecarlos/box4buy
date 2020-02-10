@@ -298,7 +298,7 @@
                                             </a>
                                             <button class="btn btn-danger btn-rounded orcamento-cancelar"
                                                     data-orcamento="{{ $a->sequencia }}"><i class="fa fa-remove"></i>
-                                                Cancelar Orçamento
+                                                Cancelar Solicitação
                                             </button>
                                         </td>
                                     </tr>
@@ -375,7 +375,9 @@
                                                 @else
                                                     <button type="button"
                                                             id="cancela-orcamento-{{ $ap->sequencia }}"
-                                                            data-orcamento="{{ $ap->sequencia }}" class="btn btn-rounded btn-danger">
+                                                            data-orcamento="{{ $ap->sequencia }}"
+                                                            onclick="cancelaOrcamento(this)"
+                                                            class="btn btn-rounded btn-danger">
                                                         <i class="fa fa-close"></i> Recusar Orçamento
                                                     </button>
                                                     <button type="button"
@@ -734,8 +736,12 @@
         }
 
         function cancelaOrcamento(btn) {
-            const id = btn.querySelector('data-orcamento').value;
+            const id = btn.getAttribute('data-orcamento');
             axios.get('/orcamento/' + id + '/cancelar').then(response => {
+                Swal.fire({
+                    type: 'success',
+                    text: 'Orçamento cancelado com sucesso'
+                });
                 location.reload();
             });
         }
