@@ -298,7 +298,7 @@
                                             </a>
                                             <button class="btn btn-danger btn-rounded orcamento-cancelar"
                                                     data-orcamento="{{ $a->sequencia }}"><i class="fa fa-remove"></i>
-                                                Cancelar Orçamento
+                                                Cancelar Solicitação
                                             </button>
                                         </td>
                                     </tr>
@@ -320,9 +320,9 @@
                                     <th>Suite</th>
                                     <th>Pacote</th>
                                     <th>Produtos</th>
-                                    <th>Peso(lbs)</th>
-                                    <th>Peso com a caixa(lbs)</th>
-                                    <th>Valor com a caixa</th>
+                                    <th>Peso Produtos(lbs)</th>
+                                    <th>Peso final</th>
+                                    <th>Valor final</th>
                                     <th>status pagamento</th>
                                     <th>Status</th>
                                     <th>Ações</th>
@@ -368,10 +368,25 @@
                                                     seus documentos e habilitar o pagamento de suas mercadorias</p>
                                                 @break
                                                 @case('2')
-                                                <a href="{{ route('pagamento-invoice', $ap->sequencia) }}"
-                                                   class="btn btn-info btn-rounded boxColorTema"><i
-                                                            class="fa fa-paypal"></i>
-                                                    Pagar</a>
+                                                @if($ap->aceita_orcamento == '1')
+                                                    <a class="btn btn-rounded boxColorTema" href="{{ route('pagamento-invoice', $ap->sequencia) }}">
+                                                        <i class="fa fa-paypal"></i> Pagar
+                                                    </a>
+                                                @else
+                                                    <button type="button"
+                                                            id="cancela-orcamento-{{ $ap->sequencia }}"
+                                                            data-orcamento="{{ $ap->sequencia }}"
+                                                            onclick="cancelaOrcamento(this)"
+                                                            class="btn btn-rounded btn-danger">
+                                                        <i class="fa fa-close"></i> Recusar Orçamento
+                                                    </button>
+                                                    <button type="button"
+                                                       id="{{ $ap->sequencia }}"
+                                                       onclick="aceitaOrcamento(this)"
+                                                       class="btn btn-success btn-rounded">
+                                                        <i class="fa fa-check"></i> Aceitar Orçamento
+                                                    </button>
+                                                @endif
                                                 @break
                                             @endswitch
                                         </td>
@@ -382,7 +397,7 @@
                         </div>
                     </div>
 
-                    <div class="box box-info">
+                    {{--<div class="box box-info">
                         <div class="box-header">
                             <h4>ORÇAMENTOS PAGOS</h4>
                         </div>
@@ -437,17 +452,17 @@
                                                 Recibo</a>
                                         </td>
 
-                                        {{--<td>
+                                        --}}{{--<td>
                                             <a href="{{ route('orcamento-edit', $pg->sequencia) }}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
-                                        </td>--}}
+                                        </td>--}}{{--
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div>--}}
                 </div>
             </div>
         </div>
@@ -686,6 +701,50 @@
                 $('.box-overlay').show();
             });
         });
+
+        function aceitaOrcamento(btn) {
+            Swal.fire({
+                type: 'warning',
+                title: 'Aviso',
+                text: 'Deseja aceitar este orçamento? Ao aceita-lo você será redirecionado para a tela de pagamento e não poderá mais cancelar o orçamento',
+                width: 650,
+                showCancelButton: true,
+                confirmButtonText: 'Sim, aceito o orçamento',
+                confirmButtonColor: '#00a65a',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar Orçamento',
+            }).then(result => {
+                if (result.value) {
+                    axios.get('/orcamento/' + btn.id + '/aceite').then(response => {
+                        location.href = '/invoice/' + btn.id
+                    });
+
+                } else {
+                    axios.get('/orcamento/' + btn.id + '/cacncelar').then(response => {
+                       Swal.fire({
+                           type: 'success',
+                           text: 'Orçamento recusado.'
+                       }).then(result => {
+                           if (result.value) {
+                               location.reload();
+                           }
+                       })
+                    });
+                    alert("Orçamento " + btn.id + " cancelado");
+                }
+            });
+        }
+
+        function cancelaOrcamento(btn) {
+            const id = btn.getAttribute('data-orcamento');
+            axios.get('/orcamento/' + id + '/cancelar').then(response => {
+                Swal.fire({
+                    type: 'success',
+                    text: 'Orçamento cancelado com sucesso'
+                });
+                location.reload();
+            });
+        }
     </script>
     <script src="{{ asset('js/orcamento.js') }}"></script>
 

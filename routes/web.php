@@ -205,6 +205,8 @@ Route::group(['middleware' => ['auth', 'calculadora']], function () {
     Route::put('/orcamento/{id}', 'OrcamentoController@update')->name('update-orcamento');
     Route::delete('/cancelar/orcamento/{id}', 'OrcamentoController@cancelaOrcamento')->name('orcamento.cancelar');
     Route::get('/orcamento/show/{id}', 'OrcamentoController@show')->name('orcamento.show');
+    Route::get('/orcamento/{id}/aceite', 'OrcamentoController@aceite')->name('orcamento.aceite');
+    Route::get('/orcamento/{id}/cancelar', 'OrcamentoController@voltaStatus')->name('orcamento.cacela');
     // Route::post('/orcamento/remove/produto/{id}', 'OrcamentoController@removeProduto')->name('removeproduto');
 
     // Rotas de pagamento e recibo

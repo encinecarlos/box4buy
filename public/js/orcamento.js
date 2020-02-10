@@ -219,10 +219,6 @@ $(document).ready(function () {
                         location.href = location.origin + '/usuario/estoque';
                     }
                 });
-
-                /*setTimeout(() => {
-
-                }, 1000);*/
             } else {
                 Swal({
                     title: 'Tivemos um problema!',
