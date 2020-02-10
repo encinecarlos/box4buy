@@ -307,4 +307,14 @@ class OrcamentoController extends Controller
             debugbar()->error("Orçamento não foi cancelado");
         }
     }
+
+    public function aceite($id)
+    {
+        Orcamento::where('sequencia', $id)->update(['aceita_orcamento' => '1']);
+    }
+
+    public function voltaStatus($id)
+    {
+        Orcamento::where('sequencia', $id)->update(['status' => '4']);
+    }
 }

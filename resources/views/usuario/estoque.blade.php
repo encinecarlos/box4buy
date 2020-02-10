@@ -368,10 +368,23 @@
                                                     seus documentos e habilitar o pagamento de suas mercadorias</p>
                                                 @break
                                                 @case('2')
-                                                <a href="{{ route('pagamento-invoice', $ap->sequencia) }}"
-                                                   class="btn btn-info btn-rounded boxColorTema"><i
-                                                            class="fa fa-paypal"></i>
-                                                    Pagar</a>
+                                                @if($ap->aceita_orcamento == '1')
+                                                    <a class="btn btn-rounded boxColorTema" href="{{ route('pagamento-invoice', $ap->sequencia) }}">
+                                                        <i class="fa fa-paypal"></i> Pagar
+                                                    </a>
+                                                @else
+                                                    <button type="button"
+                                                            id="cancela-orcamento-{{ $ap->sequencia }}"
+                                                            data-orcamento="{{ $ap->sequencia }}" class="btn btn-rounded btn-danger">
+                                                        <i class="fa fa-close"></i> Recusar Orçamento
+                                                    </button>
+                                                    <button type="button"
+                                                       id="{{ $ap->sequencia }}"
+                                                       onclick="aceitaOrcamento(this)"
+                                                       class="btn btn-success btn-rounded">
+                                                        <i class="fa fa-check"></i> Aceitar Orçamento
+                                                    </button>
+                                                @endif
                                                 @break
                                             @endswitch
                                         </td>
@@ -686,6 +699,46 @@
                 $('.box-overlay').show();
             });
         });
+
+        function aceitaOrcamento(btn) {
+            Swal.fire({
+                type: 'warning',
+                title: 'Aviso',
+                text: 'Deseja aceitar este orçamento? Ao aceita-lo você será redirecionado para a tela de pagamento e não poderá mais cancelar o orçamento',
+                width: 650,
+                showCancelButton: true,
+                confirmButtonText: 'Sim, aceito o orçamento',
+                confirmButtonColor: '#00a65a',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar Orçamento',
+            }).then(result => {
+                if (result.value) {
+                    axios.get('/orcamento/' + btn.id + '/aceite').then(response => {
+                        location.href = '/invoice/' + btn.id
+                    });
+
+                } else {
+                    axios.get('/orcamento/' + btn.id + '/cacncelar').then(response => {
+                       Swal.fire({
+                           type: 'success',
+                           text: 'Orçamento recusado.'
+                       }).then(result => {
+                           if (result.value) {
+                               location.reload();
+                           }
+                       })
+                    });
+                    alert("Orçamento " + btn.id + " cancelado");
+                }
+            });
+        }
+
+        function cancelaOrcamento(btn) {
+            const id = btn.querySelector('data-orcamento').value;
+            axios.get('/orcamento/' + id + '/cancelar').then(response => {
+                location.reload();
+            });
+        }
     </script>
     <script src="{{ asset('js/orcamento.js') }}"></script>
 
