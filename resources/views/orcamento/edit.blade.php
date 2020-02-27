@@ -145,7 +145,7 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-sm-2">Valor sem a caixa:</label>
+                <label class="control-label col-sm-2">Subtotal:</label>
                 <div class="col-sm-1">
                     <input type="text" id="subtotal" name="valorsubtotal" class="form-control money" value="{{ $orcamento[0]->vlr_subtotal }}">
                 </div>
@@ -154,7 +154,7 @@
                     <button type="button" id="calcularvalor" class="btn btn-info boxColorTema">Calcular</button>
                 </div>
 
-                <label class="control-label col-sm-2">Valor com a caixa:</label>
+                <label class="control-label col-sm-2">Valor final:</label>
                 <div class="col-sm-1">
                     <input type="text" id="total" name="valortotal" class="form-control money" value="{{ $orcamento[0]->vlr_final }}">
                 </div>

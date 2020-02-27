@@ -29,7 +29,7 @@
                 @foreach($enviados as $env)
                     <tr>
                         <td class="text-center">{{ $env->codigo_orcamento }}</td>
-                        <td class="text-center">{{ $env->orcamento->cod_rastreio }}</td>
+                        <td class="text-center">{{ !is_null($env->orcamento->cod_rastreio) ? $env->orcamento->cod_rastreio : 'Rastreio não informado' }}</td>
                         <td class="text-center">{{ $env->descricao }}</td>
                         <td class="text-center">{{ $env->orcamento->vlr_final }}</td>
                         <td class="text-center">

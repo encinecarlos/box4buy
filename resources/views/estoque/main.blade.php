@@ -76,6 +76,8 @@
                                     <td>
                                         <a href="{{ route('edit-produto', [$e->codigo_suite, $e->seq_produto]) }}"
                                            class="btn btn-info btn-rounded boxColorTema"><i class="fa fa-edit"></i></a>
+                                        <button class="btn btn-danger btn-rounded delete-produto-{{ $e->seq_produto }}" type="button" onclick="deleteProduto({{ $e->seq_produto }})"><i class="fa fa-trash"></i></button>
+
                                     </td>
                                 </tr>
                                 @endforeach
