@@ -19,7 +19,6 @@ $(document).ready(function () {
         if (!$('form').hasClass('noenter')) {
             if (event.keyCode === 10 || event.keyCode === 13) {
                 event.preventDefault();
-                console.log("ENTER PRESSIONADO");
             }
         }
     });
