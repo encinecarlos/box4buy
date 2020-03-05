@@ -310,7 +310,7 @@ class UsuarioController extends Controller
                         ->where('codigo_suite', $request->input('id'))
                         ->update(['token_troca' => '', 'troca_senha' => '2']);
 
-                    return redirect()->route('login')->with('reset-msg', 'Senha alterada com sucesso com sucesso!');
+                    return redirect()->route('login')->with('reset-msg', 'Senha alterada com sucesso!');
                 }
             }
         } catch (QueryException $e) {
