@@ -26,7 +26,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($enviados as $env)
+                @forelse($enviados as $env)
                     <tr>
                         <td class="text-center">{{ $env->codigo_orcamento }}</td>
                         <td class="text-center">{{ !is_null($env->orcamento->cod_rastreio) ? $env->orcamento->cod_rastreio : 'Rastreio não informado' }}</td>
@@ -46,7 +46,11 @@
                         {{--<td class="text-center"><a href="#" class="btn btn-info BoxColorTema"><i class="fa da-check"></i></a></td>
                         <td class="text-center"><a href="#" class="btn btn-info boxColorTema"><i class="fa fa-ticket"></i></a></td>--}}
                     </tr>
-                @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="7" class="alert alert-info text-center"><h4>Nenhum produto enviado ainda.</h4></td>
+                        </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>
