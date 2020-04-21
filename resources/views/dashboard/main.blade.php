@@ -56,6 +56,7 @@
             <div class="box-header">
                 <h4>Novos clientes este mês</h4>
             </div>
+            @dd(Carbon\Carbon::now()->format('m'))
             <div class="box-body">
                 @if($usuario_mes->isEmpty())
                     <p class="alert alert-warning text-uppercase">Nenhum usuário cadastrado no mês atual.</p>

@@ -19,8 +19,10 @@ class DashboardController extends Controller
 //            ->get()
 //            ->sortBy('month');
 
+//        $currentMonth = ;
         $user_month = User::where('type_user', 2)
-            ->whereMonth('data_cadastro', date('m', strtotime(Carbon::now())))
+            ->whereMonth('data_cadastro', now()->format('m'))
+            ->whereYear('data_cadastro', now()->format('Y'))
             ->orderBy('codigo_suite', 'desc')
             ->limit(5)
             ->get();

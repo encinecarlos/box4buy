@@ -528,8 +528,7 @@
                         </div>
                         <div class="box-footer">
                             <button type="button" class="btn btn-info btn-rounded boxColorTema" id="send-produto-user">
-                                <i
-                                        class="fa fa-check"></i> Enviar
+                                <i class="fa fa-check"></i> Enviar
                             </button>
                         </div>
                     </form>

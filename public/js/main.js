@@ -54,9 +54,20 @@ $(document).ready(function () {
         }).catch(error => {
             var erros = error.response.data.errors;
 
-            for (erro in erros) {
-                $('#list-error').append('<li>' + erros[erro][0] + '</li>')
-            }
+
+            Swal.fire({
+               icon: 'error',
+               title: 'Algo deu errado...',
+               html: '<div class="list-errors"></div>',
+               onBeforeOpen: () => {
+                   for (erro in erros) {
+                       console.log(erro[0]);
+                       $('.list-errors').append('<p>' + erros[erro][0] + '</p>')
+                   }
+               }
+            });
+
+
 
             $('.alert-errors').show();
 
@@ -202,7 +213,10 @@ $(document).ready(function () {
                 text: response.data.msg,
                 type: 'success',
                 confirmButtonText: 'OK',
-                onClose: reloadpage
+            }).then(result => {
+               if (result.value) {
+                   location.reload();
+               }
             });
         }).catch(error => {
             var erros = error.response.data.errors;

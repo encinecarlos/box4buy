@@ -229,7 +229,7 @@
             e.preventDefault();
             var seq_produto = e.target.id;
             axios.get('/estoque/adiciona/quantidade/' + seq_produto).then(response => {
-                location.href = location.href;
+                location.href = '{{ route('estoque') }}';
                 console.log(response.data);
             });
         });
