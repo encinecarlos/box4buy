@@ -1,9 +1,9 @@
 <form class="form-horizontal form-ajax noenter" id="form-cadastro" enctype="multipart/form-data" method="post">
     @csrf
-    <div class="alert alert-danger alert-errors">
+    {{--<div class="alert alert-danger alert-errors">
         <ul id="list-error" style="list-style-type: none">
         </ul>
-    </div>
+    </div>--}}
     <!-- <input type="hidden" name="nome"> -->
     <div class="row">
         <div class="col-6">

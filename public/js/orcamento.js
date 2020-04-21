@@ -178,7 +178,7 @@ $(document).ready(function () {
         });
     });
 
-    // Remove produto carrinho
+    // Remove produto do carrinho
     $('.removeproduto').click(function (e) {
         e.preventDefault();
         var produtoid = $(this).data('product');
@@ -193,7 +193,10 @@ $(document).ready(function () {
                 text: 'Produto removido.',
                 type: 'success',
                 confirmButtonText: 'OK',
-                onClose: reloadpage
+            }).then(result => {
+                if (result.value) {
+                    location.href = '/usuario/estoque'
+                }
             });
         });
     });
