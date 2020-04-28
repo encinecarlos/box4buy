@@ -50,10 +50,17 @@ $(document).ready(function () {
         let data = form.serialize();
 
         axios.post('/api/usuario/new', data).then(response => {
-            window.location = '/sucesso';
+            Swal.fire({
+                icon: 'success',
+                title: 'Conta criada com sucesso!',
+                text: 'Verifique seu E-mail informado no cadastro, bem como a caixa de SPAM para obter maiores detalhes sobre sua conta.'
+            }).then(result => {
+                if (result.value) {
+                    location.href = '/login'
+                }
+            });
         }).catch(error => {
             var erros = error.response.data.errors;
-
 
             Swal.fire({
                icon: 'error',
@@ -66,8 +73,6 @@ $(document).ready(function () {
                    }
                }
             });
-
-
 
             $('.alert-errors').show();
 

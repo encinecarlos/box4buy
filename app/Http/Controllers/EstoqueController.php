@@ -9,6 +9,7 @@ use App\Http\Requests\EstoqueRequest;
 use App\Lib\ProductServices;
 use App\Mail\StatusNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
@@ -271,13 +272,23 @@ class EstoqueController extends Controller
                 DB::table('bxby_produtos_estoque')->where('seq_produto', $seq_produto)->update(['status' => '3']);
             }
         }
-        $prod_orcamento = DB::table('bxby_produtos_estoque')->where('seq_produto', $seq_produto)->get();
+        $prod_orcamento = Estoque::with('fotos')->where('seq_produto', $seq_produto)->get();
+        debugbar()->info($prod_orcamento);
+        $imagens = [];
+        foreach ($prod_orcamento[0]->fotos as $foto)
+        {
+            $imagens[] = [
+                'foto' => $foto->caminho_imagem
+            ];
+        }
+
 
         $data_produtos = [
             "id" => $seq_produto,
             "descricao" => $prod_orcamento[0]->descricao_produto,
             "qtde" => $request->qtenvio,
             'peso' => $prod_orcamento[0]->peso != null ? $prod_orcamento[0]->peso : 0,
+            'imagens' => $imagens,
             'dias_estoque' => $prod_orcamento[0]->data_chegada == '' ? 'NR' : $prod_orcamento[0]->data_chegada
         ];
 

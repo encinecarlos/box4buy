@@ -22,7 +22,7 @@ $(document).ready(function () {
         axios.post('/estoque/produto/' + seq_id, { qtenvio: qtde }).then(response => {
             Swal({
                 title: 'Sucesso!',
-                text: response.data.msg,
+                text: 'Seu produto foi adicionado ao carrinho.',
                 type: 'success',
                 confirmButtonText: 'OK',
                 onClose: reloadpage
@@ -30,14 +30,14 @@ $(document).ready(function () {
         });
     });
 
-    $('#linha_seguro').hide();
+    /*$('#linha_seguro').hide();
     $('select[name="codigo_pacote"]').change(function () {
         if ($('select[name="codigo_pacote"]').val() === 2 || $('select[name="codigo_pacote"]').val() === 3) {
             $('#linha_seguro').show();
         } else {
             $('#linha_seguro').hide();
         }
-    });
+    });*/
 
     if ($('#peso-total').val() > 4) {
         $('select[name="codigo_pacote"] option:first-child').remove();

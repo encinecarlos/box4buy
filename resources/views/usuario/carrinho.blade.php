@@ -27,7 +27,7 @@
                                 <th>Descrição</th>
                                 <th>Quantidade</th>
                                 <th>Peso</th>
-                                <th>Valor Declarado</th>
+                                <th>Fotos</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -53,16 +53,40 @@
                                         </td>
                                         <td class="col-sm-1"
                                             id="peso_valor">{{ $value['peso'] != '' ? $value['peso'] : '0' }}</td>
-                                        <td id="valor_declarado"><input type="text"
-                                                                        name="valor_declarado[]"
-                                                                        data-product="{{ $value['id'] }}"
-                                                                        id="{{ $es }}"
-                                                                        class="form-control"
-                                                                        placeholder="Valor unitário"></td>
+                                        <td class="col-sm-1 text-center" id="valor_declarado">
+                                            <a href="#fotoproduto-{{ $value['id'] }}" class="btn boxColorTema btn-rounded" rel="modal:open">
+                                                <i class="fa fa-image"></i>
+                                            </a>
+                                        </td>
                                         <td><a href="#" id="{{ $es }}" class="btn btn-danger removeproduto"
                                                data-product="{{ $value['id'] }}" data-qtd="{{ $value['qtde'] }}"><i
                                                         class="fa fa-close"></i></a></td>
                                     </tr>
+
+                                    <div class="modal img-modal" id="fotoproduto-{{ $value['id'] }}">
+                                        <div class="box box-info">
+                                            <div class="box-header">
+                                                <h4>Fotos do produto</h4>
+                                                <div class="box-tools">
+                                                    <a href="#" rel="modal:close" class="close"><i
+                                                                class="fa fa-close"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    @foreach ($value['imagens'] as $imagem)
+                                                        <div class="col-lg-6"
+                                                             style="list-style: none">
+                                                            <img src="{{ $imagem['foto'] }}"
+                                                                 class="img-responsive img-thumbnail"
+                                                                 alt="">
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                                 <div class="pull-right">
                                     <tr>
@@ -92,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="row" id="linha_seguro">
+                    {{--<div class="row" id="linha_seguro">
                         <div class="form-gorup">
                             <label for="inputValida" class="col-sm-1 control-label">Seguro:</label>
                             <div class="col-sm-6">
@@ -105,7 +129,9 @@
                                 <span class="text text-danger">O valor do seguro é de 5% do valor declarado</span>
                             </div>
                         </div>
-                    </div>
+                    </div>--}}
+
+
 
                     <div class="form-group">
                         <label for="inputValida" class="col-sm-1 control-label">Endereço de Entrega</label>
@@ -126,6 +152,28 @@
 
                     <div class="row">
                         <table class="table">
+                            <tr>
+                                <th class="col-sm-3">Seguro?</th>
+                                <td>
+                                    <div class="col-sm-3">
+                                        <select name="seguro" class="form-control select2" style="width: 100%;">
+                                            <option value="1">Sim (Acréscimo de 3% no valor do serviço)</option>
+                                            <option value="2" selected>Não</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="col-sm-3">Fechar toda a caixa com fita para ter uma proteção extra?</th>
+                                <td>
+                                    <div class="col-sm-3">
+                                        <select name="protecao_extra" class="form-control select2" style="width: 100%;">
+                                            <option value="1">Sim (Acréscimo de U$1.00 no valor do serviço)</option>
+                                            <option value="2" selected>Não</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <th class="col-sm-3">Enviar Nota Fiscal do produto?</th>
                                 <td>
