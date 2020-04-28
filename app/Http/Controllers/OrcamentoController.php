@@ -43,9 +43,10 @@ class OrcamentoController extends Controller
                                 recebe_propaganda,
                                 caixas_originais,
                                 sacolas_originais,
+                                protecao_extra,
                                 vlr_declarado,
                                 `status`)
-                           VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", [
+                           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", [
                     $cod_suite,
                     $request->codigo_pacote,
                     $request->seguro,
@@ -56,6 +57,7 @@ class OrcamentoController extends Controller
                     $request->enviapropaganda,
                     $request->caixaoriginal,
                     $request->sacolaoriginal,
+                    $request->protecao_extra,
                     $request->protecao_extra,
                     4
                 ]);

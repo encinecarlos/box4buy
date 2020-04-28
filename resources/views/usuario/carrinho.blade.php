@@ -58,9 +58,15 @@
                                                 <i class="fa fa-image"></i>
                                             </a>
                                         </td>
-                                        <td><a href="#" id="{{ $es }}" class="btn btn-danger removeproduto"
-                                               data-product="{{ $value['id'] }}" data-qtd="{{ $value['qtde'] }}"><i
-                                                        class="fa fa-close"></i></a></td>
+                                        <td>
+                                            <a href="#"
+                                               id="{{ $es }}"
+                                               class="btn btn-danger btn-rounded removeproduto"
+                                               data-product="{{ $value['id'] }}"
+                                               data-qtd="{{ $value['qtde'] }}">
+                                                <i class="fa fa-close"></i>
+                                            </a>
+                                        </td>
                                     </tr>
 
                                     <div class="modal img-modal" id="fotoproduto-{{ $value['id'] }}">
@@ -97,7 +103,10 @@
                                 </div>
 
                             @else
-                                <p class="alert alert-warning text-center">NENHUM PRODUTO ADICIONADO AO CARRINHO</p>
+                                <div class="alert alert-secondary text-center">
+                                    <h3>SEU CARRINHO ESTÁ VAZIO</h3>
+                                    <span>Adicione produtos para dar inicio a sua solicitação de orçamento</span>
+                                </div>
                             @endif
                             </tbody>
                         </table>
@@ -130,8 +139,6 @@
                             </div>
                         </div>
                     </div>--}}
-
-
 
                     <div class="form-group">
                         <label for="inputValida" class="col-sm-1 control-label">Endereço de Entrega</label>
@@ -244,8 +251,10 @@
                                 <td colspan="2">
                                     {{-- <button type="button" id="geraorcamento" class="btn btn-info btn-lg boxColorTema pull-right">
                                         <i class="fa fa-money"></i> Solicitar Orçamento</button> --}}
-                                    <a href="#verificadados" class="btn btn-info btn-lg boxColorTema pull-right"
-                                       id="solicita_orcamento" data-suite="{{ Auth::user()->codigo_suite }}"
+                                    <a href="#verificadados"
+                                       class="btn btn-info btn-lg btn-rounded boxColorTema pull-right"
+                                       id="solicita_orcamento"
+                                       data-suite="{{ Auth::user()->codigo_suite }}"
                                        rel="modal:open">
                                         <i class="fa fa-money"></i> Solicitar Orçamento</a>
                                 </td>

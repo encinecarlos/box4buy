@@ -6,8 +6,7 @@
             <div class="box-tools">
                 <a href="{{ route('user-carrinho') }}"
                    id="user-cart"
-                   class="btn btn-rounded btn-success"
-                   {{ !session('produtos') ? 'disabled' : '' }}>
+                   class="btn btn-rounded btn-success">
                     <i class="fa fa-shopping-cart"></i> Carrinho
                     <small class="label badge">{{ session('produtos') ? count(session('produtos')) : '0' }}</small>
                 </a>
@@ -16,8 +15,11 @@
         <div class="box-body" id="estoque-content">
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#produtos-estoque" data-toggle="tab" aria-expanded="true" id="item-produtos"><i
-                                class="fa fa-list"></i> SEUS PRODUTOS</a>
+                    <a href="#produtos-estoque"
+                       data-toggle="tab"
+                       aria-expanded="true"
+                       id="item-produtos"><i
+                       class="fa fa-list"></i> SEUS PRODUTOS</a>
                 </li>
                 <li>
                     <a href="#orcamento"
