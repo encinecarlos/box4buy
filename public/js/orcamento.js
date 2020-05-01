@@ -22,7 +22,7 @@ $(document).ready(function () {
         axios.post('/estoque/produto/' + seq_id, { qtenvio: qtde }).then(response => {
             Swal({
                 title: 'Sucesso!',
-                text: response.data.msg,
+                text: 'Seu produto foi adicionado ao carrinho.',
                 type: 'success',
                 confirmButtonText: 'OK',
                 onClose: reloadpage
@@ -30,14 +30,14 @@ $(document).ready(function () {
         });
     });
 
-    $('#linha_seguro').hide();
+    /*$('#linha_seguro').hide();
     $('select[name="codigo_pacote"]').change(function () {
         if ($('select[name="codigo_pacote"]').val() === 2 || $('select[name="codigo_pacote"]').val() === 3) {
             $('#linha_seguro').show();
         } else {
             $('#linha_seguro').hide();
         }
-    });
+    });*/
 
     if ($('#peso-total').val() > 4) {
         $('select[name="codigo_pacote"] option:first-child').remove();
@@ -58,6 +58,7 @@ $(document).ready(function () {
             caixas = $('select[name="caixaoriginal"]');
             sacolas = $('select[name="sacolaoriginal"]');
             etiquetas = $('select[name="etiquetaoriginal"]');
+            protecao_extra = $('select[name="protecao_extra"]');
             $('#address_id').val(endereco.val());
 
             valor_declarado = $('input[name="valor_declarado[]"]');
@@ -74,6 +75,7 @@ $(document).ready(function () {
             $('#vercaixas').prepend(caixas.children(':selected').text());
             $('#versacolas').prepend(sacolas.children(':selected').text());
             $('#veretiquetas').prepend(etiquetas.children(':selected').text());
+            $('#verfitaextra').prepend(protecao_extra.children(':selected').text());
             // $('.valor').prepend();
 
             $('#newendereco').prepend(response.data[0].endereco);
@@ -211,6 +213,7 @@ $(document).ready(function () {
             $('#peso-total').val('');
 
             if (response.data.status === '1') {
+                $.modal.close();
                 Swal({
                     title: 'Sucesso!',
                     text: response.data.msg,
@@ -218,11 +221,11 @@ $(document).ready(function () {
                     confirmButtonText: 'OK',
                 }).then(result => {
                     if (result.value) {
-                        $.modal.close();
                         location.href = location.origin + '/usuario/estoque';
                     }
                 });
             } else {
+                $.modal.close();
                 Swal({
                     title: 'Tivemos um problema!',
                     text: response.data.msg,

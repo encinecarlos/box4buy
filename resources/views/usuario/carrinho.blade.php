@@ -27,7 +27,7 @@
                                 <th>Descrição</th>
                                 <th>Quantidade</th>
                                 <th>Peso</th>
-                                <th>Valor Declarado</th>
+                                <th>Fotos</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -53,16 +53,46 @@
                                         </td>
                                         <td class="col-sm-1"
                                             id="peso_valor">{{ $value['peso'] != '' ? $value['peso'] : '0' }}</td>
-                                        <td id="valor_declarado"><input type="text"
-                                                                        name="valor_declarado[]"
-                                                                        data-product="{{ $value['id'] }}"
-                                                                        id="{{ $es }}"
-                                                                        class="form-control"
-                                                                        placeholder="Valor unitário"></td>
-                                        <td><a href="#" id="{{ $es }}" class="btn btn-danger removeproduto"
-                                               data-product="{{ $value['id'] }}" data-qtd="{{ $value['qtde'] }}"><i
-                                                        class="fa fa-close"></i></a></td>
+                                        <td class="col-sm-1 text-center" id="valor_declarado">
+                                            <a href="#fotoproduto-{{ $value['id'] }}" class="btn boxColorTema btn-rounded" rel="modal:open">
+                                                <i class="fa fa-image"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"
+                                               id="{{ $es }}"
+                                               class="btn btn-danger btn-rounded removeproduto"
+                                               data-product="{{ $value['id'] }}"
+                                               data-qtd="{{ $value['qtde'] }}">
+                                                <i class="fa fa-close"></i>
+                                            </a>
+                                        </td>
                                     </tr>
+
+                                    <div class="modal img-modal" id="fotoproduto-{{ $value['id'] }}">
+                                        <div class="box box-info">
+                                            <div class="box-header">
+                                                <h4>Fotos do produto</h4>
+                                                <div class="box-tools">
+                                                    <a href="#" rel="modal:close" class="close"><i
+                                                                class="fa fa-close"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    @foreach ($value['imagens'] as $imagem)
+                                                        <div class="col-lg-6"
+                                                             style="list-style: none">
+                                                            <img src="{{ $imagem['foto'] }}"
+                                                                 class="img-responsive img-thumbnail"
+                                                                 alt="">
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                                 <div class="pull-right">
                                     <tr>
@@ -73,7 +103,10 @@
                                 </div>
 
                             @else
-                                <p class="alert alert-warning text-center">NENHUM PRODUTO ADICIONADO AO CARRINHO</p>
+                                <div class="alert alert-secondary text-center">
+                                    <h3>SEU CARRINHO ESTÁ VAZIO</h3>
+                                    <span>Adicione produtos para dar inicio a sua solicitação de orçamento</span>
+                                </div>
                             @endif
                             </tbody>
                         </table>
@@ -92,7 +125,7 @@
                         </div>
                     </div>
 
-                    <div class="row" id="linha_seguro">
+                    {{--<div class="row" id="linha_seguro">
                         <div class="form-gorup">
                             <label for="inputValida" class="col-sm-1 control-label">Seguro:</label>
                             <div class="col-sm-6">
@@ -105,7 +138,7 @@
                                 <span class="text text-danger">O valor do seguro é de 5% do valor declarado</span>
                             </div>
                         </div>
-                    </div>
+                    </div>--}}
 
                     <div class="form-group">
                         <label for="inputValida" class="col-sm-1 control-label">Endereço de Entrega</label>
@@ -126,6 +159,28 @@
 
                     <div class="row">
                         <table class="table">
+                            <tr>
+                                <th class="col-sm-3">Seguro?</th>
+                                <td>
+                                    <div class="col-sm-3">
+                                        <select name="seguro" class="form-control select2" style="width: 100%;">
+                                            <option value="1">Sim (Acréscimo de 3% no valor do serviço)</option>
+                                            <option value="2" selected>Não</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="col-sm-3">Fechar toda a caixa com fita para ter uma proteção extra?</th>
+                                <td>
+                                    <div class="col-sm-3">
+                                        <select name="protecao_extra" class="form-control select2" style="width: 100%;">
+                                            <option value="1">Sim (Acréscimo de U$1.00 no valor do serviço)</option>
+                                            <option value="2" selected>Não</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <th class="col-sm-3">Enviar Nota Fiscal do produto?</th>
                                 <td>
@@ -196,8 +251,10 @@
                                 <td colspan="2">
                                     {{-- <button type="button" id="geraorcamento" class="btn btn-info btn-lg boxColorTema pull-right">
                                         <i class="fa fa-money"></i> Solicitar Orçamento</button> --}}
-                                    <a href="#verificadados" class="btn btn-info btn-lg boxColorTema pull-right"
-                                       id="solicita_orcamento" data-suite="{{ Auth::user()->codigo_suite }}"
+                                    <a href="#verificadados"
+                                       class="btn btn-info btn-lg btn-rounded boxColorTema pull-right"
+                                       id="solicita_orcamento"
+                                       data-suite="{{ Auth::user()->codigo_suite }}"
                                        rel="modal:open">
                                         <i class="fa fa-money"></i> Solicitar Orçamento</a>
                                 </td>

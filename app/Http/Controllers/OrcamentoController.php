@@ -43,9 +43,10 @@ class OrcamentoController extends Controller
                                 recebe_propaganda,
                                 caixas_originais,
                                 sacolas_originais,
+                                protecao_extra,
                                 vlr_declarado,
                                 `status`)
-                           VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", [
+                           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", [
                     $cod_suite,
                     $request->codigo_pacote,
                     $request->seguro,
@@ -56,21 +57,16 @@ class OrcamentoController extends Controller
                     $request->enviapropaganda,
                     $request->caixaoriginal,
                     $request->sacolaoriginal,
-                    $request->total_declarado,
+                    $request->protecao_extra,
+                    $request->protecao_extra,
                     4
                 ]);
 
                 $cod_orcamento = DB::getPdo()->lastInsertId();
 
                 $produtos = $request->session()->get('produtos');
-                $messages = [
-                    'valordeclarado.required' => 'Informe o valor declarado do(s) produto(s).'
-                ];
 
                 for ($i = 0; $i < count($produtos); $i++) {
-                    $this->validate($request, [
-                        'valor_declarado' => 'required'
-                    ], $messages);
                     DB::insert("INSERT INTO bxby_orcamento_produto (codigo_produto,
                                                             descricao,
                                                             codigo_orcamento,

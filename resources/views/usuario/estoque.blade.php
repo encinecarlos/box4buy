@@ -6,8 +6,7 @@
             <div class="box-tools">
                 <a href="{{ route('user-carrinho') }}"
                    id="user-cart"
-                   class="btn btn-rounded btn-default boxColorTema"
-                   {{ !session('produtos') ? 'disabled' : '' }}>
+                   class="btn btn-rounded btn-success">
                     <i class="fa fa-shopping-cart"></i> Carrinho
                     <small class="label badge">{{ session('produtos') ? count(session('produtos')) : '0' }}</small>
                 </a>
@@ -16,8 +15,11 @@
         <div class="box-body" id="estoque-content">
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#produtos-estoque" data-toggle="tab" aria-expanded="true" id="item-produtos"><i
-                                class="fa fa-list"></i> SEUS PRODUTOS</a>
+                    <a href="#produtos-estoque"
+                       data-toggle="tab"
+                       aria-expanded="true"
+                       id="item-produtos"><i
+                       class="fa fa-list"></i> SEUS PRODUTOS</a>
                 </li>
                 <li>
                     <a href="#orcamento"
@@ -173,18 +175,12 @@
                                                    max="{{ $produto->qtde }}">
                                         </td>
                                         <td>
-                                            @if($produto->data_chegada == '' || $produto->qtde == 0)
-                                                <button type="button"
-                                                        class="btn btn-danger btn-rounded qt"
-                                                        title="Adicionar ao carrinho" disabled>
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </button>
-                                            @else
-                                                <button type="button" class="btn btn-success btn-rounded qt"
-                                                        title="Adicionar ao carrinho" id="{{ $produto->seq_produto }}">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </button>
-                                            @endif
+                                            <button type="button"
+                                                    class="btn {{ $produto->data_chegada == '' || $produto->qtde == 0 ? 'btn-danger' : 'btn-success' }} btn-rounded qt"
+                                                    {{ $produto->data_chegada == '' || $produto->qtde == 0 ? 'disabled' : '' }}
+                                                    title="Adicionar ao carrinho" id="{{ $produto->seq_produto }}">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </button>
                                             <a href="#edit-produto-{{ $produto->seq_produto }}"
                                                class="btn btn-default btn-rounded boxColorTema" rel="modal:open"><i
                                                         class="fa fa-edit"></i></a>

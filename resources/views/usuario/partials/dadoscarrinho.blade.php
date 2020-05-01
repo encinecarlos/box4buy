@@ -113,7 +113,12 @@
                 </table>    
             </div>
             <div class="row">
-                <a href="#dados-envio" class="btn btn-warning" id="dados-entrega" rel="modal:open">Editar Dados de Entrega</a>
+                <a href="#dados-envio"
+                   class="btn btn-warning btn-rounded"
+                   id="dados-entrega"
+                   rel="modal:open">
+                    <i class="fal fa-pencil"></i>Editar Dados de Entrega
+                </a>
             </div>
 
             @include('usuario.partials.editperfil-orcamento')
@@ -124,40 +129,47 @@
             <div class="row">
                 <table class="table">
                     <tr>
-                        <th class="col-sm-3">Enviar Nota Fiscal do produto?</th>
+                        <th class="col-sm-4">Enviar Nota Fiscal do produto?</th>
                         <td>
-                            <div class="col-sm-3" id="vernf"></div>
+                            <div class="col-sm-6" id="vernf"></div>
                         </td>
                     </tr>
                     <tr>
-                        <th>Enviar Propaganda do produto?</th>
+                        <th class="col-sm-4">Fechar toda a caixa com fita para ter uma proteção extra?</th>
                         <td>
-                                <div class="col-sm-3" id="verpropaganda"></div>
-                            
+                            <div class="col-sm-6" id="verfitaextra"></div>
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-sm-3">Envia caixas originais?</th>
+                        <th class="col-sm-4">Enviar Propaganda do produto?</th>
                         <td>
-                            <div class="col-sm-3" id="vercaixas"></div>
+                            <div class="col-sm-6" id="verpropaganda"></div>
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-sm-3">Descartar sacolas do produto?</th>
+                        <th class="col-sm-4">Envia caixas originais?</th>
                         <td>
-                            <div class="col-sm-3" id="versacolas"></div>
+                            <div class="col-sm-6" id="vercaixas"></div>
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-sm-3">Retirar etiquetas de preço do produto?</th>
+                        <th class="col-sm-4">Descartar sacolas do produto?</th>
                         <td>
-                            <div class="col-sm-3" id="veretiquetas"></div>
+                            <div class="col-sm-6" id="versacolas"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-sm-4">Retirar etiquetas de preço do produto?</th>
+                        <td>
+                            <div class="col-sm-6" id="veretiquetas"></div>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="row">
-                <button type="button" id="geraorcamento" class="btn btn-info btn-lg btn-block boxColorTema">
+                <button type="button"
+                        id="geraorcamento"
+                        class="btn btn-info btn-lg btn-block btn-rounded boxColorTema">
                    <i class="fa fa-send"></i> Enviar Orçamento
                 </button>
             </div>
